@@ -2,7 +2,7 @@ import axios from 'axios';
 import humps from 'humps';
 
 export const fetchBooks = () => {
-    return axios.get('http://localhost:3001/api/books',
+    return axios.get('/api/books',
         {
             transformResponse: [
                 ...axios.defaults.transformResponse,
@@ -14,7 +14,7 @@ export const fetchBooks = () => {
 
 export const updateBook = (id, location) => {
     return axios.patch(
-        `http://localhost:3001/api/books/${id}`,
+        `/api/books/${id}`,
         { location: location },
         { withCredentials: true }
     ).then(book => book.data)

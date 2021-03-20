@@ -3,14 +3,14 @@ import humps from 'humps';
 
 export const login = user => {
     return axios.post(
-        'http://localhost:3001/api/session', 
+        '/api/session', 
         { user }, 
         { withCredentials: true }
     )
 };
 
 export const getCurrentUser = () => {
-    return axios.get('http://localhost:3001/api/session', 
+    return axios.get('/api/session', 
         {
             withCredentials: true,
             transformResponse: [
@@ -23,7 +23,7 @@ export const getCurrentUser = () => {
 
 export const signup = user => {
     return axios.post(
-        'http://localhost:3001/api/users', 
+        '/api/users', 
         { user }, 
         { withCredentials: true }
     )
@@ -31,7 +31,7 @@ export const signup = user => {
 
 export const updateSettings = (id, color, fontSize, theme) => {
     return axios.patch(
-        `http://localhost:3001/api/users/${id}`,
+        `/api/users/${id}`,
         { highlight_color: color, font_size: fontSize, theme },
         {
             withCredentials: true,
@@ -45,7 +45,7 @@ export const updateSettings = (id, color, fontSize, theme) => {
 
 export const logout = () => {
     return axios.delete(
-        'http://localhost:3001/api/session',
+        '/api/session',
         { withCredentials: true }
     )
 };

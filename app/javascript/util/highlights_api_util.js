@@ -2,7 +2,7 @@ import axios from 'axios';
 import humps from 'humps';
 
 export const fetchHighlights = () => {
-    return axios.get('http://localhost:3001/api/highlights',
+    return axios.get('/api/highlights',
         {
             transformResponse: [
                 ...axios.defaults.transformResponse,
@@ -13,7 +13,7 @@ export const fetchHighlights = () => {
 };
 
 export const createHighlight = (data) => {
-    return axios.post('http://localhost:3001/api/highlights', 
+    return axios.post('/api/highlights', 
         {
             highlight: {
                 text: data.text,
@@ -32,5 +32,5 @@ export const createHighlight = (data) => {
 }
 
 export const deleteHighlight = (id) => {
-    return axios.delete(`http://localhost:3001/api/highlights/${id}`)
+    return axios.delete(`/api/highlights/${id}`)
 }

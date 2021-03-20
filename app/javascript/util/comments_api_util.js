@@ -2,7 +2,7 @@ import axios from 'axios';
 import humps from 'humps';
 
 export const fetchComments = () => {
-    return axios.get('http://localhost:3001/api/comments',
+    return axios.get('/api/comments',
         {
             transformResponse: [
                 ...axios.defaults.transformResponse,
@@ -13,7 +13,7 @@ export const fetchComments = () => {
 };
 
 export const createComment = (data) => {
-    return axios.post(data.parent ? `http://localhost:3001/api/highlights/${data.id}/comments` : `http://localhost:3001/api/comments/${data.id}/comments`,
+    return axios.post(data.parent ? `/api/highlights/${data.id}/comments` : `/api/comments/${data.id}/comments`,
         {
             comment: {
                 body: data.body,
@@ -30,5 +30,5 @@ export const createComment = (data) => {
 }
 
 export const deleteComment = (id) => {
-    return axios.delete(`http://localhost:3001/api/comments/${id}`)
+    return axios.delete(`/api/comments/${id}`)
 }
