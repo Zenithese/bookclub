@@ -23,6 +23,13 @@ class User < ApplicationRecord
     has_many :received_followings, class_name: :Follow, foreign_key: :follow_id
     has_many :received_follows, through: :received_followings, source: :user
 
+    # follows ######################################
+    def follows?(id)
+        follows.include?(User.find(id))
+    end
+
+
+    # sessions #####################################
     def self.find_by_credentials(username, password)
         user = User.find_by(username: username)
         return nil unless user

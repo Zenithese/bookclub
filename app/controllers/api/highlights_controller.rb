@@ -16,7 +16,8 @@ class Api::HighlightsController < ApplicationController
     end
 
     def show
-        @highlight = Highlight.find(params[:id])
+        # @highlight = Highlight.find(params[:id])
+        @highlights = Highlight.where(params[:id]) if current_user.follows?(params[:id])
     end
 
     def destroy
