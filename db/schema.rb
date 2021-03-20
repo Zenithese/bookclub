@@ -10,10 +10,56 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_20_014844) do
+ActiveRecord::Schema.define(version: 2021_03_20_143545) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "books", force: :cascade do |t|
+    t.string "title", null: false
+    t.string "location", null: false
+    t.string "image"
+    t.integer "user_id"
+    t.string "epub_file", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["title"], name: "index_books_on_title", unique: true
+    t.index ["user_id"], name: "index_books_on_user_id"
+  end
+
+  create_table "comments", force: :cascade do |t|
+    t.string "commentable_type", null: false
+    t.integer "commentable_id", null: false
+    t.text "body"
+    t.integer "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["commentable_id", "commentable_type"], name: "index_comments_on_commentable_id_and_commentable_type"
+    t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "follows", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "follow_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id", "follow_id"], name: "index_follows_on_user_id_and_follow_id", unique: true
+  end
+
+  create_table "highlights", force: :cascade do |t|
+    t.string "text", null: false
+    t.string "cfi_range", null: false
+    t.string "notes"
+    t.integer "user_id"
+    t.integer "book_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["book_id"], name: "index_highlights_on_book_id"
+    t.index ["cfi_range"], name: "index_highlights_on_cfi_range"
+    t.index ["notes"], name: "index_highlights_on_notes"
+    t.index ["text"], name: "index_highlights_on_text"
+    t.index ["user_id"], name: "index_highlights_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "username", null: false

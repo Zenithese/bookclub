@@ -8,20 +8,20 @@ class User < ApplicationRecord
     
     after_initialize :ensure_session_token
 
-    # has_many :books,
-    #     foreign_key: :user_id
+    has_many :books,
+        foreign_key: :user_id
 
-    # has_many :highlights,
-    #     foreign_key: :user_id
+    has_many :highlights,
+        foreign_key: :user_id
 
-    # has_many :comments,
-    #     foreign_key: :user_id
+    has_many :comments,
+        foreign_key: :user_id
         
-    # has_many :followings, class_name: :Follow
-    # has_many :follows, through: :followings
+    has_many :followings, class_name: :Follow
+    has_many :follows, through: :followings
 
-    # has_many :received_followings, class_name: :Follow, foreign_key: :follow_id
-    # has_many :received_follows, through: :received_followings, source: :user
+    has_many :received_followings, class_name: :Follow, foreign_key: :follow_id
+    has_many :received_follows, through: :received_followings, source: :user
 
     def self.find_by_credentials(username, password)
         user = User.find_by(username: username)

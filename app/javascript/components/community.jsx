@@ -24,9 +24,9 @@ function Community({ fetchBookworms, bookworms }) {
 
     return (
         <div className="community">
-            {bookworms.map((bookworm) => {
+            {bookworms.map((bookworm, i) => {
                 return (
-                    <Bookworm username={bookworm.username} />
+                    <Bookworm username={bookworm.username} key={i}/>
                     // <Link className="bookworm-link" to={`link`} >
                     //     <Bookworm username={bookworm.username} />
                     // </Link>

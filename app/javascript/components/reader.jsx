@@ -33,7 +33,7 @@ class Reader extends Component {
         super(props);
         this.state = {
             fullscreen: false,
-            location: this.props.book.location,
+            location: props.book ? props.book.location : "0",
             localFile: null,
             localName: null,
             visible: false,
@@ -133,6 +133,7 @@ class Reader extends Component {
                 storage && storage.setItem("epub-location", location);
             }
         );
+        debugger
         this.props.updateBook(this.props.book.id, this.state.location)
     };
 
