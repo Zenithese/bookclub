@@ -12,6 +12,17 @@ export const fetchHighlights = () => {
     )
 };
 
+export const fetchReadersHighlights = (id, bookId) => {
+    return axios.get(`/api/highlights_search/?id=${id}&book_id=${bookId}`,
+        {
+            transformResponse: [
+                ...axios.defaults.transformResponse,
+                data => humps.camelizeKeys(data)
+            ],
+        }
+    )
+};
+
 export const createHighlight = (data) => {
     return axios.post('/api/highlights', 
         {

@@ -1,34 +1,34 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { fetchBookworms } from '../actions/bookworms_actions'
-import Bookworm from './bookworm';
+import { fetchReaders } from '../actions/readers_actions'
+import Reader from './reader';
 // import { Link } from 'react-router-dom';
 
 const mapStateToProps = ({ entities }) => {
     return {
-        bookworms: entities.bookworms
+        readers: entities.readers
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchBookworms: () => dispatch(fetchBookworms()),
+        fetchReaders: () => dispatch(fetchReaders()),
     };
 };
 
-function Community({ fetchBookworms, bookworms }) {
+function Community({ fetchReaders, readers }) {
 
     useEffect(() => {
-        fetchBookworms()
+        fetchReaders()
     }, [])
 
     return (
         <div className="community">
-            {bookworms.map((bookworm, i) => {
+            {readers.map((reader, i) => {
                 return (
-                    <Bookworm username={bookworm.username} key={i}/>
-                    // <Link className="bookworm-link" to={`link`} >
-                    //     <Bookworm username={bookworm.username} />
+                    <Reader username={reader.username} id={reader.id} key={i}/>
+                    // <Link className="reader-link" to={`link`} >
+                    //     <Reader username={reader.username} />
                     // </Link>
                 )
             })}

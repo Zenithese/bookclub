@@ -25,7 +25,6 @@ class Api::BooksController < ApplicationController
     end
 
     def update
-        # debugger
         @book = Book.find(params[:id])
         if @book.update(book_params)
             render :show

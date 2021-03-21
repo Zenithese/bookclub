@@ -5,7 +5,7 @@ import users from './users_reducer'
 import books from './books_reducer'
 import settings from './setting_reducer'
 import comments from './comments_reducer'
-import bookworms from './bookworms_reducer'
+import readers from './readers_reducer'
 
 
 export default combineReducers({
@@ -15,5 +15,5 @@ export default combineReducers({
     books,
     settings,
     comments,
-    bookworms,
+    readers,
 });

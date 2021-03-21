@@ -1,4 +1,4 @@
-import { RECEIVE_HIGHLIGHT, RECEIVE_HIGHLIGHTS, REMOVE_HIGHLIGHT } from '../actions/highlights_actions'
+import { RECEIVE_HIGHLIGHT, RECEIVE_HIGHLIGHTS, REMOVE_HIGHLIGHT, RECEIVE_READERS_HIGHLIGHTS } from '../actions/highlights_actions'
 
 const highlightsReducer = (state = [], action) => {
     Object.freeze(state);
@@ -10,6 +10,8 @@ const highlightsReducer = (state = [], action) => {
         case REMOVE_HIGHLIGHT:
             let newState = [...state]
             return newState.filter(highlight => highlight.id !== action.id)
+        case RECEIVE_READERS_HIGHLIGHTS:
+            return action.highlights
         default:
             return state;
     }

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import humps from 'humps';
 
-export const fetchBookworms = () => {
+export const fetchReaders = () => {
     return axios.get('/api/users',
         {
             transformResponse: [

@@ -3,6 +3,25 @@ class Api::HighlightsController < ApplicationController
 
     def index
         @highlights = Highlight.all.includes(:comments)
+        # @highlights = Highlight.where(user_id: current_user.id)
+        # if params[:id] && params[:book_id]
+        #     if params[:id].to_i == current_user.id
+        #         @highlights = Highlight.where(user_id: params[:id], book_id: params[:book_id])
+        #     else
+        #         @highlights = Highlight.where(user_id: params[:id], book_id: params[:book_id]) if current_user.follows?(params[:id])
+        #     end
+        # else
+        #     @highlights = Highlight.all
+        # end
+    end
+
+    def search
+        if params[:id].to_i == current_user.id
+            @highlights = Highlight.where(user_id: params[:id], book_id: params[:book_id])
+        else
+            @highlights = Highlight.where(user_id: params[:id], book_id: params[:book_id]) if current_user.follows?(params[:id])
+        end
+        render :index
     end
 
     def create
@@ -16,8 +35,7 @@ class Api::HighlightsController < ApplicationController
     end
 
     def show
-        # @highlight = Highlight.find(params[:id])
-        @highlights = Highlight.where(params[:id]) if current_user.follows?(params[:id])
+        @highlight = Highlight.find(params[:id])
     end
 
     def destroy
@@ -35,7 +53,7 @@ class Api::HighlightsController < ApplicationController
         end
     end
 
-    private
+    # private
 
     def highlight_params
         params.require(:highlight).permit(:text, :cfi_range, :user_id, :book_id)
