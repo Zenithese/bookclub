@@ -2,8 +2,8 @@ class Api::HighlightsController < ApplicationController
     skip_before_action :verify_authenticity_token
 
     def index
-        @highlights = Highlight.all.includes(:comments)
-        # @highlights = Highlight.where(user_id: current_user.id)
+        # @highlights = Highlight.all.includes(:comments)
+        @highlights = Highlight.where(user_id: current_user.id)
         # if params[:id] && params[:book_id]
         #     if params[:id].to_i == current_user.id
         #         @highlights = Highlight.where(user_id: params[:id], book_id: params[:book_id])

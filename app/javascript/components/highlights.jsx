@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Comment from './comments'
 import { connect } from 'react-redux';
 import { fetchHighlights, deleteHighlight } from '../actions/highlights_actions'
@@ -48,6 +48,12 @@ function Highlights({ id, highlights, _fontSize, highlightColor, _theme, fetchHi
     const [fontSize, setFontSize] = useState(Number(_fontSize))
     const [theme, setTheme] = useState(_theme)
     const [highlightsLength, setHighlightsLength] = useState(Infinity)
+
+    const prevHighlightsRef = useRef();
+    useEffect(() => {
+        prevHighlightsRef.current = highlights;
+    });
+    const prevHighlights = prevHighlightsRef.current;
     
 
     useEffect(() => {
@@ -62,8 +68,12 @@ function Highlights({ id, highlights, _fontSize, highlightColor, _theme, fetchHi
     }, [comments, fetchHighlights])
 
     useEffect(() => {
-        updateHighlights()
+        if (rendition) updateHighlights()
     }, [book])
+
+    useEffect(() => {
+        if (rendition && prevHighlights) replaceHighlights()
+    }, [book, highlights, rendition])
 
     useEffect(() => {
         createSettings(id, color, fontSize, theme);
@@ -124,6 +134,15 @@ function Highlights({ id, highlights, _fontSize, highlightColor, _theme, fetchHi
                 );
             });
         };
+    }
+
+    const replaceHighlights = (updateHighlightToggle = false) => {
+        prevHighlights.forEach(highlight => rendition.annotations.remove(highlight.cfiRange, "highlight"))
+
+        highlights.forEach(highlight => {
+            const { cfiRange } = highlight;
+            rendition.annotations.highlight(cfiRange, {}, null, `${cfiRange}`, { "fill": updateHighlightToggle ? visible ? color : "transparent" : color, "fill-opacity": "0.3", "mix-blend-mode": "multiply" });
+        });
     }
 
     const toggleHighlights = () => {

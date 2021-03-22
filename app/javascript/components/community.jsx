@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { fetchReaders } from '../actions/readers_actions'
-import Reader from './reader';
+import Reader from './readers';
 // import { Link } from 'react-router-dom';
 
 const mapStateToProps = ({ entities }) => {

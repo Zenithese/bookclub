@@ -25,6 +25,7 @@ const mapStateToProps = ({ entities }) => {
         book: entities.books.book,
         theme: entities.settings.settings ? entities.settings.settings.theme : "light",
         userId: Object.keys(entities.users)[0],
+        highlights: entities.highlights,
     }
 }
 
