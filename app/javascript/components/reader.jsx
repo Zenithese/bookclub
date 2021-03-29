@@ -1,28 +1,12 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { fetchReadersHighlights } from '../actions/highlights_actions'
+import { Link } from 'react-router-dom';
 
-const mapStateToProps = ({ entities }) => {
-    return {
-        bookId: entities.books.book ? entities.books.book.id : null,
-    }
-}
-
-const mapDispatchToProps = dispatch => {
-    return {
-        fetchReadersHighlights: (id, bookId) => dispatch(fetchReadersHighlights(id, bookId)),
-    }
-}
-
-
-function Reader({ username, id, bookId }) {
+export default function Reader({ username, id }) {
 
     return (
-        <div>
-            <img className="reader-image" src="/default-profile-img.jpeg" />
+        <Link to={`/reader/${id}`} >
+            <img src="/default-profile-img.jpeg" alt=""/>
             <h2>{username}</h2>
-        </div>
+        </Link>
     )
 }
-
-export default connect(mapStateToProps, mapDispatchToProps)(Reader)

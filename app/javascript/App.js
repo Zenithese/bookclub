@@ -7,6 +7,7 @@ import { ProtectedRoute } from './util/route_util';
 import { Switch } from 'react-router-dom';
 import Header from './components/header'
 import Readers from './components/readers'
+import ReaderProfile from './components/reader_profile'
 // import './assests/App.css';
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
       <ProtectedRoute path="/search/books" component={Books} />
       <ProtectedRoute path="/search/readers" component={Readers} />
       <ProtectedRoute path="/book/:book" component={Highlights} />
+      <ProtectedRoute path="/reader/:id" component={ReaderProfile} />
     </div>
   );
 }
