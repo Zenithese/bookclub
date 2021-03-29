@@ -3,9 +3,10 @@ import Greeting from './components/book_session_forms/greeting_container'
 import Ereader from './components/ereader'
 import Highlights from './components/highlights'
 import Books from './components/books'
-import Community from './components/community'
 import { ProtectedRoute } from './util/route_util';
 import { Switch } from 'react-router-dom';
+import Header from './components/header'
+import Readers from './components/readers'
 // import './assests/App.css';
 
 function App() {
@@ -13,11 +14,12 @@ function App() {
     <div className="App" style={{position: "absolute", height: "100%", width: "100%"}}>
       <Greeting />
       <Switch>
-        <ProtectedRoute path="/:book" component={Ereader} />
-        <ProtectedRoute path="/" component={Books} />
+        <ProtectedRoute path="/book/:book" component={Ereader} />
+        <ProtectedRoute path="/" component={Header} />
       </Switch>
-      <ProtectedRoute path="/" component={Community} />
-      <ProtectedRoute path="/:book" component={Highlights} />
+      <ProtectedRoute path="/search/books" component={Books} />
+      <ProtectedRoute path="/search/readers" component={Readers} />
+      <ProtectedRoute path="/book/:book" component={Highlights} />
     </div>
   );
 }

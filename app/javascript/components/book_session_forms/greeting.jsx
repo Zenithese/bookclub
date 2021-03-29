@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import SessionBook from './session_book'
+import { Redirect } from "react-router-dom";
 
 const Greeting = ({ currentUser, getCurrentUser, openModal }) => {
     useEffect(() => {
@@ -15,7 +16,7 @@ const Greeting = ({ currentUser, getCurrentUser, openModal }) => {
 
     );
 
-    return currentUser ? null : sessionLinks();
+    return currentUser ? <Redirect to="/search/books" /> : sessionLinks();
 };
 
 export default Greeting;

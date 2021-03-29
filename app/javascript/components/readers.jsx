@@ -1,31 +1,36 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { fetchReadersHighlights } from '../actions/highlights_actions'
+import { fetchReaders } from '../actions/readers_actions'
+import Reader from './reader'
+// import { Link } from 'react-router-dom';
 
 const mapStateToProps = ({ entities }) => {
     return {
-        bookId: entities.books.book ? entities.books.book.id : null,
+        readers: entities.readers
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchReadersHighlights: (id, bookId) => dispatch(fetchReadersHighlights(id, bookId)),
-    }
-}
+        fetchReaders: () => dispatch(fetchReaders()),
+    };
+};
 
+function Readers({ fetchReaders, readers }) {
 
-function Reader({ username, id, bookId, fetchReadersHighlights }) {
+    useEffect(() => {
+        fetchReaders()
+    }, [])
 
-    const handleClick = () => {
-        fetchReadersHighlights(id, bookId)
-    }
-    
     return (
-        <div onClick={handleClick} >
-            {username}
+        <div className="community">
+            {readers.map((reader, i) => {
+                return (
+                    <Reader username={reader.username} id={reader.id} key={i} />
+                )
+            })}
         </div>
     )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Reader)
+export default connect(mapStateToProps, mapDispatchToProps)(Readers)

@@ -19,3 +19,14 @@ export const updateBook = (id, location) => {
         { withCredentials: true }
     ).then(book => book.data)
 }
+
+export const searchBooks = (query) => {
+    return axios.get(`/api/books_search/?query=${query}`,
+        {
+            transformResponse: [
+                ...axios.defaults.transformResponse,
+                data => humps.camelizeKeys(data)
+            ],
+        }
+    )
+};

@@ -48,7 +48,7 @@ class Ereader extends Component {
         this.handleHighlight = this.handleHighlight.bind(this)
     }
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         this.props.fetchBook();
         this.props.fetchSettings();
     }

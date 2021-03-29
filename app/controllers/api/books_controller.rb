@@ -4,6 +4,15 @@ class Api::BooksController < ApplicationController
         @books = Book.all
     end
 
+    def search
+        if params[:query].length > 0
+            @books = Book.search(params[:query])
+        else
+            @books = Book.all
+        end
+        render :index
+    end
+
     def create
         @book = Book.new(book_params)
         if @book.save
@@ -37,6 +46,6 @@ class Api::BooksController < ApplicationController
     private 
 
     def book_params
-        params.require(:book).permit(:title, :location, :user_id, :image)
+        params.require(:book).permit(:title, :location, :user_id, :image, :query)
     end
 end

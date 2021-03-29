@@ -8,6 +8,7 @@ import { faCog, faEye } from '@fortawesome/free-solid-svg-icons'
 import { fetchRendition } from '../actions/rendition_actions'
 import { createSettings } from '../actions/settings_actions'
 import { createComment } from '../actions/comments_actions'
+import ReaderList from './reader_list'
 
 
 const mapStateToProps = ({ entities, session }) => {
@@ -67,12 +68,19 @@ function Highlights({ id, highlights, _fontSize, highlightColor, _theme, fetchHi
         }
     }, [comments, fetchHighlights])
 
-    useEffect(() => {
-        if (rendition) updateHighlights()
-    }, [book])
+    // useEffect(() => {
+    //     if (rendition) updateHighlights()
+    // }, [book])
 
     useEffect(() => {
-        if (rendition && prevHighlights) replaceHighlights()
+        if (rendition && prevHighlights) {
+            console.log("replace")
+            replaceHighlights()
+        } 
+        // else if (rendition) {
+        //     console.log("update")
+        //     updateHighlights()
+        // }
     }, [book, highlights, rendition])
 
     useEffect(() => {
@@ -139,10 +147,13 @@ function Highlights({ id, highlights, _fontSize, highlightColor, _theme, fetchHi
     const replaceHighlights = (updateHighlightToggle = false) => {
         prevHighlights.forEach(highlight => rendition.annotations.remove(highlight.cfiRange, "highlight"))
 
-        highlights.forEach(highlight => {
-            const { cfiRange } = highlight;
-            rendition.annotations.highlight(cfiRange, {}, null, `${cfiRange}`, { "fill": updateHighlightToggle ? visible ? color : "transparent" : color, "fill-opacity": "0.3", "mix-blend-mode": "multiply" });
-        });
+        if (highlights.length) {
+            highlights.forEach(highlight => {
+                const { cfiRange } = highlight;
+                rendition.annotations.remove(cfiRange, "highlight");
+                rendition.annotations.highlight(cfiRange, {}, null, `${cfiRange}`, { "fill": updateHighlightToggle ? visible ? color : "transparent" : color, "fill-opacity": "0.3", "mix-blend-mode": "multiply" });
+            });
+        }
     }
 
     const toggleHighlights = () => {
@@ -260,16 +271,20 @@ function Highlights({ id, highlights, _fontSize, highlightColor, _theme, fetchHi
 
     return (
         <div className={toggle ? "" : "annotations-container"}>
+
             <div className={toggle ? settings ? "annotations-closed-for-settings" : "annotations-opened" : settings ? "annotations-closed-for-settings-opened" : "annotations-closed"} >
                 <div className="annotations-buttons" onClick={() => { setToggle(!toggle); if (settings && !toggle) {setSettings(!settings)} }}>
                     <div>{toggle ? "close" : "open"}</div>
                     <br />
                 </div>
+                <ReaderList />
                 <ul className={toggle ? "highlight-list-opened" : "highlight-lilst-closed"}>
                     {highlightList}
                 </ul>
             </div>
+
             <div className={toggle ? settings ? "toggle-button-closed-for-settings" : "toggle-button-opened" : settings ? "toggle-button-closed-for-settings" : "toggle-button"} onClick={() => { toggleHighlights() }}><FontAwesomeIcon icon={faEye} /></div>
+
             <div className={settings ? toggle ? "" : "settings-button-opened" : toggle ? "settings-button-closed-for-toggle" : "settings-button"} onClick={() => { if (!settings) { setSettings(!settings); if (toggle && !settings) { setToggle(!toggle) } } } }>
                 <FontAwesomeIcon icon={faCog} style={{fontSize: "20px"}} onClick={() => { setSettings(!settings); if (toggle && !settings) { setToggle(!toggle) } }} />
                 <div className={ settings ? "color-section" : "color-section-closed"} >
@@ -288,6 +303,7 @@ function Highlights({ id, highlights, _fontSize, highlightColor, _theme, fetchHi
                     <span className="slider round"></span>
                 </label>    
             </div>
+
         </div>
     )
 }

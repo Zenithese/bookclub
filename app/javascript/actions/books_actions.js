@@ -43,3 +43,9 @@ export const updateBook = (id, location) => dispatch => {
         dispatch(storeBook(book))
     })
 }
+
+export const searchBooks = (query) => dispatch => {
+    return APIUtil.searchBooks(query).then(response =>
+        dispatch(receiveBooks(response.data))
+    )
+};
