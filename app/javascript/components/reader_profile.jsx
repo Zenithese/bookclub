@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux';
 import { fetchReadersHighlights } from '../actions/highlights_actions'
+import HighlightsList from './highlights_list'
 
 
 const mapStateToProps = ({ entities }, ownProps) => {
@@ -16,22 +17,16 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-function ReaderProfile({ readerId, highlights, fetchReadersHighlights }) {
+function ReaderProfile({ readerId, fetchReadersHighlights }) {
 
     useEffect(() => {
         fetchReadersHighlights(readerId)
     }, [])
 
     return (
-        <ul>
-            {highlights.map(highlight => {
-                return (
-                    <div>
-                        {highlight.text}
-                    </div>
-                )
-            })}
-        </ul>
+        <div>
+            <HighlightsList readerId={readerId}/>
+        </div>
     )
 }
 

@@ -17,7 +17,7 @@ class Api::HighlightsController < ApplicationController
 
     def search
         if params[:book_id] == "undefined"
-                @highlights = Highlight.where(user_id: params[:id])
+            @highlights = Highlight.where(user_id: params[:id])
         elsif current_user.follows?(params[:id]) || params[:id].to_i == current_user.id
             @highlights = Highlight.where(user_id: params[:id], book_id: params[:book_id])
         end
