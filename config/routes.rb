@@ -5,7 +5,8 @@ Rails.application.routes.draw do
     resources :users, only: [:create, :update, :index]
     resource :session, only: [:create, :destroy, :show]
     resources :books, only: [:create, :destroy, :update, :show, :index]
-    resources :follows, only: [:create, :destroy]
+    resources :follows, only: [:index, :create, :destroy]
+    resources :readings, only: [:create, :destroy]
     resources :highlights, only: [:create, :destroy, :update, :show, :index] do
       resources :comments, module: :highlights
     end
@@ -14,6 +15,8 @@ Rails.application.routes.draw do
     end
     get :highlights_search, to: 'highlights#search'
     get :books_search, to: 'books#search'
+    get :user_books, to: 'books#readings'
+    get :user_follows, to: 'users#follows'
   end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

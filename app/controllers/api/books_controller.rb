@@ -13,6 +13,10 @@ class Api::BooksController < ApplicationController
         render :index
     end
 
+    def readings
+        @books = User.find(params[:user_id]).books
+    end
+
     def create
         @book = Book.new(book_params)
         if @book.save

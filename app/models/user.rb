@@ -8,9 +8,6 @@ class User < ApplicationRecord
     
     after_initialize :ensure_session_token
 
-    has_many :books,
-        foreign_key: :user_id
-
     has_many :highlights,
         foreign_key: :user_id
 
@@ -22,6 +19,9 @@ class User < ApplicationRecord
 
     has_many :received_followings, class_name: :Follow, foreign_key: :follow_id
     has_many :received_follows, through: :received_followings, source: :user
+
+    has_many :readings, class_name: :Reading
+    has_many :books, through: :readings
 
     # follows ######################################
     def follows?(id)

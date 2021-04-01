@@ -1,0 +1,1 @@
+json.array! @readings, partial: "api/readings/reading", as: :reading
