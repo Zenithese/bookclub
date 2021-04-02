@@ -6,10 +6,10 @@ const followsReducer = (state = {}, action) => {
         case RECEIVE_FOLLOWS:
             return action.follows
         case RECEIVE_FOLLOW:
-            return { ...state, ...{ [action.follow.id]: action.follow.username } }
+            return { ...state, ...{ [action.follow.followId]: { "id": action.follow.id } } }
         case REMOVE_FOLLOW:
             let newState = { ...state }
-            delete newState[action.follow.id]
+            delete newState[action.followId]
             return newState
         default:
             return state;

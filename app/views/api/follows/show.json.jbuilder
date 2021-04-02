@@ -1,1 +1,1 @@
-json.array! @follows, partial: "api/follows/follow", as: :follow
+json.partial! "api/follows/follow", follow: @follow

@@ -21,6 +21,7 @@ class Api::HighlightsController < ApplicationController
         elsif current_user.follows?(params[:id]) || params[:id].to_i == current_user.id
             @highlights = Highlight.where(user_id: params[:id], book_id: params[:book_id])
         end
+        
         render :index
     end
 

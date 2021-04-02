@@ -1,14 +1,14 @@
 class Api::FollowsController < ApplicationController
+    skip_before_action :verify_authenticity_token
 
     def index
-        @follows = User.find(current_user.id).follows
+        @follows = Follow.where(:user_id => current_user.id)
     end
 
     def create
-        @follow = Follow.new(follow_params)
+        @follow = Follow.new(:user_id => current_user.id, :follow_id => params[:follow_id])
         
         if @follow.save
-            @follow = @follow.follow
             render :show
         else
             render json: @follow.errors.full_messages, status: 422
@@ -18,7 +18,6 @@ class Api::FollowsController < ApplicationController
     def destroy
         @follow = Follow.find(params[:id])
         @follow.destroy
-        @follow = @follow.follow
         render :show
     end
 
