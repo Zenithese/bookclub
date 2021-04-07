@@ -23,8 +23,6 @@ export default function Highlight({ id, text, cfiRange, comments, bookId, i, com
                 </div>
             </div>
             <div className={`thread ${visibleThread ? 'thread-open' : ''}`}>
-                <br />
-                <hr />
                 {commentThread(comments, id)}
             </div>
         </div>

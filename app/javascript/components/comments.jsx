@@ -20,6 +20,7 @@ function Comment({ comment, createComment, fetchComments, userId, comments }) {
 
     const [visible, setVisible] = useState(false)
     const [body, setBody] = useState("")
+    const [displayReplies, setDisplayReplies] = useState(false)
 
     // useEffect(() => {
     //     fetchComments();
@@ -30,7 +31,9 @@ function Comment({ comment, createComment, fetchComments, userId, comments }) {
     }) // Thank you Nick @CoderRocketFuel for the recursive functional component lesson!
 
     const handleSubmit = (e, id) => {
+        debugger
         e.preventDefault();
+        if (!body.length) return;
         const comment = {
             body,
             id,
@@ -41,15 +44,24 @@ function Comment({ comment, createComment, fetchComments, userId, comments }) {
 
     return (
         <div className="comments">
-            <div className="comment" key={comment.id}>
+            <div onClick={() => setDisplayReplies(!displayReplies)} style={{fontWeight: "bold"}}>{comment.username}</div>
+            
+            <div className="comment" key={comment.id} style={{display: displayReplies ? "block" : "none"}}>
+                <div className="comment-border" />
+                <br />
                 <div>{comment.body}</div>
-                <button onClick={() => setVisible(!visible)}>reply</button>
-                <form style={visible ? { display: "block" } : { display: "none" }} onSubmit={(e) => handleSubmit(e, comment.id)} >
-                    <label>Reply:</label>
-                    <input type="body" value={body} onChange={(e) => setBody(e.target.value)} />
-                </form>
+                <br />
+                <button onClick={() => setVisible(!visible)} style={!visible ? { display: "block" } : { display: "none" }}>reply</button>
+                <div style={visible ? { display: "block" } : { display: "none" }} >
+                    <textarea type="body" placeholder="Reply to comment" value={body} onChange={(e) => setBody(e.target.value)}></textarea>
+                    <br />
+                    <button onClick={(e) => handleSubmit(e, comment.id)}>Submit</button>
+                    <button onClick={() => setVisible(!visible)}>cancel</button>
+                </div>
+                <br />
                 {nestedComments}
             </div>
+            <br />
         </div>
     )
 }
