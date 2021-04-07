@@ -11,3 +11,14 @@ export const fetchReaders = () => {
         }
     )
 };
+
+export const fetchReader = (id) => {
+    return axios.get(`/api/users/${id}`, 
+        {
+            transformResponse: [
+                ...axios.defaults.transformResponse,
+                data => humps.camelizeKeys(data)
+            ],
+        },
+    )
+}

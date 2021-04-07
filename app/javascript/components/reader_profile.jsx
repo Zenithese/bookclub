@@ -3,37 +3,32 @@ import { connect } from 'react-redux';
 import { fetchReadersHighlights } from '../actions/highlights_actions'
 import { fetchFollows, createFollow, deleteFollow } from '../actions/follows_actions'
 import HighlightsList from './highlights_list'
+import { fetchReader } from '../actions/readers_actions';
 
 
 const mapStateToProps = ({ entities }, ownProps) => {
     return {
-        highlights: entities.highlights,
         readerId: ownProps.match.params.id,
         follows: entities.follows,
+        reader: entities.reader,
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchReadersHighlights: (id) => dispatch(fetchReadersHighlights(id)), // without bookId
         fetchFollows: () => dispatch(fetchFollows()),
         createFollow: (id) => dispatch(createFollow(id)),
         deleteFollow: (id) => dispatch(deleteFollow(id)),
+        fetchReader: (id) => dispatch(fetchReader(id)),
     }
 }
 
-function ReaderProfile({ readerId, fetchReadersHighlights, fetchFollows, createFollow, deleteFollow, follows }) {
+function ReaderProfile({ readerId, fetchFollows, createFollow, deleteFollow, follows, fetchReader, reader }) {
 
     useEffect(() => {
         fetchFollows()
-        fetchReadersHighlights(readerId)
+        fetchReader(readerId)
     }, [])
-
-    // useEffect(() => {
-    //     if (follows) {
-
-    //     }
-    // }, [follows])
 
     const handleClick = () => {
         if (follows[readerId]) {
@@ -46,15 +41,12 @@ function ReaderProfile({ readerId, fetchReadersHighlights, fetchFollows, createF
     return (
         <div>
             <img className="reader-img" src="/default-profile-img.jpeg" alt="" />
+            <h1>{reader.username}</h1>
             <button onClick={handleClick} >{follows[readerId] ? "Unfollow" : "Follow"}</button>
             <br />
-            <div style={{display: "flex", justifyContent: "space-evenly"}}>
-                <div>Highlights</div>
-                <div>Reading</div>
-                <div>Reading</div>
-            </div>
             <br />
             <HighlightsList readerId={readerId}/>
+            <br />
         </div>
     )
 }

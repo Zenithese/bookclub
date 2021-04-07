@@ -6,6 +6,7 @@ import books from './books_reducer'
 import settings from './setting_reducer'
 import comments from './comments_reducer'
 import readers from './readers_reducer'
+import reader from './reader_reducer'
 import follows from './follows_reducer'
 
 
@@ -17,5 +18,6 @@ export default combineReducers({
     settings,
     comments,
     readers,
+    reader,
     follows,
 });

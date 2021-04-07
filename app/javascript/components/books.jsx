@@ -5,7 +5,7 @@ import { fetchBooks, createBook } from '../actions/books_actions'
 
 const mapStateToProps = ({ entities }) => {
     return {
-        books: entities.books
+        books: Object.values(entities.books)
     }
 }
 

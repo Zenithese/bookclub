@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { createComment, fetchComments } from '../actions/comments_actions'
 import { fetchReadersHighlights } from '../actions/highlights_actions'
 import Comment from './comments'
+import Highlight from './highlight'
 
 
 
@@ -11,6 +12,7 @@ const mapStateToProps = ({ entities, session }) => {
         highlights: entities.highlights,
         userId: Number(session.id),
         comments: entities.comments,
+        books: entities.books
     }
 }
 
@@ -23,7 +25,7 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-function HighlightsList({ highlights, userId, comments, fetchComments, fetchReadersHighlights, readerId, createComment }) {
+function HighlightsList({ highlights, userId, comments, fetchComments, fetchReadersHighlights, readerId, createComment, books }) {
 
     const [visibleForms, setVisibleForms] = useState(new Set())
     const [body, setBody] = useState("")
@@ -81,18 +83,9 @@ function HighlightsList({ highlights, userId, comments, fetchComments, fetchRead
     }
 
     const list = highlights.length ? (
-        highlights.map(({ id, text, cfiRange, comments }, i) => {
+        highlights.map(({ id, text, cfiRange, comments, bookId }, i) => {
             return (
-                <div className="annotation" key={i}>
-                    <a href={`#${cfiRange}`} onClick={() => { rendition.display(cfiRange) }}>Go to:</a>
-                    <br />
-                    <div className="quote">
-                        <span className="text">{text}</span>
-                    </div>
-                    <hr />
-                    {commentThread(comments, id)}
-                    <a href={`#${cfiRange}`} onClick={() => { console.log(rendition.annotations); rendition.annotations.remove(cfiRange, "highlight"); console.log(id); deleteHighlight(id) }}>remove</a>
-                </div>
+                <Highlight id={id} text={text} cfiRange={cfiRange} comments={comments} bookId={bookId} i={i} commentThread={commentThread} books={books} />
             )
         })
     ) : (
@@ -100,9 +93,9 @@ function HighlightsList({ highlights, userId, comments, fetchComments, fetchRead
     )
 
     return (
-        <ul>
+        <div className="profile-highlights">
             {list}
-        </ul>
+        </div>
     )
 }
 

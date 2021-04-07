@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   root 'events#index'
 
   namespace :api, defaults: {format: :json} do
-    resources :users, only: [:create, :update, :index]
+    resources :users, only: [:create, :update, :index, :show]
     resource :session, only: [:create, :destroy, :show]
     resources :books, only: [:create, :destroy, :update, :show, :index]
     resources :follows, only: [:index, :create, :destroy]
