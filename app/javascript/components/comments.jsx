@@ -20,15 +20,11 @@ function Comment({ comment, createComment, fetchComments, userId, comments }) {
 
     const [visible, setVisible] = useState(false)
     const [body, setBody] = useState("")
-    const [displayReplies, setDisplayReplies] = useState(false)
-
-    // useEffect(() => {
-    //     fetchComments();
-    // }, [fetchComments])
+    const [displayReplies, setDisplayReplies] = useState(true)
 
     const nestedComments = (comment.comments || []).map(comment => {
         return <Comment key={comment.id} comment={comment} createComment={createComment} userId={userId} fetchComments={fetchComments} comments={comments} />
-    }) // Thank you Nick @CoderRocketFuel for the recursive functional component lesson!
+    }) // @CoderRocketFuel
 
     const handleSubmit = (e, id) => {
         debugger
@@ -44,11 +40,12 @@ function Comment({ comment, createComment, fetchComments, userId, comments }) {
 
     return (
         <div className="comments">
-            <div onClick={() => setDisplayReplies(!displayReplies)} style={{fontWeight: "bold"}}>{comment.username}</div>
-            
+            <div className="comment-img-username-container">
+                <img className="comment-reader-img" src="/default-profile-img.jpeg" alt="" />
+                <div onClick={() => setDisplayReplies(!displayReplies)} className="comment-username">{comment.username}</div>
+            </div>
             <div className="comment" key={comment.id} style={{display: displayReplies ? "block" : "none"}}>
                 <div className="comment-border" />
-                <br />
                 <div>{comment.body}</div>
                 <br />
                 <button onClick={() => setVisible(!visible)} style={!visible ? { display: "block" } : { display: "none" }}>reply</button>
