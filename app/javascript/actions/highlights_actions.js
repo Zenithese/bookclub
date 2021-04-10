@@ -4,6 +4,7 @@ export const RECEIVE_HIGHLIGHT = "RECEIVE_HIGHLIGHT"
 export const RECEIVE_HIGHLIGHTS = "RECEIVE_HIGHLIGHTS"
 export const REMOVE_HIGHLIGHT = "REMOVE_HIGHLIGHT"
 export const RECEIVE_READERS_HIGHLIGHTS = "RECEIVE_READERS_HIGHLIGHTS"
+export const REMOVE_HIGHLIGHTS = "REMOVE_HIGHLIGHTS"
 
 const receiveHighlight = (highlight) => {
     return {
@@ -33,6 +34,12 @@ const receiveReadersHighlights = (highlights) => {
     }
 }
 
+const removeHighlights = () => {
+    return {
+        type: REMOVE_HIGHLIGHTS,
+    }
+}
+
 export const createHighlight = (highlight) => dispatch => {
     return APIUtil.createHighlight(highlight).then(highlight => 
         dispatch(receiveHighlight(highlight.data))
@@ -59,3 +66,7 @@ export const fetchReadersHighlights = (id, bookId) => dispatch => {
         dispatch(receiveReadersHighlights(response.data))
     )
 };
+
+export const clearHighlights = () => dispatch => {
+    return dispatch(removeHighlights())
+}

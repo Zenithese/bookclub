@@ -16,7 +16,7 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-function ReaderList({ fetchReaders, readers }) {
+function ReaderList({ fetchReaders, readers, bookId }) {
 
     useEffect(() => {
         fetchReaders()
@@ -26,7 +26,7 @@ function ReaderList({ fetchReaders, readers }) {
         <div>
             {readers.map((reader, i) => {
                 return (
-                    <ReaderListNode username={reader.username} id={reader.id} key={i}/>
+                    <ReaderListNode username={reader.username} id={reader.id} key={i} bookId={bookId} />
                     // <Link className="reader-link" to={`link`} >
                     //     <Reader username={reader.username} />
                     // </Link>

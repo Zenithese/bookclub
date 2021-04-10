@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { connect } from 'react-redux';
 import { createComment, fetchComments } from '../actions/comments_actions'
-import { fetchReadersHighlights } from '../actions/highlights_actions'
+import { fetchReadersHighlights, clearHighlights } from '../actions/highlights_actions'
 import Comment from './comments'
 import Highlight from './highlight'
 
@@ -19,19 +19,23 @@ const mapStateToProps = ({ entities, session }) => {
 const mapDispatchToProps = dispatch => {
     return {
         createComment: (comment) => dispatch(createComment(comment)),
-        // fetchHighlights: () => dispatch(fetchHighlights()),
         fetchComments: () => dispatch(fetchComments()),
         fetchReadersHighlights: (id) => dispatch(fetchReadersHighlights(id)),
+        clearHighlights: () => dispatch(clearHighlights()),
     }
 }
 
-function HighlightsList({ highlights, userId, comments, fetchComments, fetchReadersHighlights, readerId, createComment, books }) {
+function HighlightsList({ highlights, userId, comments, fetchComments, fetchReadersHighlights, readerId, createComment, books, clearHighlights }) {
 
     const [visibleForms, setVisibleForms] = useState(new Set())
     const [body, setBody] = useState("")
 
     useEffect(() => {
         fetchComments();
+
+        return () => {
+            clearHighlights()
+        }
     }, [fetchComments])
 
     useEffect(() => {
@@ -72,7 +76,7 @@ function HighlightsList({ highlights, userId, comments, fetchComments, fetchRead
                         <label>thought:</label>
                         <input type="body" value={body} onChange={(e) => setBody(e.target.value)} />
                     </form>
-                    {thread.map(comment => {
+                    {thread.map((comment) => {
                         return (
                             <Comment key={comment.id} comment={comment} />
                         )

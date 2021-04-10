@@ -2,9 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { fetchReadersHighlights } from '../actions/highlights_actions'
 
-const mapStateToProps = ({ entities }) => {
+const mapStateToProps = ({ entities, session }) => {
     return {
-        bookId: entities.books.book ? entities.books.book.id : null,
+        highlights: entities.highlights,
+        rendition: entities.rendition.rendition,
     }
 }
 
@@ -15,9 +16,10 @@ const mapDispatchToProps = dispatch => {
 }
 
 
-function ReaderListNode({ username, id, bookId, fetchReadersHighlights }) {
+function ReaderListNode({ username, id, bookId, fetchReadersHighlights, highlights, rendition }) {
 
     const handleClick = () => {
+        highlights.forEach(highlight => rendition.annotations.remove(highlight.cfiRange, "highlight"))
         fetchReadersHighlights(id, bookId)
     }
     

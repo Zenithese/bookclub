@@ -5,6 +5,7 @@ import { createHighlight } from '../actions/highlights_actions'
 import { createRendition } from '../actions/rendition_actions'
 import { updateBook } from '../actions/books_actions'
 import { darkTheme, lightTheme } from '../assests/ereader_styles'
+import Highlights from './highlights_new'
 
 const storage = global.localStorage || null;
 
@@ -21,6 +22,7 @@ const mapStateToProps = ({ entities }, ownProps) => {
         book: entities.books[ownProps.match.params.book],
         theme: entities.settings.settings ? entities.settings.settings.theme : "light",
         userId: Object.keys(entities.users)[0],
+        bookId: ownProps.match.params.book,
         highlights: entities.highlights,
     }
 }
@@ -36,8 +38,8 @@ class Ereader extends Component {
             x: 0,
             y: 0,
             cfiRange: null,
-            el: null,
-            lastEffectiveEvent: null
+            displayingTooltip: false,
+            el: null
         };
         this.rendition = null;
         this.handleHighlight = this.handleHighlight.bind(this)
@@ -61,7 +63,7 @@ class Ereader extends Component {
 
                 createHighlight(highlight)
 
-                _this.setState({visible: false})
+                _this.setState({ visible: false })
             }
         })
     }
@@ -73,50 +75,28 @@ class Ereader extends Component {
         const _this = this
 
         rendition.on("selected", function (cfiRange, contents) {
-            console.log("selected")
             let className = `${cfiRange}-${Math.random()}`
             rendition.annotations.remove(cfiRange, "highlight");
             rendition.annotations.highlight(cfiRange, {}, null, className, { "fill": "transparent" });
-
-            if (_this.state.lastEffectiveEvent == "mouseup") {
-                const el = document.getElementsByClassName(className)[0].firstElementChild.getBoundingClientRect()
-                _this.setState({
-                    visible: true,
-                    x: el.x + ((el.width / 2) - 35),
-                    y: el.y - 20
-                })
-            } else {
-                _this.setState({ cfiRange: cfiRange, lastEffectiveEvent: "selected", el: document.getElementsByClassName(className)[0] })
-            }
-
+            _this.state.el = document.getElementsByClassName(className)[0]
+            _this.setState({ cfiRange: cfiRange, displayingTooltip: true })
         });
 
-        
+
         rendition.on("mousedown", function (event) {
-            _this.setState({ visible: false, x: event.clientX, y: event.clientY, lastEffectiveEvent: "mousedown"})
+            _this.setState({ visible: false, x: event.clientX, y: event.clientY })
         })
 
         rendition.on("mouseup", function (event) {
-            if (_this.state.lastEffectiveEvent == "selected") {
-                console.log("up")
+            if (_this.state.displayingTooltip) {
                 if (event.clientX < _this.state.x) {
-                    const el = _this.state.el.firstElementChild.getBoundingClientRect()
-                    _this.setState({ 
-                        visible: true, 
-                        x: el.x - 35,
-                        y: el.y - 20
-                    }) // lifting at left side of selection
+                    _this.setState({ visible: true, x: event.clientX + 20, y: _this.state.el.firstElementChild.y.animVal.value + 30 })
                 } else {
-                    const el = _this.state.el.lastElementChild.getBoundingClientRect()
-                    _this.setState({ 
-                        visible: true, 
-                        x: el.x + el.width - 35, 
-                        y: el.y + 20 
-                    }) // lifting at right side of selection
+                    _this.setState({ visible: true, x: event.clientX + 20, y: _this.state.el.lastElementChild.y.animVal.value + 65 })
                 }
             }
 
-            _this.setState({ el: null, lastEffectiveEvent: "mouseup" })
+            _this.setState({ displayingTooltip: false })
         })
 
     }
@@ -147,8 +127,10 @@ class Ereader extends Component {
                     styles={this.props.theme === "dark" ? darkTheme : lightTheme}
                 />
 
-                { this.state.visible ? <div className="tooltip" style={{ position: "absolute", left: `${this.state.x}px`, top: `${this.state.y}px`, backgroundColor: "red", zIndex: "1" }}><span className="popuptext" onClick={ () => this.handleHighlight() }>Highlight!</span></div> : null }
+                { this.state.visible ? <div className="tooltip" style={{ position: "absolute", left: `${this.state.x}px`, top: `${this.state.y}px`, backgroundColor: "red", zIndex: "1" }}><span className="popuptext" onClick={() => this.handleHighlight()}>Highlight!</span></div> : null}
 
+                <Highlights rendition={this.rendition} userId={this.props.userId} bookId={this.props.bookId}/>
+                
             </div>
         );
     }

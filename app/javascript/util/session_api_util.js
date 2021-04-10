@@ -13,10 +13,6 @@ export const getCurrentUser = () => {
     return axios.get('/api/session', 
         {
             withCredentials: true,
-            transformResponse: [
-                ...axios.defaults.transformResponse,
-                data => humps.camelizeKeys(data)
-            ],
         },
     )
 }

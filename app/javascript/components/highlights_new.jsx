@@ -3,56 +3,49 @@ import { connect } from 'react-redux';
 import { deleteHighlight, fetchReadersHighlights } from '../actions/highlights_actions'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye } from '@fortawesome/free-solid-svg-icons'
-import { fetchRendition } from '../actions/rendition_actions'
 import { updateSettings } from '../actions/settings_actions'
 import ReaderList from './reader_list'
 import Settings from './settings'
 import HighlightList from './highlight_list_old_copy'
 
 
-const mapStateToProps = ({ entities, session }, ownProps) => {
+const mapStateToProps = ({ entities, session }) => {
     return {
         highlights: entities.highlights,
-        comments: entities.comments,
         rendition: entities.rendition.rendition,
         _fontSize: entities.users[session.id].font_size,
         highlightColor: entities.users[session.id].highlight_color,
         _theme: entities.users[session.id].theme,
         id: session.id,
-        bookId: ownProps.match.params.book,
-        userId: Number(session.id),
-        reader: entities.reader
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
         deleteHighlight: (id) => dispatch(deleteHighlight(id)),
-        fetchRendition: () => dispatch(fetchRendition()),
         updateSettings: (id, color, fontSize, theme) => dispatch(updateSettings(id, color, fontSize, theme)),
         fetchReadersHighlights: (userId, bookId) => dispatch(fetchReadersHighlights(userId, bookId)),
     }
 }
 
 
-function Highlights({ id, highlights, _fontSize, highlightColor, _theme, fetchComments, deleteHighlight, rendition, fetchRendition, updateSettings, bookId, createComment, userId, comments, fetchReadersHighlights, reader }) {
+function Highlights({ id, highlights, _fontSize, highlightColor, _theme, fetchComments, deleteHighlight, rendition, updateSettings, bookId, userId}) {
     const [color, setColor] = useState(highlightColor)
     const [toggle, setToggle] = useState(false)
-    const [visible, setVisible] = useState(false)
+    const [visible, setVisible] = useState(true)
     const [settings, setSettings] = useState(false)
     const [fontSize, setFontSize] = useState(Number(_fontSize))
     const [theme, setTheme] = useState(_theme)
+    const [highlightsLength, setHighlightsLength] = useState(Infinity)
 
     useEffect(() => {
         updateSettings(id, color, fontSize, theme);
     }, [updateSettings, id, color, fontSize, theme])
 
     useEffect(() => {
-        if (rendition) {
-            highlights.forEach(highlight => {
-                const { cfiRange } = highlight;
-                updateHighlight(cfiRange)
-            });
+        if (rendition && highlights.length > highlightsLength) {
+            const { cfiRange } = highlights[highlights.length - 1];
+            updateHighlight(cfiRange)
         }
     }, [highlights])
 
@@ -62,13 +55,14 @@ function Highlights({ id, highlights, _fontSize, highlightColor, _theme, fetchCo
     }, [fontSize])
 
     useEffect(() => {
-        fetchRendition()
-
         if (rendition) {
             rendition.themes.default({ 'body': { 'color': theme === "dark" ? "#999" : "black", }, });
             rendition.themes.fontSize(String(_fontSize) + "%");
+            setTimeout(() => {
+                toggleHighlights()
+                setHighlightsLength(highlights.length)
+            }, 1000)
         };
-
     }, [rendition])
 
     const updateHighlight = (cfiRange, updateHighlightToggle = false, c = color) => {
@@ -103,28 +97,29 @@ function Highlights({ id, highlights, _fontSize, highlightColor, _theme, fetchCo
         <div className={toggle ? "" : "annotations-container"}>
 
             <div className={toggle ? settings ? "annotations-closed-for-settings" : "annotations-opened" : settings ? "annotations-closed-for-settings-opened" : "annotations-closed"} >
-                <div className="annotations-buttons" onClick={() => { setToggle(!toggle); if (settings && !toggle) {setSettings(!settings)} }}>
+                <div className="annotations-buttons" onClick={() => { setToggle(!toggle); if (settings && !toggle) { setSettings(!settings) } }}>
                     <div>{toggle ? "close" : "open"}</div>
                     <br />
                 </div>
-                <ReaderList bookId={bookId} />
+                <ReaderList />
                 <HighlightList
                     toggle={toggle}
                     userId={userId}
                     bookId={bookId}
+                    rendition={rendition}
                 />
             </div>
 
             <div className={toggle ? settings ? "toggle-button-closed-for-settings" : "toggle-button-opened" : settings ? "toggle-button-closed-for-settings" : "toggle-button"} onClick={() => { toggleHighlights() }}><FontAwesomeIcon icon={faEye} /></div>
 
-            <Settings 
-                settings={settings} 
-                setSettings={setSettings} 
-                toggle={toggle} 
-                fontSize={fontSize} 
-                theme={theme} 
-                setHighlightsColor={setHighlightsColor} 
-                setFontSize={setFontSize} 
+            <Settings
+                settings={settings}
+                setSettings={setSettings}
+                toggle={toggle}
+                fontSize={fontSize}
+                theme={theme}
+                setHighlightsColor={setHighlightsColor}
+                setFontSize={setFontSize}
                 setThemeColor={setThemeColor}
             />
 

@@ -22,12 +22,11 @@ function Comment({ comment, createComment, fetchComments, userId, comments }) {
     const [body, setBody] = useState("")
     const [displayReplies, setDisplayReplies] = useState(true)
 
-    const nestedComments = (comment.comments || []).map(comment => {
+    const nestedComments = (comment.comments || []).map((comment) => {
         return <Comment key={comment.id} comment={comment} createComment={createComment} userId={userId} fetchComments={fetchComments} comments={comments} />
     }) // @CoderRocketFuel
 
     const handleSubmit = (e, id) => {
-        debugger
         e.preventDefault();
         if (!body.length) return;
         const comment = {

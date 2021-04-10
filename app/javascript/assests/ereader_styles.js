@@ -1,7 +1,7 @@
 export const darkTheme = {
   container: {
     overflow: "hidden",
-    height: "100%",
+    height: "100%"
   },
   readerArea: {
     position: "relative",
@@ -9,9 +9,9 @@ export const darkTheme = {
     height: "100%",
     width: "100%",
     backgroundColor: "rgb(41, 40, 40)",
-    transition: "all .3s ease",
+    transition: "all .3s ease"
   },
-  containerExpaned: {
+  containerExpanded: {
     transform: "translateX(256px)"
   },
   titleArea: {
@@ -27,8 +27,7 @@ export const darkTheme = {
     top: 50,
     left: 50,
     bottom: 20,
-    right: 50,
-    color: "red"
+    right: 50
   },
   swipeWrapper: {
     position: "absolute",
@@ -53,7 +52,7 @@ export const darkTheme = {
     marginTop: -32,
     fontSize: 64,
     padding: "0 10px",
-    color: "#E2E2E2",
+    color: "rgb(153 153 153)",
     fontFamily: "arial, sans-serif",
     cursor: "pointer",
     userSelect: "none",
@@ -80,7 +79,7 @@ export const darkTheme = {
     width: 256,
     overflowY: "auto",
     WebkitOverflowScrolling: "touch",
-    background: "#f2f2f2",
+    background: "#333",
     padding: "10px 0"
   },
   tocAreaButton: {
@@ -94,7 +93,7 @@ export const darkTheme = {
     fontSize: ".9em",
     textAlign: "left",
     padding: ".9em 1em",
-    borderBottom: "1px solid #ddd",
+    borderBottom: "1px solid rgb(153 153 153)",
     color: "#aaa",
     boxSizing: "border-box",
     outline: "none",
@@ -109,10 +108,11 @@ export const darkTheme = {
     top: 10,
     left: 10,
     borderRadius: 2,
-    outline: "none"
+    outline: "none",
+    cursor: "pointer"
   },
-  tocButtonExpaned: {
-    background: "#f2f2f2"
+  tocButtonExpanded: {
+    background: "rgb(41, 40, 40)"
   },
   tocButtonBar: {
     position: "absolute",
@@ -154,7 +154,7 @@ export const lightTheme = {
     backgroundColor: "#fff",
     transition: "all .3s ease"
   },
-  containerExpaned: {
+  containerExpanded: {
     transform: "translateX(256px)"
   },
   titleArea: {
@@ -251,9 +251,10 @@ export const lightTheme = {
     top: 10,
     left: 10,
     borderRadius: 2,
-    outline: "none"
+    outline: "none",
+    cursor: "pointer"
   },
-  tocButtonExpaned: {
+  tocButtonExpanded: {
     background: "#f2f2f2"
   },
   tocButtonBar: {
