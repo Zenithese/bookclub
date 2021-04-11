@@ -36,7 +36,7 @@ const mapDispatchToProps = dispatch => {
 }
 
 
-function Highlights({ id, highlights, _fontSize, highlightColor, _theme, fetchComments, deleteHighlight, rendition, fetchRendition, updateSettings, bookId, createComment, userId, comments, fetchReadersHighlights, reader, book }) {
+function Highlights({ id, highlights, _fontSize, highlightColor, _theme, deleteHighlight, rendition, fetchRendition, updateSettings, bookId, userId, book }) {
     const [color, setColor] = useState(highlightColor)
     const [toggle, setToggle] = useState(false)
     const [visible, setVisible] = useState(false)
