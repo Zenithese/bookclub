@@ -1,3 +1,20 @@
+.community {
+ margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+  width: 80%;
+}
+
+.reader-container {
+    transition: 0.3s;
+    height: 300px;
+    min-width: 250px;
+    min-height: 295px;
+    margin-top: 2%;
+    text-decoration: none;
+    color: antiquewhite;
+}
+
 .reader-img {
     width: 200px;
     height: 200px;

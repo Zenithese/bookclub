@@ -3,6 +3,7 @@ import highlights from './highlights_reducer'
 import rendition from './rendition_reducer'
 import users from './users_reducer'
 import books from './books_reducer'
+import book from './book_reducer'
 import settings from './setting_reducer'
 import comments from './comments_reducer'
 import readers from './readers_reducer'
@@ -15,6 +16,7 @@ export default combineReducers({
     rendition,
     users,
     books,
+    book,
     settings,
     comments,
     readers,

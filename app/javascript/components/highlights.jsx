@@ -21,7 +21,8 @@ const mapStateToProps = ({ entities, session }, ownProps) => {
         id: session.id,
         bookId: ownProps.match.params.book,
         userId: Number(session.id),
-        reader: entities.reader
+        reader: entities.reader,
+        book: entities.book
     }
 }
 
@@ -35,7 +36,7 @@ const mapDispatchToProps = dispatch => {
 }
 
 
-function Highlights({ id, highlights, _fontSize, highlightColor, _theme, fetchComments, deleteHighlight, rendition, fetchRendition, updateSettings, bookId, createComment, userId, comments, fetchReadersHighlights, reader }) {
+function Highlights({ id, highlights, _fontSize, highlightColor, _theme, fetchComments, deleteHighlight, rendition, fetchRendition, updateSettings, bookId, createComment, userId, comments, fetchReadersHighlights, reader, book }) {
     const [color, setColor] = useState(highlightColor)
     const [toggle, setToggle] = useState(false)
     const [visible, setVisible] = useState(false)
@@ -54,7 +55,7 @@ function Highlights({ id, highlights, _fontSize, highlightColor, _theme, fetchCo
                 updateHighlight(cfiRange)
             });
         }
-    }, [highlights])
+    }, [highlights, book])
 
     useEffect(() => {
         if (rendition) rendition.themes.fontSize(String(fontSize) + "%")
