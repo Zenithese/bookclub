@@ -6,6 +6,12 @@ function SessionForm(props) {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
 
+    const demo = () => {
+        setUsername("Justin")
+        setEmail("Justin")
+        setPassword("password")
+    }
+
     const update = (field) => {
         return e => {
             if (field === 'username or email') {
@@ -33,6 +39,7 @@ function SessionForm(props) {
 
     let appropriateCredentials = props.formType === 'login' ? (
         <div>
+            <button onClick={demo}>Demo</button>
             <label></label>
             <input type="text" value={username} onChange={update('username or email')} placeholder="Username or email"/>
         </div>
@@ -57,7 +64,7 @@ function SessionForm(props) {
                     <label></label>
                     <input type="password" value={password} onChange={update('password')} placeholder="Password" />
                 </div>
-                <input className="btn waves-effect waves-light" type="submit" value={props.formType} />
+                <input type="submit" value={props.formType} />
                 <br />
                 {props.otherForm}
             </form>

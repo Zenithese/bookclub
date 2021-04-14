@@ -1,16 +1,16 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux';
-import { fetchReadersHighlights } from '../actions/highlights_actions'
 import { fetchFollows, createFollow, deleteFollow } from '../actions/follows_actions'
 import HighlightsList from './highlights_list'
 import { fetchReader } from '../actions/readers_actions';
 
 
-const mapStateToProps = ({ entities }, ownProps) => {
+const mapStateToProps = ({ entities, session }, ownProps) => {
     return {
         readerId: ownProps.match.params.id,
         follows: entities.follows,
         reader: entities.reader,
+        currentUserId: session.id,
     }
 }
 
@@ -23,7 +23,7 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-function ReaderProfile({ readerId, fetchFollows, createFollow, deleteFollow, follows, fetchReader, reader }) {
+function ReaderProfile({ readerId, fetchFollows, createFollow, deleteFollow, follows, fetchReader, reader, currentUserId }) {
 
     useEffect(() => {
         fetchFollows()
@@ -40,9 +40,15 @@ function ReaderProfile({ readerId, fetchFollows, createFollow, deleteFollow, fol
 
     return (
         <div>
-            <img className="reader-img" src="/default-profile-img.jpeg" alt="" />
-            <h1>{reader.username}</h1>
-            <button onClick={handleClick} >{follows[readerId] ? "Unfollow" : "Follow"}</button>
+            <div className="reader-container" >
+                <img className="reader-img" src="/default-profile-img.jpeg" alt="" />
+                <h1>{reader.username}</h1>
+            </div>
+            {currentUserId != reader.id && 
+                <button onClick={handleClick} >
+                    {follows[readerId] ? "Unfollow" : "Follow"}
+                </button>
+            }
             <br />
             <br />
             <HighlightsList readerId={readerId}/>

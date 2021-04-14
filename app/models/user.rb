@@ -23,6 +23,8 @@ class User < ApplicationRecord
     has_many :readings, class_name: :Reading
     has_many :books, through: :readings
 
+    has_many :notifications, foreign_key: :recipient_id
+
     # follows ######################################
     def follows?(id)
         follows.include?(User.find(id))

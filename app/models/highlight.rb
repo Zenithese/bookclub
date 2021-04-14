@@ -10,4 +10,6 @@ class Highlight < ApplicationRecord
         class_name: :Book
 
     has_many :comments, as: :commentable
+
+    has_many :users, {:through=>:comments, :source=>"user"}
 end

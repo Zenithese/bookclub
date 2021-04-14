@@ -1,8 +1,8 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useRef } from 'react';
 import { connect } from 'react-redux';
 import { debounce } from 'lodash';
 import { searchBooks } from '../actions/books_actions'
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 const mapDispatchToProps = dispatch => {
     return {
@@ -11,6 +11,12 @@ const mapDispatchToProps = dispatch => {
 };
 
 function Search({ searchBooks }) {
+
+    const ref = useRef(null)
+
+    const handleClick = () => {
+        ref.current.focus()
+    }
 
     const handleChange = (e) => {
         delayedQuery(e.target.value);
@@ -23,13 +29,13 @@ function Search({ searchBooks }) {
 
      return (
          <div className="search-container">
-            <Link className="reader-link" to={`/search/readers`} >
-                 <button>Readers</button>
-            </Link>
-            <Link className="reader-link" to={`/search/books`} >
-                 <button>Books</button>
-            </Link>
-            <input className="search" onChange={handleChange}></input>
+             <NavLink className="reader-link" to={`/search/books`} onClick={handleClick}>
+                Books
+            </NavLink>
+             <NavLink className="reader-link" to={`/search/readers`} onClick={handleClick}>
+                Readers
+            </NavLink>
+            <input ref={ref} className="search" onChange={handleChange}></input>
          </div>
      )
 }

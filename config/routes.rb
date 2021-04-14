@@ -13,6 +13,11 @@ Rails.application.routes.draw do
     resources :comments do
       resources :comments, module: :comments
     end
+    resources :notifications, only: [:index, :update] do
+      collection do
+        post :mark_as_read
+      end
+    end
     get :highlights_search, to: 'highlights#search'
     get :books_search, to: 'books#search'
     get :user_books, to: 'books#readings'

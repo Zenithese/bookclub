@@ -11,16 +11,31 @@
 }
 
 .search {
-    height: 30px;
+    height: 22px;
     width: 220px;
     font-size: large;
+    background-color: antiquewhite;
+    border: 1px solid darkgray;
+    outline: none;
 }
 
 .search-container {
-    margin: 0;
-    position: absolute;
+    position: relative;
     top: 50%;
-    right: 20px;
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
+    float: left;
+    margin-left: 5px;
+}
+
+.reader-link {
+    text-decoration: none;
+    color: black;
+    margin-right: 5px;
+}
+
+.reader-link.active {
+    text-decoration: underline;
+    text-decoration-thickness: 3px;
+    text-decoration-color: antiquewhite;
 }

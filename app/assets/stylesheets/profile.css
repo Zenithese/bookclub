@@ -16,7 +16,7 @@
   min-width: 180px;
   border: solid 2px tan;
   background-color: silver;
-  overflow-y: scroll;
+  overflow-y: auto;
   position: relative;
 }
 

@@ -9,6 +9,7 @@ import comments from './comments_reducer'
 import readers from './readers_reducer'
 import reader from './reader_reducer'
 import follows from './follows_reducer'
+import notifications from './notifications_reducer'
 
 
 export default combineReducers({
@@ -22,4 +23,5 @@ export default combineReducers({
     readers,
     reader,
     follows,
+    notifications,
 });

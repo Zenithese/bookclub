@@ -1,4 +1,4 @@
-class Api::Highlights::CommentsController < Api::CommentsController
+class Api::Highlights::CommentsController < Api::Highlights::NotificationsController
     before_action :set_commentable
 
     private

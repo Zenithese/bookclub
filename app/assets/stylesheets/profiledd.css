@@ -1,0 +1,79 @@
+.profile-dd-container {
+    position: relative;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    float: right;
+    margin-right: 20px;
+    outline: none;
+}
+
+.profile-dd-img {
+    height: 41px;
+    width: 41px;
+    border-radius: 100px;
+    outline: none;
+}
+
+.profile-link {
+    text-decoration: none;
+    color: black;
+}
+
+.drop-down-container {
+    position: absolute;
+    right: -5px;
+}
+
+.drop-down-username {
+    font-size: 19px;
+    font-weight: bold;
+    text-align: left;
+    padding-right: 10px;
+}
+
+.drop-down-arrow-container {
+    height: 5px;
+    width: auto;
+}
+
+.drop-down-arrow {
+    width: 0; 
+    height: 0; 
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 5px solid antiquewhite;
+    float: right;
+    margin-right: 21px;
+}
+
+.drop-down-contents {
+    background: antiquewhite;
+    min-width: 107px;
+    padding: 0px;
+    margin: 0px;
+    padding-left: 10px;
+    padding-bottom: 7px;
+    padding-top: 3px;
+    border-radius: 1px;
+}
+
+.drop-down-content {
+    text-decoration: none;
+    color: black;
+}
+
+.drop-down-content:hover {
+    cursor: pointer;
+}
+
+.inner-contents-container {
+    margin-top: 5px;
+    text-align: left;
+}
+
+.drop-down-hr {
+    margin: 0px;
+    position: absolute;
+    width: 95px;
+}

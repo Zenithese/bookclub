@@ -1,0 +1,86 @@
+.notification-button {
+    width: 31px;
+    height: 31px;
+    border-radius: 100px;
+    background-color: green;
+    outline: none;
+}
+
+.notifications-dd-container {
+    position: relative;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    float: right;
+    margin-right: 20px;
+    outline: none;
+}
+
+.profile-link {
+    text-decoration: none;
+    color: black;
+}
+
+.notifications-drop-down-container {
+    position: absolute;
+    right: -5px;
+    margin-top: 2px;
+}
+
+.drop-down-username {
+    font-size: 19px;
+    font-weight: bold;
+    text-align: left;
+    padding-right: 10px;
+}
+
+.drop-down-arrow-container {
+    height: 5px;
+    width: auto;
+}
+
+.notifications-drop-down-arrow {
+    width: 0; 
+    height: 0; 
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 5px solid antiquewhite;
+    float: right;
+    margin-right: 15px;
+}
+
+.drop-down-contents {
+    background: antiquewhite;
+    min-width: 107px;
+    padding: 0px;
+    margin: 0px;
+    padding-left: 10px;
+    padding-bottom: 7px;
+    padding-top: 3px;
+    border-radius: 1px;
+}
+
+.drop-down-content:hover {
+    cursor: pointer;
+}
+
+.inner-contents-container {
+    margin-top: 5px;
+    text-align: left;
+}
+
+.drop-down-hr {
+    margin: 0px;
+    position: absolute;
+    width: 95px;
+}
+
+.notifications-red-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 100px;
+    background-color: red;
+    position: absolute;
+    right: 1px;
+    bottom: 0px;
+}
