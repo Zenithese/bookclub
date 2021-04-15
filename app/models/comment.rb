@@ -4,6 +4,10 @@ class Comment < ApplicationRecord
         foreign_key: :user_id,
         class_name: :User
     has_many :comments, as: :commentable
-    has_many :users, through: :comments
-    # belongs_to :comment, -> { where(commentable_type: 'Comment') }, foreign_key: :commentable_id
+    has_many :users, {:through=>:comments, :source=>"user"}
+    has_many :likes, as: :likeable
+
+    def likes_array
+        likes.map { |like| like.user.username }
+    end
 end

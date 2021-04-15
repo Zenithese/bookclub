@@ -2,7 +2,19 @@ class Api::NotificationsController < ApplicationController
     skip_before_action :verify_authenticity_token
 
     def index
-        @notifications = Notification.where(recipient: current_user).unread
+        @notifications = Notification.where(recipient: current_user).order(:created_at)
+        # + Notification.where(recipient: current_user).read
+    end
+
+    def mark_as_seen
+        @notifications = Notification.where(recipient: current_user).unseen
+        @notifications.update_all(seen: DateTime.now)
+        render json: { count: 0 }
+    end
+
+    def not_seen
+        @count = Notification.where(recipient: current_user).unseen.length
+        render json: { count: @count }
     end
 
     def update

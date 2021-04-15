@@ -12,4 +12,6 @@ class Highlight < ApplicationRecord
     has_many :comments, as: :commentable
 
     has_many :users, {:through=>:comments, :source=>"user"}
+
+    has_many :likes, as: :likeable
 end

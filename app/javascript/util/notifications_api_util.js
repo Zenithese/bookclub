@@ -12,8 +12,8 @@ export const fetchNotifications = () => {
     )
 };
 
-export const updateNotifications = () => {
-    return axios.post('api/notifications/mark_as_read',
+export const updateSeenNotifications = () => {
+    return axios.post('api/notifications/mark_as_seen',
         {
             transformResponse: [
                 ...axios.defaults.transformResponse,
@@ -25,6 +25,17 @@ export const updateNotifications = () => {
 
 export const updateNotification = (id) => {
     return axios.patch(`api/notifications/${id}`,
+        {
+            transformResponse: [
+                ...axios.defaults.transformResponse,
+                data => humps.camelizeKeys(data)
+            ],
+        }
+    )
+};
+
+export const fetchUnseenNotificationCount = () => {
+    return axios.get(`/api/notifications/not_seen`,
         {
             transformResponse: [
                 ...axios.defaults.transformResponse,

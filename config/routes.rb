@@ -15,7 +15,8 @@ Rails.application.routes.draw do
     end
     resources :notifications, only: [:index, :update] do
       collection do
-        post :mark_as_read
+        post :mark_as_seen
+        get :not_seen
       end
     end
     get :highlights_search, to: 'highlights#search'

@@ -4,6 +4,6 @@ json.array! @notifications do |notification|
     json.action notification.action
     json.read_at notification.read_at
     json.notifiable do
-        json.type "a #{notification.notifiable.class.to_s.underscore.humanize.downcase}"
+        json.type "a #{notification.notifiable.commentable_type.downcase}"
     end
 end

@@ -25,6 +25,8 @@ class User < ApplicationRecord
 
     has_many :notifications, foreign_key: :recipient_id
 
+    has_many :likes, foreign_key: :user_id
+
     # follows ######################################
     def follows?(id)
         follows.include?(User.find(id))

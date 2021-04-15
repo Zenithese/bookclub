@@ -1,31 +1,35 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { fetchNotifications, updateNotifications, updateNotification } from '../actions/notifications_actions';
+import { fetchNotifications, updateSeenNotifications, updateNotification, fetchUnseenNotificationCount } from '../actions/notifications_actions';
 
-const mapStateToProps = ({ entities, session }) => {
+const mapStateToProps = ({ entities, ui }) => {
     return {
-        notifications: entities.notifications
+        notifications: entities.notifications,
+        count: ui.count
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
         fetchNotifications: () => dispatch(fetchNotifications()),
-        updateNotifications: () => dispatch(updateNotifications()),
-        updateNotification: (id) => dispatch(updateNotification(id))
+        updateNotification: (id) => dispatch(updateNotification(id)),
+        updateSeenNotifications: () => dispatch(updateSeenNotifications()),
+        fetchUnseenNotificationCount: () => dispatch(fetchUnseenNotificationCount()),
     };
 };
 
-function Notifications({ notifications, fetchNotifications, updateNotifications, updateNotification }) {
+function Notifications({ notifications, fetchNotifications, updateSeenNotifications, updateNotification, fetchUnseenNotificationCount, count }) {
 
     const [visible, setVisible] = useState(false);
 
     useEffect(() => {
         fetchNotifications();
+        fetchUnseenNotificationCount();
     }, []);
 
-    const handleClick = (id) => {
-        updateNotification(id)
+    const handleClick = () => {
+        if (count) updateSeenNotifications();
+        setVisible(!visible)
     }
 
     const dd = visible && (
@@ -38,7 +42,7 @@ function Notifications({ notifications, fetchNotifications, updateNotifications,
                 <div className="inner-contents-container">
                     {notifications.map((n, i) => {
                         return (
-                            <div onClick={() => handleClick(n.id)} style={!n.readAt ? {color: "red"} : {}}className="drop-down-content" key={i}>{n.actor} {n.action}</div>
+                            <div onClick={() => updateNotification(n.id)} style={!n.readAt ? {color: "red"} : {color: "black"}} className="drop-down-content" key={i}>{n.actor} {n.action} {n.notifiable.type}</div>
                         )
                     })}
                 </div>
@@ -48,8 +52,8 @@ function Notifications({ notifications, fetchNotifications, updateNotifications,
 
     return (
         <div className="notifications-dd-container" tabIndex="0" onBlur={() => setVisible(false)} >
-            <div className="notification-button" onClick={() => setVisible(!visible)} />
-            <div className="notifications-red-dot" style={{display: visible ? "none" : "block"}} />
+            <div className="notification-button" onClick={handleClick} />
+            <div className="notifications-red-dot" style={{display: count ? "block" : "none"}} >{count}</div>
             {dd}
         </div>
     );
