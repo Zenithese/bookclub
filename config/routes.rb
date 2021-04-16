@@ -7,11 +7,13 @@ Rails.application.routes.draw do
     resources :books, only: [:create, :destroy, :update, :show, :index]
     resources :follows, only: [:index, :create, :destroy]
     resources :readings, only: [:create, :destroy]
+    resources :likes, only: [:index, :destroy]
     resources :highlights, only: [:create, :destroy, :update, :show, :index] do
       resources :comments, module: :highlights
     end
     resources :comments do
       resources :comments, module: :comments
+      resources :likes, module: :comments
     end
     resources :notifications, only: [:index, :update] do
       collection do

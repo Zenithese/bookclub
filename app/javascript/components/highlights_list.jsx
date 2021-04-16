@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { connect } from 'react-redux';
 import { createComment, fetchComments } from '../actions/comments_actions'
+import { fetchLikes } from '../actions/likes_actions'
 import { fetchReadersHighlights, clearHighlights } from '../actions/highlights_actions'
 import Comment from './comments'
 import Highlight from './highlight'
@@ -20,18 +21,20 @@ const mapDispatchToProps = dispatch => {
     return {
         createComment: (comment) => dispatch(createComment(comment)),
         fetchComments: () => dispatch(fetchComments()),
+        fetchLikes: () => dispatch(fetchLikes()),
         fetchReadersHighlights: (id) => dispatch(fetchReadersHighlights(id)),
         clearHighlights: () => dispatch(clearHighlights()),
     }
 }
 
-function HighlightsList({ highlights, userId, comments, fetchComments, fetchReadersHighlights, readerId, createComment, books, clearHighlights }) {
+function HighlightsList({ highlights, userId, comments, fetchComments, fetchReadersHighlights, readerId, createComment, books, clearHighlights, fetchLikes }) {
 
     const [visibleForms, setVisibleForms] = useState(new Set())
     const [body, setBody] = useState("")
 
     useEffect(() => {
         fetchComments();
+        fetchLikes();
 
         return () => {
             clearHighlights()

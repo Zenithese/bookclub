@@ -10,6 +10,7 @@ import readers from './readers_reducer'
 import reader from './reader_reducer'
 import follows from './follows_reducer'
 import notifications from './notifications_reducer'
+import likes from './likes_reducer'
 
 
 export default combineReducers({
@@ -24,4 +25,5 @@ export default combineReducers({
     reader,
     follows,
     notifications,
+    likes,
 });

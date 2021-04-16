@@ -50,6 +50,7 @@ export const createHighlight = (highlight) => dispatch => {
 //     return dispatch(receiveHighlights());
 // };
 export const fetchHighlights = () => dispatch => {
+    debugger
     return APIUtil.fetchHighlights().then(highlights => 
         dispatch(receiveHighlights(highlights.data))
     )

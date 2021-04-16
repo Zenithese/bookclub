@@ -6,7 +6,9 @@ json.username comment.user.username
 json.commentable_type comment.commentable_type
 json.commentable_id comment.commentable_id
 json.body comment.body
-json.likes comment.likes_array
+# json.likes do
+#     json.partial! "api/comments/likes", likes: comment.likes
+# end
 json.comments do 
     json.array! comment.comments, partial: "api/comments/comment", as: :comment
 end

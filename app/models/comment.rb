@@ -8,6 +8,6 @@ class Comment < ApplicationRecord
     has_many :likes, as: :likeable
 
     def likes_array
-        likes.map { |like| like.user.username }
+        likes.map { |like| like.user_id }
     end
 end
