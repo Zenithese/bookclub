@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { createLike, deleteLike } from '../actions/likes_actions'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faComment, faHeart } from '@fortawesome/free-solid-svg-icons'
 
 const mapStateToProps = ({ entities, session }) => {
     return {
@@ -48,16 +50,16 @@ function Highlight({ id, text, cfiRange, comments, bookId, i, commentThread, han
                             <div className="apostrophe" style={{ float: "right" }}>&rsquo;&rsquo;</div>
                         </div>
                     </div>
-                    <div style={{ display: "flex" }} >
-                        <button 
+                    <div className="highlight-comment-actions-container" >
+                        <div className="comment-icon"
                             onClick={(e) => handleVisibleForm(e, id)}
-                            value="comment">reply</button>
-                        <button 
+                            value="comment"><FontAwesomeIcon icon={faComment} /></div>
+                        <div 
                             value="like"
                             onClick={handleLike} 
-                            style={likes.highlights && likes.highlights[id] ? { backgroundColor: "red" } : {}}
-                            >like
-                        </button>
+                            style={likes.highlights && likes.highlights[id] ? { color: "red" } : { color: "gray"}}
+                        ><FontAwesomeIcon icon={faHeart} />
+                        </div>
                     </div>
                 </div>
             </div>

@@ -83,7 +83,7 @@ function HighlightsList({ highlights, userId, comments, fetchComments, fetchRead
 
     const commentThread = (thread, id) => {
         return (
-            <div className="comments">
+            <div>
                 <div className="comment">
                     <div style={visibleForms.has(id) ? { display: "block" } : { display: "none" }} onSubmit={(e) => handleSubmit(e, id)} >
                         <textarea type="body" placeholder="Comment on quote" value={body} onChange={(e) => setBody(e.target.value)}></textarea>

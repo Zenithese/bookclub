@@ -29,3 +29,30 @@
     font-size: small;
     padding-top: 1px;
 }
+
+.comment-icon {
+    color: gray;
+    margin-right: 5px;
+}
+
+.highlight-comment-actions-container {
+    display: flex;
+    position: absolute;
+    bottom: 3px;
+    right: 3px;
+}
+
+.comment-body {
+    margin-top: 2px;
+    margin-bottom: 4px;
+}
+
+.comment-actions-container {
+    display: flex;
+    margin-bottom: 2px;
+}
+
+.reply-area {
+    margin-top: 4px;
+    margin-bottom: 5px;
+}

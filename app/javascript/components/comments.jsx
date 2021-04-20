@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { createComment, fetchComments } from '../actions/comments_actions'
 import { createLike, deleteLike } from '../actions/likes_actions'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faComment, faHeart } from '@fortawesome/free-solid-svg-icons'
 
 const mapStateToProps = ({ entities, session }) => {
     return {
@@ -60,6 +62,11 @@ function Comment({ comment, createComment, fetchComments, userId, comments, crea
             : createLike("comments", comment.id)
     }
 
+    const likeCount = () => {
+        const count = (likes.comments && likes.comments[comment.id] ? 1 : 0) + comment.likesCount + (wasLiked ? -1 : 0)
+        return count === 0 ? null : count
+    }
+
     return (
         <div className="comments">
             <div className="comment-img-username-container">
@@ -68,26 +75,23 @@ function Comment({ comment, createComment, fetchComments, userId, comments, crea
             </div>
             <div className="comment" key={comment.id} style={{ display: displayReplies ? "block" : "none" }}>
                 <div className="comment-border" />
-                <div>{comment.body}</div>
-                <br />
-                <div style={{ display: "flex" }} style={!visible ? { display: "block" } : { display: "none" }}>
-                    <button onClick={() => setVisible(!visible)} >reply</button>
-                    <button
-                        style={likes.comments && likes.comments[comment.id] ? { backgroundColor: "red" } : {}}
+                <div className="comment-body">{comment.body}</div>
+                <div className="comment-actions-container" style={!visible ? {} : { display: "none" }}>
+                    <div className="comment-icon" onClick={() => setVisible(!visible)} ><FontAwesomeIcon icon={faComment} /></div>
+                    <div
+                        style={likes.comments && likes.comments[comment.id] ? { color: "red" } : { color: "gray" }}
                         onClick={handleLike}
-                    >{(likes.comments && likes.comments[comment.id] ? 1 : 0) + comment.likesCount + (wasLiked ? -1 : 0)}
-                    </button>
+                    ><FontAwesomeIcon icon={faHeart} /> {likeCount()}
+                    </div>
                 </div>
-                <div style={visible ? { display: "block" } : { display: "none" }} >
+                <div className="reply-area" style={visible ? { display: "block" } : { display: "none" }} >
                     <textarea type="body" placeholder="Reply to comment" value={body} onChange={(e) => setBody(e.target.value)}></textarea>
                     <br />
                     <button onClick={(e) => handleSubmit(e, comment.id)}>Submit</button>
                     <button onClick={() => setVisible(!visible)}>cancel</button>
                 </div>
-                <br />
                 {nestedComments}
             </div>
-            <br />
         </div>
     )
 }
