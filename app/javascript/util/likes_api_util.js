@@ -13,7 +13,6 @@ export const fetchLikes = () => {
 }
 
 export const createLike = (likeableType, likeableId) => {
-
     return axios.post(`/api/${likeableType}/${likeableId}/likes`,
         {
             transformResponse: [

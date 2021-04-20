@@ -1,0 +1,27 @@
+.modal-thread {
+    height: 0px;
+    overflow: hidden;
+    background-color: silver;
+    border: 2px solid tan;
+    transition: height 0.5s;
+    width: 100%;
+    max-width: 1000px;
+    margin: auto;
+}
+
+.modal-thread-open {
+    height: 500px;
+    overflow: scroll;
+    margin-bottom: 20px;
+}
+
+.modal-highlights-container {
+  display: flex;
+  margin-left: 2px;
+  width: 100%;
+  max-width: 1000px;
+  justify-content: space-evenly;
+  max-height: 250px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}

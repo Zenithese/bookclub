@@ -1,3 +1,4 @@
+import highlight from '../components/highlight'
 import * as APIUtil from '../util/highlights_api_util'
 
 export const RECEIVE_HIGHLIGHT = "RECEIVE_HIGHLIGHT"
@@ -46,11 +47,13 @@ export const createHighlight = (highlight) => dispatch => {
     )
 };
 
-// export const fetchHighlights = () => dispatch => {
-//     return dispatch(receiveHighlights());
-// };
+export const fetchHighlight = (id) => {
+    return APIUtil.fetchHighlight(id).then(highlight => {
+        dispatch(receiveHighlight(highlight.data))
+    })
+}
+
 export const fetchHighlights = () => dispatch => {
-    debugger
     return APIUtil.fetchHighlights().then(highlights => 
         dispatch(receiveHighlights(highlights.data))
     )

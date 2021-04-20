@@ -6,7 +6,7 @@ import { faEye } from '@fortawesome/free-solid-svg-icons'
 import { updateSettings } from '../actions/settings_actions'
 import ReaderList from './reader_list'
 import Settings from './settings'
-import HighlightList from './highlight_list_old_copy'
+import HighlightList from './ereader_highlight_list'
 
 
 const mapStateToProps = ({ entities, session }) => {

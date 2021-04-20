@@ -18,6 +18,8 @@ export const createComment = (data) => {
             comment: {
                 body: data.body,
                 user_id: data.userId,
+                ancestor_type: data.ancestorType,
+                ancestor_id: data.ancestorId,
             },
         },
         {

@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     resources :likes, only: [:index, :destroy]
     resources :highlights, only: [:create, :destroy, :update, :show, :index] do
       resources :comments, module: :highlights
+      resources :likes, module: :highlights
     end
     resources :comments do
       resources :comments, module: :comments

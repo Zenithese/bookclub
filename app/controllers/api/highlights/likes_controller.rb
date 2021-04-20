@@ -4,6 +4,6 @@ class Api::Highlights::LikesController < Api::LikesController
     private
 
     def set_likeable
-        @likeable = Highlight.find(params[:comment_id])
+        @likeable = Highlight.find(params[:highlight_id])
     end
 end

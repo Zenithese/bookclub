@@ -7,7 +7,8 @@ import { fetchRendition } from '../actions/rendition_actions'
 import { updateSettings } from '../actions/settings_actions'
 import ReaderList from './reader_list'
 import Settings from './settings'
-import HighlightList from './highlight_list_old_copy'
+import HighlightList from './ereader_highlight_list'
+import useWindowSize from './window_resize_hook';
 
 
 const mapStateToProps = ({ entities, session }, ownProps) => {
@@ -43,6 +44,7 @@ function Highlights({ id, highlights, _fontSize, highlightColor, _theme, deleteH
     const [settings, setSettings] = useState(false)
     const [fontSize, setFontSize] = useState(Number(_fontSize))
     const [theme, setTheme] = useState(_theme)
+    // const [width, height] = useWindowSize();
 
     useEffect(() => {
         updateSettings(id, color, fontSize, theme);
@@ -50,6 +52,7 @@ function Highlights({ id, highlights, _fontSize, highlightColor, _theme, deleteH
 
     useEffect(() => {
         if (rendition) {
+            console.log("resize")
             highlights.forEach(highlight => {
                 const { cfiRange } = highlight;
                 updateHighlight(cfiRange)

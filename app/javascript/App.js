@@ -8,7 +8,7 @@ import { Switch } from 'react-router-dom';
 import Header from './components/header'
 import Readers from './components/readers'
 import ReaderProfile from './components/reader_profile'
-// import './assests/App.css';
+import Modal from './components/modal/modal'
 
 function App() {
   return (
@@ -22,6 +22,7 @@ function App() {
       <ProtectedRoute path="/search/readers" component={Readers} />
       <ProtectedRoute path="/book/:book" component={Highlights} />
       <ProtectedRoute path="/reader/:id" component={ReaderProfile} />
+      <ProtectedRoute path="/" component={Modal} />
     </div>
   );
 }

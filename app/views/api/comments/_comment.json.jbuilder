@@ -9,6 +9,10 @@ json.body comment.body
 # json.likes do
 #     json.partial! "api/comments/likes", likes: comment.likes
 # end
+json.likes_count comment.likes.count
+json.likes_array comment.likes_array
+json.ancestor_type comment.ancestor_type
+json.ancestor_id comment.ancestor_id
 json.comments do 
     json.array! comment.comments, partial: "api/comments/comment", as: :comment
 end

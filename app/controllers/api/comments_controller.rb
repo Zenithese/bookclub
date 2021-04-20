@@ -5,7 +5,7 @@ class Api::CommentsController < ApplicationController
   # GET /comments
   # GET /comments.json
   def index
-    @comments = Comment.all
+    @comments = Comment.all.includes(:comments, :likes, :highlight)
     # @comments = Comment.all.includes(:commentable => [:comments])
   end
 
@@ -59,6 +59,6 @@ class Api::CommentsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def comment_params
-      params.require(:comment).permit(:body, :user_id)
+      params.require(:comment).permit(:body, :user_id, :ancestor_type, :ancestor_id)
     end
 end

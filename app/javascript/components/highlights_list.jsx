@@ -13,7 +13,6 @@ const mapStateToProps = ({ entities, session }) => {
         highlights: entities.highlights,
         userId: Number(session.id),
         comments: entities.comments,
-        books: entities.books
     }
 }
 
@@ -27,10 +26,11 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-function HighlightsList({ highlights, userId, comments, fetchComments, fetchReadersHighlights, readerId, createComment, books, clearHighlights, fetchLikes }) {
+function HighlightsList({ highlights, userId, comments, fetchComments, fetchReadersHighlights, readerId, createComment, clearHighlights, fetchLikes }) {
 
     const [visibleForms, setVisibleForms] = useState(new Set())
     const [body, setBody] = useState("")
+    const [newCommentId, setNewCommentId] = useState(null)
 
     useEffect(() => {
         fetchComments();
@@ -47,6 +47,14 @@ function HighlightsList({ highlights, userId, comments, fetchComments, fetchRead
         }
     }, [comments, fetchReadersHighlights])
 
+    useEffect(() => {
+        if (visibleForms.has(newCommentId)) {
+            const newSet = new Set(visibleForms);
+            newSet.delete(newCommentId);
+            setVisibleForms(newSet);
+        }
+    }, [highlights])
+
     const handleSubmit = (e, id) => {
         e.preventDefault();
         const comment = {
@@ -54,8 +62,11 @@ function HighlightsList({ highlights, userId, comments, fetchComments, fetchRead
             id,
             userId,
             parent: true,
+            ancestorType: "Highlight",
+            ancestorId: id
         }
         createComment(comment);
+        setNewCommentId(id);
     }
 
     const handleVisibleForm = (e, id) => {
@@ -74,14 +85,15 @@ function HighlightsList({ highlights, userId, comments, fetchComments, fetchRead
         return (
             <div className="comments">
                 <div className="comment">
-                    <button onClick={(e) => handleVisibleForm(e, id)}>Thoughts</button>
-                    <form style={visibleForms.has(id) ? { display: "block" } : { display: "none" }} onSubmit={(e) => handleSubmit(e, id)} >
-                        <label>thought:</label>
-                        <input type="body" value={body} onChange={(e) => setBody(e.target.value)} />
-                    </form>
+                    <div style={visibleForms.has(id) ? { display: "block" } : { display: "none" }} onSubmit={(e) => handleSubmit(e, id)} >
+                        <textarea type="body" placeholder="Comment on quote" value={body} onChange={(e) => setBody(e.target.value)}></textarea>
+                        <br />
+                        <button onClick={(e) => handleSubmit(e, id)}>Submit</button>
+                        <button onClick={(e) => handleVisibleForm(e, id)}>cancel</button>
+                    </div>
                     {thread.map((comment) => {
                         return (
-                            <Comment key={comment.id} comment={comment} />
+                            <Comment key={comment.id} comment={comment} ancestorType={"Highlight"} ancestorId={id} />
                         )
                     })}
                 </div>
@@ -92,7 +104,7 @@ function HighlightsList({ highlights, userId, comments, fetchComments, fetchRead
     const list = highlights.length ? (
         highlights.map(({ id, text, cfiRange, comments, bookId }, i) => {
             return (
-                <Highlight id={id} text={text} cfiRange={cfiRange} comments={comments} bookId={bookId} i={i} commentThread={commentThread} books={books} />
+                <Highlight id={id} text={text} cfiRange={cfiRange} comments={comments} bookId={bookId} i={i} commentThread={commentThread} handleVisibleForm={handleVisibleForm} />
             )
         })
     ) : (

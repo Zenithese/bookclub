@@ -20,7 +20,7 @@ export default function Settings({ settings, toggle, fontSize, theme, setSetting
             </div>
             <br />
             <label className="switch" >
-                <input type="checkbox" checked={theme === "dark"} onClick={() => theme === "light" ? setThemeColor("dark", "#999") : setThemeColor("light", "black")} />
+                <input type="checkbox" checked={theme === "dark"} onChange={() => theme === "light" ? setThemeColor("dark", "#999") : setThemeColor("light", "black")} />
                 <span className="slider round"></span>
             </label>
         </div>

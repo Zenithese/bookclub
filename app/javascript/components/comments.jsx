@@ -8,6 +8,7 @@ const mapStateToProps = ({ entities, session }) => {
         userId: Number(session.id),
         comments: entities.comments,
         likes: entities.likes,
+        highlights: entities.highlights,
     }
 }
 
@@ -20,15 +21,24 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-function Comment({ comment, createComment, fetchComments, userId, comments, createLike, deleteLike, likes }) {
+function Comment({ comment, createComment, fetchComments, userId, comments, createLike, deleteLike, likes, highlights, ancestorType, ancestorId }) {
 
     const [visible, setVisible] = useState(false)
     const [body, setBody] = useState("")
     const [displayReplies, setDisplayReplies] = useState(true)
+    const [update, setUpdate] = useState(false)
+    const wasLiked = comment.likesArray.includes(userId)
 
     const nestedComments = (comment.comments || []).map((comment) => {
-        return <Comment key={comment.id} comment={comment} createComment={createComment} userId={userId} fetchComments={fetchComments} comments={comments} createLike={createLike} deleteLike={deleteLike} likes={likes} />
+        return <Comment key={comment.id} comment={comment} createComment={createComment} userId={userId} fetchComments={fetchComments} comments={comments} createLike={createLike} deleteLike={deleteLike} likes={likes} highlights={highlights} wasLiked={wasLiked} ancestorType={ancestorType} ancestorId={ancestorId}/>
     }) // @CoderRocketFuel
+
+    useEffect(() => {
+        if (update) {
+            setVisible(!visible);
+            setUpdate(false);
+        }
+    }, [highlights])
 
     const handleSubmit = (e, id) => {
         e.preventDefault();
@@ -37,16 +47,15 @@ function Comment({ comment, createComment, fetchComments, userId, comments, crea
             body,
             id,
             userId,
+            ancestorType,
+            ancestorId,
         }
         createComment(comment);
+        setUpdate(true)
     }
 
-    useState(() => {
-        console.log(likes)
-    }, [likes])
-
     const handleLike = () => {
-        likes.comments[comment.id] ?
+        likes.comments && likes.comments[comment.id] ?
             deleteLike(likes.comments[comment.id].id)
             : createLike("comments", comment.id)
     }
@@ -57,13 +66,17 @@ function Comment({ comment, createComment, fetchComments, userId, comments, crea
                 <img className="comment-reader-img" src="/default-profile-img.jpeg" alt="" />
                 <div onClick={() => setDisplayReplies(!displayReplies)} className="comment-username">{comment.username}</div>
             </div>
-            <div className="comment" key={comment.id} style={{display: displayReplies ? "block" : "none"}}>
+            <div className="comment" key={comment.id} style={{ display: displayReplies ? "block" : "none" }}>
                 <div className="comment-border" />
                 <div>{comment.body}</div>
                 <br />
                 <div style={{ display: "flex" }} style={!visible ? { display: "block" } : { display: "none" }}>
                     <button onClick={() => setVisible(!visible)} >reply</button>
-                    <button onClick={handleLike} style={likes.comments[comment.id] ? { backgroundColor: "red" } : {}}>like</button>
+                    <button
+                        style={likes.comments && likes.comments[comment.id] ? { backgroundColor: "red" } : {}}
+                        onClick={handleLike}
+                    >{(likes.comments && likes.comments[comment.id] ? 1 : 0) + comment.likesCount + (wasLiked ? -1 : 0)}
+                    </button>
                 </div>
                 <div style={visible ? { display: "block" } : { display: "none" }} >
                     <textarea type="body" placeholder="Reply to comment" value={body} onChange={(e) => setBody(e.target.value)}></textarea>

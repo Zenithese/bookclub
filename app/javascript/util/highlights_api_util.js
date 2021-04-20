@@ -1,6 +1,17 @@
 import axios from 'axios';
 import humps from 'humps';
 
+export const fetchHighlight = (id) => {
+    return axios.get(`/api/highlights/${id}`,
+        {
+            transformResponse: [
+                ...axios.defaults.transformResponse,
+                data => humps.camelizeKeys(data)
+            ],
+        }
+    )
+};
+
 export const fetchHighlights = () => {
     return axios.get('/api/highlights',
         {

@@ -11,9 +11,11 @@ import reader from './reader_reducer'
 import follows from './follows_reducer'
 import notifications from './notifications_reducer'
 import likes from './likes_reducer'
+import highlight from './highlight_reducer'
 
 
 export default combineReducers({
+    highlight,
     highlights,
     rendition,
     users,
