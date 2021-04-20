@@ -32,6 +32,8 @@ function HighlightsList({ highlights, userId, comments, fetchComments, fetchRead
     const [body, setBody] = useState("")
     const [newCommentId, setNewCommentId] = useState(null)
 
+    const el = useRef(null)
+
     useEffect(() => {
         fetchComments();
         fetchLikes();
@@ -69,8 +71,7 @@ function HighlightsList({ highlights, userId, comments, fetchComments, fetchRead
         setNewCommentId(id);
     }
 
-    const handleVisibleForm = (e, id) => {
-        e.preventDefault();
+    const handleVisibleForm = (id) => {
         const newSet = new Set(visibleForms);
         if (visibleForms.has(id)) {
             newSet.delete(id);
@@ -83,19 +84,23 @@ function HighlightsList({ highlights, userId, comments, fetchComments, fetchRead
 
     const commentThread = (thread, id) => {
         return (
-            <div>
+            <div className="first-comments">
                 <div className="comment">
-                    <div style={visibleForms.has(id) ? { display: "block" } : { display: "none" }} onSubmit={(e) => handleSubmit(e, id)} >
+                    <div className="first-reply-area" style={visibleForms.has(id) ? {} : { display: "none" }} onSubmit={(e) => handleSubmit(e, id)} >
                         <textarea type="body" placeholder="Comment on quote" value={body} onChange={(e) => setBody(e.target.value)}></textarea>
-                        <br />
-                        <button onClick={(e) => handleSubmit(e, id)}>Submit</button>
-                        <button onClick={(e) => handleVisibleForm(e, id)}>cancel</button>
+                        <div className="first-reply-actions">
+                            <button onClick={(e) => handleSubmit(e, id)}>Submit</button>
+                            <button onClick={(e) => handleVisibleForm(e, id)}>cancel</button>
+                        </div>
                     </div>
-                    {thread.map((comment) => {
-                        return (
-                            <Comment key={comment.id} comment={comment} ancestorType={"Highlight"} ancestorId={id} />
-                        )
-                    })}
+                    {thread.length ? 
+                        thread.map((comment) => {
+                            return (
+                                <Comment key={comment.id} comment={comment} ancestorType={"Highlight"} ancestorId={id} />
+                            )
+                        })
+                        : <div>Feeling empty here</div>
+                    }
                 </div>
             </div>
         )
@@ -104,7 +109,7 @@ function HighlightsList({ highlights, userId, comments, fetchComments, fetchRead
     const list = highlights.length ? (
         highlights.map(({ id, text, cfiRange, comments, bookId }, i) => {
             return (
-                <Highlight id={id} text={text} cfiRange={cfiRange} comments={comments} bookId={bookId} i={i} commentThread={commentThread} handleVisibleForm={handleVisibleForm} />
+                <Highlight id={id} text={text} cfiRange={cfiRange} comments={comments} bookId={bookId} i={i} commentThread={commentThread} handleVisibleForm={handleVisibleForm} visibleForms={visibleForms} />
             )
         })
     ) : (

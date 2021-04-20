@@ -19,6 +19,11 @@
   height: 5%;
 }
 
+.first-comments {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
 .comments {
   display: flex;
   text-align: left;
@@ -28,7 +33,7 @@
 }
 
 .comment {
-  margin-left: 3%;
+  margin-left: 20px;
 }
 
 .toggle-button {

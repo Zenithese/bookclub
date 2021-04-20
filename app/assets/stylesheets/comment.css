@@ -4,7 +4,7 @@
     border-radius: 100px;
     top: 1px;
     position: relative;
-    left: -3px;
+    margin-right: 3px;
 }
 
 .comment-img-username-container {
@@ -15,7 +15,7 @@
     display: block;
     position: absolute;
     top: 23px;
-    left: -1px;
+    left: 2px;
     width: 3px;
     height: calc(100% - 27px);
     border-left: 4px solid transparent;
@@ -55,4 +55,13 @@
 .reply-area {
     margin-top: 4px;
     margin-bottom: 5px;
+}
+
+.first-reply-area {
+    display: flex;
+    flex-direction: column;
+}
+
+.first-reply-actions {
+    width: fit-content;
 }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { createLike, deleteLike } from '../actions/likes_actions'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -18,13 +18,22 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-function Highlight({ id, text, cfiRange, comments, bookId, i, commentThread, handleVisibleForm, books, likes, createLike, deleteLike }) {
+function Highlight({ id, text, cfiRange, comments, bookId, i, commentThread, handleVisibleForm, visibleForms, books, likes, createLike, deleteLike, el }) {
 
     const [visibleThread, setVisibleThread] = useState(false)
+    const [cancelClick, setCancelClick] = useState(false)
+
+    useEffect(() => {
+        if (!visibleThread && visibleForms.has(id)) {
+            handleVisibleForm(id)
+        }
+    }, [visibleThread])
 
     const handleClick = (e) => {
-        if (e.target.value == "like") return;
-        if (e.target.value == "comment" && visibleThread) return; 
+        if (cancelClick) {
+            setCancelClick(false)
+            return
+        }
         setVisibleThread(!visibleThread)
     }
 
@@ -32,6 +41,11 @@ function Highlight({ id, text, cfiRange, comments, bookId, i, commentThread, han
         likes.highlights[id] ?
             deleteLike(likes.highlights[id].id)
             : createLike("highlights", id)
+    }
+
+    const handleMouseUp = (type) => {
+        if (type == "comment" && !visibleThread) return;
+        setCancelClick(true)
     }
 
     return (
@@ -51,14 +65,17 @@ function Highlight({ id, text, cfiRange, comments, bookId, i, commentThread, han
                         </div>
                     </div>
                     <div className="highlight-comment-actions-container" >
-                        <div className="comment-icon"
-                            onClick={(e) => handleVisibleForm(e, id)}
-                            value="comment"><FontAwesomeIcon icon={faComment} /></div>
                         <div 
-                            value="like"
+                            className="comment-icon"
+                            onClick={() => handleVisibleForm(id)}
+                            onMouseUp={() => handleMouseUp("comment")}>
+                                <FontAwesomeIcon icon={faComment} /> 
+                        </div>
+                        <div
                             onClick={handleLike} 
-                            style={likes.highlights && likes.highlights[id] ? { color: "red" } : { color: "gray"}}
-                        ><FontAwesomeIcon icon={faHeart} />
+                            onMouseUp={() => handleMouseUp("like")}
+                            style={likes.highlights && likes.highlights[id] ? { color: "red" } : { color: "gray"}}>
+                                <FontAwesomeIcon icon={faHeart} />
                         </div>
                     </div>
                 </div>

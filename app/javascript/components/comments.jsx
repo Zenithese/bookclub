@@ -86,7 +86,6 @@ function Comment({ comment, createComment, fetchComments, userId, comments, crea
                 </div>
                 <div className="reply-area" style={visible ? { display: "block" } : { display: "none" }} >
                     <textarea type="body" placeholder="Reply to comment" value={body} onChange={(e) => setBody(e.target.value)}></textarea>
-                    <br />
                     <button onClick={(e) => handleSubmit(e, comment.id)}>Submit</button>
                     <button onClick={() => setVisible(!visible)}>cancel</button>
                 </div>

@@ -45,18 +45,19 @@
 }
 
 .thread {
-    height: 0px;
-    overflow: hidden;
-    background-color: silver;
-    border: 2px solid tan;
-    transition: height 0.5s;
-    width: 70%;
-    max-width: 1000px;
-    margin: auto;
+  height: fit-content;
+  max-height: 0px;
+  overflow: hidden;
+  background-color: silver;
+  border: 2px solid tan;
+  transition: max-height 0.5s;
+  width: 70%;
+  max-width: 1000px;
+  margin: auto;
 }
 
 .thread-open {
-    height: 500px;
+    max-height: 500px;
     overflow: scroll;
 }
 
