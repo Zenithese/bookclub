@@ -1,18 +1,16 @@
 .modal-thread {
-    height: 0px;
-    overflow: hidden;
-    background-color: silver;
-    border: 2px solid tan;
-    transition: height 0.5s;
-    width: 100%;
-    max-width: 1000px;
-    margin: auto;
+  height: fit-content;
+  overflow: hidden;
+  background-color: silver;
+  border: 2px solid tan;
+  transition: max-height 0.5s;
+  width: 100%;
+  max-width: 1000px;
+  margin: auto;
 }
 
 .modal-thread-open {
-    height: 500px;
-    overflow: scroll;
-    margin-bottom: 20px;
+  overflow: scroll;
 }
 
 .modal-highlights-container {

@@ -1,39 +1,25 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
-export default function Cover({ position, setPosition, setSessionOpen, defaultZ, setDefaultZ }) {
-
-    const [flipped, setFlipped] = useState(false)
-    const [hoverClass, setHoverClass] = useState("")
-    // const [hovering, setHovering] = useState(false)
-    // const [paused, setPaused] = useState(false)
-    // const [coor, setCoor] = useState({x: 0, y: 0})
+export default function Cover({ position, setPosition, setSessionOpen, defaultZ, setDefaultZ, bookmarkClicked, setBookmarkClicked, hoverClass, setHoverClass, frontFlipped, setFrontFlipped }) {
 
     const ref = useRef(null)
 
-
-    // useEffect(() => {
-    //     if (hovering && !paused) {
-    //         const top = ref.current.getBoundingClientRect().top
-    //         const bottom = ref.current.getBoundingClientRect().bottom
-    //         const left = ref.current.getBoundingClientRect().left
-    //         const right = ref.current.getBoundingClientRect().right
-    //         if (coor.x > top && coor.x < bottom && coor.y > left && coor.y < right) {
-    //             setHoverClass(flipped ? "open-hover" : "hover")
-    //         }
-    //     }
-    // })
+    useEffect(() => {
+        if (bookmarkClicked) {
+            setPosition(bookmarkClicked == "Login" ? 4 : 2)
+            setFrontFlipped(true)
+            setSessionOpen(true)
+            setDefaultZ(2)
+            setBookmarkClicked(false)
+        }
+    }, [bookmarkClicked])
 
     const handleClick = (e) => {
         if (position > 2) return
-        // setCoor({ x: e.clientX, y: e.clientY })
         setHoverClass("")
-        // setPaused(true)
-        // setTimeout(() => {
-        //     setPaused(false)
-        // }, 1000)
-        setFlipped(!flipped)
+        setFrontFlipped(!frontFlipped)
         setSessionOpen(sessionOpen => !sessionOpen)
-        if (!flipped) {
+        if (!frontFlipped) {
             setPosition(position + 2)
             setDefaultZ(2)
         } else {
@@ -42,20 +28,18 @@ export default function Cover({ position, setPosition, setSessionOpen, defaultZ,
     };
 
     const handleHover = () => {
-        // setHovering(true)
-        setHoverClass(flipped ? "open-hover" : "hover")
+        setHoverClass(frontFlipped ? "open-hover" : "hover")
     }
 
     const handleLeave = () => {
-        // setHovering(false)
         setHoverClass("")
     }
 
     return (
         <div
             ref={ref}
-            style={{ zIndex: flipped ? 2 : defaultZ }}
-            id="cover" className={`book-box-shadow ${hoverClass} ${flipped ? "open-cover cover" : "cover"}`}
+            style={{ zIndex: frontFlipped ? 2 : defaultZ }}
+            id="cover" className={`book-box-shadow ${hoverClass} ${frontFlipped ? "open-cover cover" : "cover"}`}
             onClick={handleClick}
             onMouseMove={handleHover}
             onMouseLeave={handleLeave}>

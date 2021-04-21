@@ -3,10 +3,18 @@ import { AuthRoute } from '../../util/route_util';
 import LoginFormContainer from './login_form_container';
 import SignupFormContainer from './signup_form_container';
 
-export default function Page({ position, setPosition, pageNum, defaultZ, setDefaultZ }) {
+export default function Page({ position, setPosition, pageNum, defaultZ, setDefaultZ, bookmarkClicked, setBookmarkClicked, frontFlipped, setHoverClass }) {
 
     const [flipped, setFlipped] = useState(false)
     const [opacity, setOpacity] = useState("1")
+
+    useEffect(() => {
+        if (bookmarkClicked == "Login") {
+            setTimeout(() => {
+                setFlipped(true)
+            }, 200)
+        }
+    }, [bookmarkClicked])
 
     useEffect(() => {
         if (!flipped) {
@@ -21,7 +29,9 @@ export default function Page({ position, setPosition, pageNum, defaultZ, setDefa
         }
     }, [flipped])
 
-    const handleClick = () => {
+    const handleClick = (e) => {
+        if (position == 0) setBookmarkClicked(e.target.innerText)
+
         if (position > pageNum || position < 2) return
         setFlipped(!flipped)
         if (!flipped) {
@@ -29,6 +39,14 @@ export default function Page({ position, setPosition, pageNum, defaultZ, setDefa
         } else {
             setPosition(position - 2)
         }
+    }
+
+    const handleHover = () => {
+        setHoverClass(frontFlipped ? "open-hover" : "hover")
+    }
+
+    const handleLeave = () => {
+        setHoverClass("")
     }
 
     return (
@@ -40,7 +58,7 @@ export default function Page({ position, setPosition, pageNum, defaultZ, setDefa
             <div className="front-back-container">
                 <div className="front page-color">
                     <AuthRoute exact path="/" component={SignupFormContainer}/>
-                    <div className="sticky-button-container left-sticky-margin" onClick={handleClick}>
+                    <div className="sticky-button-container left-sticky-margin" onClick={handleClick} onMouseMove={handleHover} onMouseLeave={handleLeave}>
                         <div className="left-alt"></div>
                         <div className="page-sticky-container">
                             <div className={`page-front sticky-button ${flipped ? "index" : ""}`}><span style={{float: "right", cursor: "default" }}>Signup</span></div>
@@ -52,7 +70,7 @@ export default function Page({ position, setPosition, pageNum, defaultZ, setDefa
                 <div className="back page-color">
                     <AuthRoute exact path="/" component={LoginFormContainer} />
                 </div>
-                <div className="sticky-button-container abs-sticky-margin" onClick={handleClick}>
+                <div className="sticky-button-container abs-sticky-margin" onClick={handleClick} onMouseMove={handleHover} onMouseLeave={handleLeave}>
                     <div className={`abs-sticky-cover`} style={{ opacity: opacity }}></div>
                     <div className="left-alt"></div>
                     <div className="page-sticky-container">

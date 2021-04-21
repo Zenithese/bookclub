@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux';
 import { createComment, fetchComments } from '../actions/comments_actions'
 import { fetchLikes } from '../actions/likes_actions'
@@ -31,8 +31,6 @@ function HighlightsList({ highlights, userId, comments, fetchComments, fetchRead
     const [visibleForms, setVisibleForms] = useState(new Set())
     const [body, setBody] = useState("")
     const [newCommentId, setNewCommentId] = useState(null)
-
-    const el = useRef(null)
 
     useEffect(() => {
         fetchComments();

@@ -23,7 +23,7 @@ function Search({ searchBooks }) {
     }
 
     const delayedQuery = useCallback(
-        debounce((query) => searchBooks(query), 500),
+        debounce((query) => searchBooks(query), 400),
         []
     );
 

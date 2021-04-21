@@ -39,7 +39,7 @@
     display: flex;
     position: absolute;
     bottom: 3px;
-    right: 3px;
+    left: 5px;
 }
 
 .comment-body {

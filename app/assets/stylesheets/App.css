@@ -14,10 +14,10 @@
   height: 11.5%;
 }
 
-.annotations-container:hover > .toggle-button {
+/* .annotations-container:hover > .toggle-button {
   opacity: 1;
   height: 5%;
-}
+} */
 
 .first-comments {
   margin-top: 10px;
@@ -36,15 +36,42 @@
   margin-left: 20px;
 }
 
+.toggle-button:hover::before {
+  content: "Display highlights";
+  position: absolute;
+  background-color: white;
+  left: -131px;
+  top: 16px;
+}
+
+.toggle-button:hover::after {
+  content: "";
+  position: absolute;
+  left: -13px;
+  top: 16px;
+  width: 0;
+  height: 0;
+  border-top: 9px solid transparent;
+  border-bottom: 9px solid transparent;
+  border-left: 10px solid white;
+}
+
+.eye-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 .toggle-button {
-  height: 5vh;
-  width: 5vh;
+  height: 48.8px;
+  width: 48.8px;
   position: fixed;
   z-index: 1;
-  top: 5vh;
+  top: 49px;
   right: 0;
   background-color: silver;
-  overflow: hidden;
+  /* overflow: hidden; */
   transition: 0.5s;
   opacity: .9;
   border-radius: 100%;
@@ -54,8 +81,8 @@
 }
 
 .toggle-button-opened {
-  height: 5vh;
-  width: 5vh;
+  height: 48.8px;
+  width: 48.8px;
   position: fixed;
   z-index: 1;
   top: 0;
@@ -69,67 +96,82 @@
 }
 
 .toggle-button-closed-for-settings {
-  height: 5vh;
-  width: 5vh;
+  height: 48.8px;
+  width: 48.8px;
   position: fixed;
   z-index: 1;
   top: 0;
-  right: 17.9vh;
+  right: 174px;
   background-color: silver;
   overflow: hidden;
   transition: 0.5s;
   opacity: .9;
   border-radius: 100%;
   cursor: pointer;
+}
+
+.settings-button:hover::before {
+  content: "Settings";
+  position: absolute;
+  background-color: white;
+  text-shadow: white;
+  left: -65px;
+  top: 16px;
+}
+
+.settings-button:hover::after {
+  content: "";
+  position: absolute;
+  left: -13px;
+  top: 16px;
+  width: 0;
+  height: 0;
+  border-top: 9px solid transparent;
+  border-bottom: 9px solid transparent;
+  border-left: 10px solid white;
 }
 
 .settings-button {
-  height: 5vh;
-  width: 5vh;
+  height: 48.8px;
+  width: 48.8px;
   position: fixed;
   z-index: 1;
-  top: 10vh;
+  top: 98px;
   right: 0;
   background-color: silver;
-  overflow: hidden;
   transition: 0.5s;
   opacity: .9;
   border-radius: 100%;
   cursor: pointer;
-  /* transition: height .2s ease-out; */
-  /* opacity: 0; */
+}
+
+.faCog-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .settings-button-opened {
-  /* height: 100%;
-  width: 33%;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  right: 0;
-  overflow: hidden;
-  transition: 0.5s;
-  background-color: silver;
-  opacity: .9; */
-  height: 20vh;
-  width: 20vh;
+  width: 195px;
+  height: 195px;
   border-radius: 100%; 
   position: fixed;
   z-index: 1;
   top: 0;
   right: 0;
-  overflow: hidden;
   transition: 0.5s;
   background-color: silver;
   opacity: .9;
+  overflow: hidden;
 }
 
 .settings-button-closed-for-toggle {
-  height: 5vh;
-  width: 5vh;
+  height: 48.8px;
+  width: 48.8px;
   position: fixed;
   z-index: 1;
-  top: 5vh;
+  top: 49px;
   right: 33%;
   background-color: silver;
   overflow: hidden;
@@ -139,13 +181,24 @@
   cursor: pointer;
 }
 
+.color-section::before {
+  content: "Highlight Color";
+  position: absolute;
+  left: 7px;
+  top: -17px;
+  font-size: small;
+  font-style: italic;
+  z-index: 1;
+}
+
 .color-section {
   display: flex;
   margin: auto;
   width: 70%;
-  margin-top: 5%;
   transition: opacity 0.3s;
   opacity: .9;
+  position: relative;
+  top: 13px;
 }
 
 .color-section-closed {
@@ -159,8 +212,8 @@
 }
 
 .yellow {
-  height: 2vh;
-  width: 2vh;
+  height: 20px;
+  width: 20px;
   background-color: yellow;
   transition: 0.5s;
   opacity: .9;
@@ -171,8 +224,8 @@
 }
 
 .lightgreen {
-  height: 2vh;
-  width: 2vh;
+  height: 20px;
+  width: 20px;
   background-color: lightgreen;
   transition: 0.5s;
   opacity: .9;
@@ -183,8 +236,8 @@
 }
 
 .blue {
-  height: 2vh;
-  width: 2vh;
+  height: 20px;
+  width: 20px;
   background-color: blue;
   transition: 0.5s;
   opacity: .9;
@@ -195,8 +248,8 @@
 }
 
 .red {
-  height: 2vh;
-  width: 2vh;
+  height: 20px;
+  width: 20px;
   background-color: red;
   transition: 0.5s;
   opacity: .9;
@@ -207,8 +260,8 @@
 }
 
 .purple {
-  height: 2vh;
-  width: 2vh;
+  height: 20px;
+  width: 20px;
   background-color: purple;
   transition: 0.5s;
   opacity: .9;
@@ -218,8 +271,33 @@
   z-index: 2;
 }
 
+.controls-container {
+  padding-top: 10%;
+}
+
+.slider-container::before {
+  content: "Font Size";
+  position: absolute;
+  left: 35px;
+  top: -14px;
+  font-size: small;
+  font-style: italic;
+}
+
 .slider-container {
   margin-top: 15%;
+  position: relative;
+}
+
+.switch::before {
+  content: "Dark Mode";
+  position: absolute;
+  left: 0;
+  top: -16px;
+  font-size: small;
+  font-style: italic;
+  z-index: 1;
+  width: 60px;
 }
 
 /* The switch - the box around the slider */
@@ -228,6 +306,7 @@
   display: inline-block;
   width: 30%;
   height: 10%;
+  left: -33px;
 }
 
 /* Hide default HTML checkbox */
@@ -255,8 +334,8 @@
   content: "";
   height: 50%;
   width: 15%;
-  left: 4px;
-  bottom: 4px;
+  left: 7%;
+  bottom: 25%;
   background-color: white;
   -webkit-transition: .4s;
   transition: .4s;
@@ -271,9 +350,10 @@ input:focus + .slider {
 }
 
 input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
+  /* -webkit-transform: translateX(26px);
   -ms-transform: translateX(26px);
-  transform: translateX(26px);
+  transform: translateX(26px); */
+  left: 78%;
 }
 
 /* Rounded sliders */
@@ -285,23 +365,42 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 
+.annotations-closed:hover::before {
+  content: "Annotations";
+  position: absolute;
+  background-color: white;
+  left: -91px;
+  top: 16px;
+}
+
+.annotations-closed:hover::after {
+  content: "";
+  position: absolute;
+  left: -13px;
+  top: 16px;
+  width: 0;
+  height: 0;
+  border-top: 9px solid transparent;
+  border-bottom: 9px solid transparent;
+  border-left: 10px solid white;
+}
+
 .annotations-closed {
-  height: 5vh;
-  width: 5vh;
+  height: 48.8px;
+  width: 48.8px;
   position: fixed;
   z-index: 1;
   top: 0;
   right: 0;
   background-color: silver;
-  overflow: hidden;
   transition: 0.5s;
   opacity: .9;
   border-radius: 100%;
 }
 
 .annotations-closed-for-settings {
-  height: 5vh;
-  width: 5vh;
+  height: 48.8px;
+  width: 48.8px;
   position: fixed;
   z-index: 1;
   top: 5vh;
@@ -315,12 +414,12 @@ input:checked + .slider:before {
 }
 
 .annotations-closed-for-settings-opened {
-  height: 5vh;
-  width: 5vh;
+  height: 48.8px;
+  width: 48.8px;
   position: fixed;
   z-index: 1;
-  top: 5vh;
-  right: 20vh;
+  top: 49px;
+  right: 195px;
   background-color: silver;
   overflow: hidden;
   transition: 0.5s;
@@ -332,6 +431,7 @@ input:checked + .slider:before {
 .annotations-opened {
   height: 100%;
   width: 33%;
+  min-width: 350px;
   position: fixed;
   z-index: 1;
   top: 0;
@@ -373,9 +473,10 @@ textarea {
 
 .annotations-buttons {
   position: absolute;
-  background-color: rgb(192, 192, 192, .5);
   left: 0px;
   cursor: pointer;
+  padding-left: 17px;
+  padding-top: 16px;
 }
 
 .toggle-highlights-button { 
@@ -396,6 +497,12 @@ textarea {
   padding: 0;
   margin-top: 0;
   margin-left: 37px;
+}
+
+@media all and (max-width: 1061px) {
+    .toggle-button-opened, .settings-button-closed-for-toggle {
+      right: 350px;
+    }
 }
 
 .book-container {

@@ -23,8 +23,9 @@ export default function BackCover({ position, setPosition, setBookClosed, pageNu
     };
 
     const handleHover = () => {
-        console.log("hover")
-        setHover(flipped ? "closed-hover" : "hover")}
+        setHover(flipped ? "closed-hover" : "hover")
+    }
+    
     const handleLeave = () => setHover("")
 
     return (

@@ -1,0 +1,16 @@
+.quote-text {
+    cursor: pointer;
+    text-align: left;
+    padding-left: 19px;
+    padding-right: 19px;
+}
+
+.remove-highlight {
+    cursor: pointer;
+}
+
+.show-hide-comments {
+    color: blue;
+    margin-left: 5px;
+    cursor: pointer;
+}

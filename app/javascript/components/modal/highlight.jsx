@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { createLike, deleteLike } from '../../actions/likes_actions';
 import Comment from '../comments';
 import { fetchLikes } from '../../actions/likes_actions'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faComment, faHeart } from '@fortawesome/free-solid-svg-icons'
 
 const mapStateToProps = ({ entities, session }) => {
     return {
@@ -65,7 +67,7 @@ function Highlight({ id, text, cfiRange, comments, bookId, i, books, likes, crea
 
     const commentThread = (thread, id) => {
         return (
-            <div className="comments">
+            <div className="first-comments">
                 <div className="comment">
                     <div style={visibleForms.has(id) ? { display: "block" } : { display: "none" }} onSubmit={(e) => handleSubmit(e, id)} >
                         <textarea type="body" placeholder="Comment on quote" value={body} onChange={(e) => setBody(e.target.value)}></textarea>
@@ -99,16 +101,19 @@ function Highlight({ id, text, cfiRange, comments, bookId, i, books, likes, crea
                             <div className="apostrophe" style={{ float: "right" }}>&rsquo;&rsquo;</div>
                         </div>
                     </div>
-                    <div style={{ display: "flex" }} >
-                        <button
-                            onClick={(e) => handleVisibleForm(e, id)}
-                            value="comment">reply</button>
-                        <button
-                            value="like"
+                    <div className="highlight-comment-actions-container" >
+                        <div
+                            className="comment-icon"
+                            onClick={() => handleVisibleForm(id)}
+                            onMouseUp={() => handleMouseUp("comment")}>
+                            <FontAwesomeIcon icon={faComment} />
+                        </div>
+                        <div
                             onClick={handleLike}
-                            style={likes.highlights && likes.highlights[id] ? { backgroundColor: "red" } : {}}
-                        >like
-                        </button>
+                            onMouseUp={() => handleMouseUp("like")}
+                            style={likes.highlights && likes.highlights[id] ? { color: "red" } : { color: "gray" }}>
+                            <FontAwesomeIcon icon={faHeart} />
+                        </div>
                     </div>
                 </div>
             </div>

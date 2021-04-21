@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import { deleteHighlight, fetchReadersHighlights } from '../actions/highlights_actions'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEye } from '@fortawesome/free-solid-svg-icons'
+import { faEye, faComment, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 import { fetchRendition } from '../actions/rendition_actions'
 import { updateSettings } from '../actions/settings_actions'
 import ReaderList from './reader_list'
@@ -44,6 +44,7 @@ function Highlights({ id, highlights, _fontSize, highlightColor, _theme, deleteH
     const [settings, setSettings] = useState(false)
     const [fontSize, setFontSize] = useState(Number(_fontSize))
     const [theme, setTheme] = useState(_theme)
+    const [open, setOpen] = useState(null)
     // const [width, height] = useWindowSize();
 
     useEffect(() => {
@@ -103,23 +104,33 @@ function Highlights({ id, highlights, _fontSize, highlightColor, _theme, deleteH
         rendition.themes.default({ 'body': { 'color': textColor, }, });
     }
 
+    const handleClick = (icon) => {
+        // if ((icon && toggle) || !toggle) {
+        //     setToggle(!toggle);
+        //     if (settings && !toggle) {
+        //         setSettings(!settings)
+        //     }
+        // }
+        setOpen(open != "annotations" ? "annotations" : null)
+    }
+
     return (
         <div className={toggle ? "" : "annotations-container"}>
 
-            <div className={toggle ? settings ? "annotations-closed-for-settings" : "annotations-opened" : settings ? "annotations-closed-for-settings-opened" : "annotations-closed"} >
-                <div className="annotations-buttons" onClick={() => { setToggle(!toggle); if (settings && !toggle) {setSettings(!settings)} }}>
-                    <div>{toggle ? "close" : "open"}</div>
-                    <br />
+            <div className={toggle ? settings ? "annotations-closed-for-settings-opened" : "annotations-opened" : settings ? "annotations-closed-for-settings-opened" : "annotations-closed"} onClick={() => handleClick()}>
+                <div className="annotations-buttons" onClick={() => handleClick(true)}>
+                    <div>{settings ? <FontAwesomeIcon icon={faComment} /> : toggle ? <span>&#x2715;</span> : <FontAwesomeIcon icon={faComment} />}</div>
                 </div>
-                <ReaderList bookId={bookId} />
+                {/* <ReaderList bookId={bookId} /> */}
                 <HighlightList
+                    settings={settings}
                     toggle={toggle}
                     userId={userId}
                     bookId={bookId}
                 />
             </div>
 
-            <div className={toggle ? settings ? "toggle-button-closed-for-settings" : "toggle-button-opened" : settings ? "toggle-button-closed-for-settings" : "toggle-button"} onClick={() => { toggleHighlights() }}><FontAwesomeIcon icon={faEye} /></div>
+            <div className={toggle ? settings ? "toggle-button-closed-for-settings" : "toggle-button-opened" : settings ? "toggle-button-closed-for-settings" : "toggle-button"} onClick={() => { toggleHighlights() }}><div className="eye-container">{!visible ? <FontAwesomeIcon icon={faEye} /> : <FontAwesomeIcon icon={faEyeSlash} />}</div></div>
 
             <Settings 
                 settings={settings} 
@@ -130,6 +141,8 @@ function Highlights({ id, highlights, _fontSize, highlightColor, _theme, deleteH
                 setHighlightsColor={setHighlightsColor} 
                 setFontSize={setFontSize} 
                 setThemeColor={setThemeColor}
+                open={open}
+                setOpen={setOpen}
             />
 
         </div>
