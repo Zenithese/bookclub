@@ -33,7 +33,7 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-function HighlightsList({ toggle, highlights, fetchReadersHighlights, userId, comments, fetchComments, createComment, bookId, clearHighlights, readerId, rendition, deleteHighlight, likes, fetchLikes, createLike, deleteLike, settings }) {
+function HighlightsList({ toggle, highlights, fetchReadersHighlights, userId, comments, fetchComments, createComment, bookId, clearHighlights, readerId, rendition, deleteHighlight, likes, fetchLikes, createLike, deleteLike, open }) {
 
     const [visibleForms, setVisibleForms] = useState(new Set())
     const [body, setBody] = useState("")
@@ -183,7 +183,7 @@ function HighlightsList({ toggle, highlights, fetchReadersHighlights, userId, co
     )
 
     return (
-        <ul className={toggle ? settings ? "highlight-list-closed" : "highlight-list-opened" : "highlight-list-closed"}>
+        <ul className={open == "settings" ? "highlight-list-closed" : open == "annotations" ? "highlight-list-opened" : "highlight-list-closed"}>
             {list}
         </ul>
     )

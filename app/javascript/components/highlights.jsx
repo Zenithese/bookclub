@@ -8,7 +8,6 @@ import { updateSettings } from '../actions/settings_actions'
 import ReaderList from './reader_list'
 import Settings from './settings'
 import HighlightList from './ereader_highlight_list'
-import useWindowSize from './window_resize_hook';
 
 
 const mapStateToProps = ({ entities, session }, ownProps) => {
@@ -39,13 +38,10 @@ const mapDispatchToProps = dispatch => {
 
 function Highlights({ id, highlights, _fontSize, highlightColor, _theme, deleteHighlight, rendition, fetchRendition, updateSettings, bookId, userId, book }) {
     const [color, setColor] = useState(highlightColor)
-    const [toggle, setToggle] = useState(false)
     const [visible, setVisible] = useState(false)
-    const [settings, setSettings] = useState(false)
     const [fontSize, setFontSize] = useState(Number(_fontSize))
     const [theme, setTheme] = useState(_theme)
     const [open, setOpen] = useState(null)
-    // const [width, height] = useWindowSize();
 
     useEffect(() => {
         updateSettings(id, color, fontSize, theme);
@@ -105,37 +101,37 @@ function Highlights({ id, highlights, _fontSize, highlightColor, _theme, deleteH
     }
 
     const handleClick = (icon) => {
-        // if ((icon && toggle) || !toggle) {
-        //     setToggle(!toggle);
-        //     if (settings && !toggle) {
-        //         setSettings(!settings)
-        //     }
-        // }
+        if (!icon && open == "annotations") return
         setOpen(open != "annotations" ? "annotations" : null)
     }
 
     return (
-        <div className={toggle ? "" : "annotations-container"}>
+        <div className={open == "annotations" ? "" : "annotations-container"}>
 
-            <div className={toggle ? settings ? "annotations-closed-for-settings-opened" : "annotations-opened" : settings ? "annotations-closed-for-settings-opened" : "annotations-closed"} onClick={() => handleClick()}>
-                <div className="annotations-buttons" onClick={() => handleClick(true)}>
-                    <div>{settings ? <FontAwesomeIcon icon={faComment} /> : toggle ? <span>&#x2715;</span> : <FontAwesomeIcon icon={faComment} />}</div>
+            <div 
+                className={open == "annotations" ? "annotations-opened"  : open == "settings" ? "annotations-closed-for-settings-opened" : "annotations-closed"} onClick={() => handleClick()}>
+                <div 
+                    className="annotations-buttons" 
+                    onClick={() => handleClick(true)}>
+                    <div>{open == "settings" ? <FontAwesomeIcon icon={faComment} /> : open == "annotations" ? <span>&#x2715;</span> : <FontAwesomeIcon icon={faComment} />}</div>
                 </div>
                 {/* <ReaderList bookId={bookId} /> */}
                 <HighlightList
-                    settings={settings}
-                    toggle={toggle}
+                    open={open}
                     userId={userId}
                     bookId={bookId}
                 />
             </div>
 
-            <div className={toggle ? settings ? "toggle-button-closed-for-settings" : "toggle-button-opened" : settings ? "toggle-button-closed-for-settings" : "toggle-button"} onClick={() => { toggleHighlights() }}><div className="eye-container">{!visible ? <FontAwesomeIcon icon={faEye} /> : <FontAwesomeIcon icon={faEyeSlash} />}</div></div>
+            <div 
+                className={open == "annotations" ? open == "settings" ? "toggle-button-closed-for-settings" : "toggle-button-opened" : open == "settings" ? "toggle-button-closed-for-settings" : "toggle-button"} 
+                onClick={() => { toggleHighlights() }}>
+                    <div className="eye-container">
+                        {!visible ? <FontAwesomeIcon icon={faEye} /> : <FontAwesomeIcon icon={faEyeSlash} />}
+                    </div>
+            </div>
 
             <Settings 
-                settings={settings} 
-                setSettings={setSettings} 
-                toggle={toggle} 
                 fontSize={fontSize} 
                 theme={theme} 
                 setHighlightsColor={setHighlightsColor} 
