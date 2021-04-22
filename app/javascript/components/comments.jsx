@@ -4,6 +4,7 @@ import { createComment, fetchComments } from '../actions/comments_actions'
 import { createLike, deleteLike } from '../actions/likes_actions'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faComment, faHeart } from '@fortawesome/free-solid-svg-icons'
+import Avatar from './avatar'
 
 const mapStateToProps = ({ entities, session }) => {
     return {
@@ -70,7 +71,7 @@ function Comment({ comment, createComment, fetchComments, userId, comments, crea
     return (
         <div className="comments">
             <div className="comment-img-username-container">
-                <img className="comment-reader-img" src="/default-profile-img.jpeg" alt="" />
+                <Avatar className={"comment-reader-img"} avatarId={comment.avatarId} />
                 <div onClick={() => setDisplayReplies(!displayReplies)} className="comment-username">{comment.username}</div>
             </div>
             <div className="comment" key={comment.id} style={{ display: displayReplies ? "block" : "none" }}>

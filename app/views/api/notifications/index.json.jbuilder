@@ -1,6 +1,7 @@
 json.array! @notifications do |notification|
     json.id notification.id
     json.actor notification.actor.username
+    json.avatar_id notification.actor.avatar_id
     json.action notification.action
     json.read_at notification.read_at
     json.notifiable do

@@ -3,6 +3,7 @@
 json.id comment.id
 json.user_id comment.user_id
 json.username comment.user.username
+json.avatar_id comment.user.avatar_id
 json.commentable_type comment.commentable_type
 json.commentable_id comment.commentable_id
 json.body comment.body

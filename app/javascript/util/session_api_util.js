@@ -39,6 +39,20 @@ export const updateSettings = (id, color, fontSize, theme) => {
     )
 }
 
+export const updateAvatar = (id, avatarId) => {
+    return axios.patch(
+        `/api/users/${id}`,
+        { avatar_id: avatarId },
+        {
+            withCredentials: true,
+            transformResponse: [
+                ...axios.defaults.transformResponse,
+                data => humps.camelizeKeys(data)
+            ],
+        }
+    )
+}
+
 export const logout = () => {
     return axios.delete(
         '/api/session',

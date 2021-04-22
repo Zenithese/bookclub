@@ -1,0 +1,24 @@
+.avatar-list-container {
+    position: relative;
+    padding-top: 17px;
+}
+
+.avatar-list {
+    display: flex;
+    flex-wrap: wrap;
+    width: 300px;
+    height: 200px;
+    overflow: scroll;
+    position: absolute;
+    background-color: gray;
+    z-index: 2;
+    padding: 10px;
+    border-radius: 3px;
+    left: 50%;
+    transform: translateX(-50%);
+    outline: none;
+}
+
+.emoji-avatar {
+    cursor: pointer;
+}

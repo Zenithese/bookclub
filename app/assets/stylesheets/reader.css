@@ -17,6 +17,8 @@
     margin-top: 2%;
     text-decoration: none;
     color: antiquewhite;
+    width: fit-content;
+    margin: auto;
 }
 
 .reader-img {

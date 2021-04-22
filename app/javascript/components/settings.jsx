@@ -4,16 +4,17 @@ import { faCog } from '@fortawesome/free-solid-svg-icons'
 
 export default function Settings({ fontSize, theme, setHighlightsColor, setFontSize, setThemeColor, open, setOpen }) {
     
-    const handleClick = () => {
+    const handleClick = (icon) => {
+        if (!icon && open == "settings") return;
         setOpen(open != "settings" ? "settings" : null)
     }
 
     return (
         <div 
             className={open == "settings" ? "settings-button-opened" : open == "annotations" ? "settings-button-closed-for-toggle" : "settings-button"}
-            onClick={handleClick}>
+            onClick={() => handleClick()}>
             <div className={open == "settings" ? "" : "faCog-container"} 
-                onClick={handleClick}>
+                onClick={() => handleClick(true)}>
                 {   open == "settings" ?
                         <span>&#x2715;</span>
                         : <FontAwesomeIcon icon={faCog} style={{ fontSize: "20px" }} />

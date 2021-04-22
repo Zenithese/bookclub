@@ -3,8 +3,9 @@ import { connect } from 'react-redux';
 import { openModal } from '../actions/modal_actions';
 import { fetchNotifications, updateSeenNotifications, updateNotification, fetchUnseenNotificationCount } from '../actions/notifications_actions';
 import { fetchHighlight } from '../actions/highlights_actions';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBell } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBell } from '@fortawesome/free-solid-svg-icons';
+import Avatar from './avatar';
 
 const mapStateToProps = ({ entities, ui }) => {
     return {
@@ -54,7 +55,13 @@ function Notifications({ notifications, fetchNotifications, updateSeenNotificati
                 <div className="inner-contents-container">
                     {notifications.map((n, i) => {
                         return (
-                            <div onClick={() => handleNotificationClick(n.id, n.notifiable.ancestor.id)} style={!n.readAt ? { color: "red" } : { color: "black" }} className="notifications-drop-down-content" key={i}>{n.actor} {n.action} {n.notifiable.type}</div>
+                            <div 
+                                onClick={() => handleNotificationClick(n.id, n.notifiable.ancestor.id)} 
+                                style={!n.readAt ? { color: "red" } : { color: "black" }} 
+                                className="notifications-drop-down-content" 
+                                key={i}>
+                                    <Avatar className={"comment-reader-img"} avatarId={n.avatarId} /> {n.actor} {n.action} {n.notifiable.type}
+                            </div>
                         )
                     })}
                 </div>

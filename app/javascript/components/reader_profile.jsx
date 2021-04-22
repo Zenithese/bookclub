@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { fetchFollows, createFollow, deleteFollow } from '../actions/follows_actions'
 import HighlightsList from './highlights_list'
 import { fetchReader } from '../actions/readers_actions';
+import Avatar from './avatar'
+import AvatarList from './avatar_list';
 
 
 const mapStateToProps = ({ entities, session }, ownProps) => {
@@ -41,7 +43,10 @@ function ReaderProfile({ readerId, fetchFollows, createFollow, deleteFollow, fol
     return (
         <div>
             <div className="reader-container" >
-                <img className="reader-img" src="/default-profile-img.jpeg" alt="" />
+                <Avatar className={"reader-img"} avatarId={reader.avatarId} />
+                {currentUserId == reader.id &&
+                    <AvatarList />
+                }
                 <h1>{reader.username}</h1>
             </div>
             {currentUserId != reader.id && 

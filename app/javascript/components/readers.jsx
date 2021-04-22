@@ -26,7 +26,7 @@ function Readers({ fetchReaders, readers }) {
         <div className="community">
             {readers.map((reader, i) => {
                 return (
-                    <Reader username={reader.username} id={reader.id} key={i} />
+                    <Reader username={reader.username} id={reader.id} avatarId={reader.avatarId} key={i} />
                 )
             })}
         </div>

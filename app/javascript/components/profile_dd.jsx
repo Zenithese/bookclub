@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import { logout } from '../actions/session_actions';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import Avatar from './avatar';
 
 const mapStateToProps = ({ entities, session }) => {
     return {
         username: entities.users[session.id].username,
-        id: session.id
+        id: session.id,
+        avatarId: session.avatarId,
     }
 }
 
@@ -16,7 +18,7 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-function ProfileDD({ username, logout, id }) {
+function ProfileDD({ username, logout, id, avatarId }) {
 
     const [visible, setVisible] = useState(false)
     const [redirect, setRedirect] = useState(false)
@@ -51,8 +53,8 @@ function ProfileDD({ username, logout, id }) {
     )
 
     return (
-        <div className="profile-dd-container" tabIndex="0" onBlur={handleBlur} >
-            <img className="profile-dd-img" src="/default-profile-img.jpeg" alt="" onClick={() => setVisible(!visible)} />
+        <div className="profile-dd-container" tabIndex="0" onBlur={handleBlur} onClick={() => setVisible(!visible)}>
+            <Avatar className={"profile-dd-img"} avatarId={avatarId} />
             {dd}
         </div>
     )
