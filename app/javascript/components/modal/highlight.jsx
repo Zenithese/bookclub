@@ -86,7 +86,7 @@ function Highlight({ id, text, cfiRange, comments, bookId, i, books, likes, crea
     }
 
     return (
-        <div>
+        <div className="modal-highlights-container-container">
             <div className="modal-highlights-container" style={i % 2 ? { flexDirection: "row-reverse" } : {}}>
                 <img className="profile-book-image" src={books[bookId].image} style={i % 2 ? { marginLeft: "20px" } : { marginRight: "20px" }} />
                 <div onClick={handleClick} className="profile-annotation" key={i}>
