@@ -1,14 +1,18 @@
 .community {
- margin: auto;
-  display: flex;
-  flex-wrap: wrap;
-  width: 80%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 205px);
+    grid-gap: 1rem;
+    justify-content: center;
+    padding: 2rem;
+    width: 80vw;
+    margin: 0 auto;
+    list-style: none;
 }
 
 .reader-container {
     transition: 0.3s;
     height: 300px;
-    min-width: 250px;
+    min-width: 205px;
     min-height: 295px;
     margin-top: 2%;
     text-decoration: none;

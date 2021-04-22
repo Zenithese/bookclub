@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { openModal } from '../actions/modal_actions';
 import { fetchNotifications, updateSeenNotifications, updateNotification, fetchUnseenNotificationCount } from '../actions/notifications_actions';
 import { fetchHighlight } from '../actions/highlights_actions';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBell } from '@fortawesome/free-solid-svg-icons'
 
 const mapStateToProps = ({ entities, ui }) => {
     return {
@@ -47,12 +49,12 @@ function Notifications({ notifications, fetchNotifications, updateSeenNotificati
             <div className="drop-down-arrow-container">
                 <div className="notifications-drop-down-arrow" />
             </div>
-            <ul className="drop-down-contents">
+            <ul className="notifications-drop-down-contents">
                 <div className="drop-down-username">Notifcations</div>
                 <div className="inner-contents-container">
                     {notifications.map((n, i) => {
                         return (
-                            <div onClick={() => handleNotificationClick(n.id, n.notifiable.ancestor.id)} style={!n.readAt ? {color: "red"} : {color: "black"}} className="drop-down-content" key={i}>{n.actor} {n.action} {n.notifiable.type}</div>
+                            <div onClick={() => handleNotificationClick(n.id, n.notifiable.ancestor.id)} style={!n.readAt ? { color: "red" } : { color: "black" }} className="notifications-drop-down-content" key={i}>{n.actor} {n.action} {n.notifiable.type}</div>
                         )
                     })}
                 </div>
@@ -62,7 +64,11 @@ function Notifications({ notifications, fetchNotifications, updateSeenNotificati
 
     return (
         <div className="notifications-dd-container" tabIndex="0" onBlur={() => setVisible(false)} >
-            <div className="notification-button" onClick={handleClick} />
+            <div className="notification-button" onClick={handleClick}>
+                <div className="faBell-container">
+                    <FontAwesomeIcon icon={faBell} />
+                </div>
+            </div>
             <div className="notifications-red-dot" style={{display: count ? "block" : "none"}} >{count}</div>
             {dd}
         </div>

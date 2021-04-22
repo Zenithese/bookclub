@@ -38,7 +38,9 @@ function Books({ fetchBooks, createBook, books }) {
             null;
 
     return (
-        <div className="book-list-container">{booksList}</div>
+        <ul className="book-list-container">
+            {booksList}
+        </ul>
     )
 }
 
