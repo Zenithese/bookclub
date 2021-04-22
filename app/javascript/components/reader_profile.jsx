@@ -13,6 +13,7 @@ const mapStateToProps = ({ entities, session }, ownProps) => {
         follows: entities.follows,
         reader: entities.reader,
         currentUserId: session.id,
+        avatarId: session.avatarId,
     }
 }
 
@@ -25,7 +26,7 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-function ReaderProfile({ readerId, fetchFollows, createFollow, deleteFollow, follows, fetchReader, reader, currentUserId }) {
+function ReaderProfile({ readerId, fetchFollows, createFollow, deleteFollow, follows, fetchReader, reader, currentUserId, avatarId }) {
 
     useEffect(() => {
         fetchFollows()
@@ -43,7 +44,7 @@ function ReaderProfile({ readerId, fetchFollows, createFollow, deleteFollow, fol
     return (
         <div>
             <div className="reader-container" >
-                <Avatar className={"reader-img"} avatarId={reader.avatarId} />
+                <Avatar className={"reader-img"} avatarId={currentUserId == reader.id ? avatarId : reader.avatarId} />
                 {currentUserId == reader.id &&
                     <AvatarList />
                 }

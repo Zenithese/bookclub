@@ -11,7 +11,7 @@ function Avatar({ className, avatarId }) {
             imgRef.current.src = generateAvatar(
                 emojis[avatarId ? avatarId : 0],
                 "white",
-                "#009578"
+                "antiquewhite"
             );
         }
     })
