@@ -76,7 +76,7 @@ function Notifications({ notifications, fetchNotifications, updateSeenNotificati
                     <FontAwesomeIcon icon={faBell} />
                 </div>
             </div>
-            <div className="notifications-red-dot" style={{display: count ? "block" : "none"}} >{count}</div>
+            <div className="notifications-red-dot" style={{ display: count ? "block" : "none" }} ><span className="notifications-count" >{count}</span></div>
             {dd}
         </div>
     );

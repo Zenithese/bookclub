@@ -12,6 +12,7 @@ const mapStateToProps = ({ entities, session }) => {
         comments: entities.comments,
         likes: entities.likes,
         highlights: entities.highlights,
+        avatarId: session.avatarId,
     }
 }
 
@@ -24,7 +25,7 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-function Comment({ comment, createComment, fetchComments, userId, comments, createLike, deleteLike, likes, highlights, ancestorType, ancestorId }) {
+function Comment({ comment, createComment, fetchComments, userId, comments, createLike, deleteLike, likes, highlights, ancestorType, ancestorId, avatarId }) {
 
     const [visible, setVisible] = useState(false)
     const [body, setBody] = useState("")
@@ -33,7 +34,7 @@ function Comment({ comment, createComment, fetchComments, userId, comments, crea
     const wasLiked = comment.likesArray.includes(userId)
 
     const nestedComments = (comment.comments || []).map((comment) => {
-        return <Comment key={comment.id} comment={comment} createComment={createComment} userId={userId} fetchComments={fetchComments} comments={comments} createLike={createLike} deleteLike={deleteLike} likes={likes} highlights={highlights} wasLiked={wasLiked} ancestorType={ancestorType} ancestorId={ancestorId}/>
+        return <Comment key={comment.id} comment={comment} createComment={createComment} userId={userId} fetchComments={fetchComments} comments={comments} createLike={createLike} deleteLike={deleteLike} likes={likes} highlights={highlights} wasLiked={wasLiked} ancestorType={ancestorType} ancestorId={ancestorId} avatarId={avatarId} />
     }) // @CoderRocketFuel
 
     useEffect(() => {
@@ -71,7 +72,7 @@ function Comment({ comment, createComment, fetchComments, userId, comments, crea
     return (
         <div className="comments">
             <div className="comment-img-username-container">
-                <Avatar className={"comment-reader-img"} avatarId={comment.avatarId} />
+                <Avatar className={"comment-reader-img"} avatarId={comment.userId == userId ? avatarId : comment.avatarId} />
                 <div onClick={() => setDisplayReplies(!displayReplies)} className="comment-username">{comment.username}</div>
             </div>
             <div className="comment" key={comment.id} style={{ display: displayReplies ? "block" : "none" }}>

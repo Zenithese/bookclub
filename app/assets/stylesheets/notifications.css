@@ -85,13 +85,20 @@
 }
 
 .notifications-red-dot {
-    width: 9px;
-    height: 9px;
-    border-radius: 100px;
+    border-radius: 50px;
     background-color: red;
     position: absolute;
-    right: 1px;
-    bottom: 0px;
+    right: 19px;
+    bottom: -4px;
+    color: antiquewhite;
+    font-size: 11px;
+    min-width: 14px;
+    min-height: 14px;
+}
+
+.notifications-count {
+    padding-left: 4px;
+    padding-right: 4px;
 }
 
 .faBell-container {
