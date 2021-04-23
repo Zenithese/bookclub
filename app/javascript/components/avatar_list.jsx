@@ -40,6 +40,7 @@ function AvatarList({ userId, updateAvatar }) {
                     Change Avatar
                 </button>
             }
+            
             {visible &&
                 <div 
                     className="avatar-list" 
