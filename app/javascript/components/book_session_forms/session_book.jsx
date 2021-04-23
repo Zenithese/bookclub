@@ -1,4 +1,3 @@
-import './session_book.css'
 import React, { useEffect, useState } from 'react';
 import Cover from './cover';
 import Page from './page';
