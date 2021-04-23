@@ -12,6 +12,8 @@ class Api::LikesController < ApplicationController
     def create
         @like = @likeable.likes.create(:user_id => current_user.id)
         if @like.save
+            set_like_notifications
+
             render :show
         else
             render json: @like.errors.full_messages, status: 422

@@ -1,4 +1,4 @@
-class Api::Comments::LikesController < Api::LikesController
+class Api::Comments::LikesController < Api::Comments::Notifications::LikesController
     before_action :set_likeable
 
     private
