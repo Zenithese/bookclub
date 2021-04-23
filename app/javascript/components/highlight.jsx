@@ -38,7 +38,7 @@ function Highlight({ id, text, cfiRange, comments, bookId, i, commentThread, han
     }
 
     const handleLike = () => {
-        likes.highlights[id] ?
+        likes.highlights && likes.highlights[id] ?
             deleteLike(likes.highlights[id].id)
             : createLike("highlights", id)
     }

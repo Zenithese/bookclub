@@ -19,6 +19,7 @@ class Api::CommentsController < ApplicationController
   def create
     @comment = @commentable.comments.create(comment_params)
     if @comment.save
+      CommentHighlight.create!(comment_id: @comment.id, highlight_id: @comment.ancestor_id)
       set_notifications
 
       render :show

@@ -4,13 +4,17 @@ json.avatarId @notification.actor.avatar_id
 json.action @notification.action
 json.readAt @notification.read_at
 json.notifiable do
-    if notification.notifiable.class.to_s == "Comment" || notification.notifiable.class.to_s == "Highlight"
+    if @notification.notifiable.class.to_s == "Comment" || @notification.notifiable.class.to_s == "Highlight"
         json.type "a #{@notification.notifiable.commentable_type.downcase}"
         json.ancestor do
             json.type @notification.notifiable.ancestor_type.downcase
             json.id @notification.notifiable.ancestor_id
         end
-    elsif notification.notifiable.class.to_s == "Like"
+    elsif @notification.notifiable.class.to_s == "Like"
         json.type "a #{@notification.notifiable.likeable_type.downcase}"
+        json.ancestor do
+            json.type "highlight"
+            json.id @notification.notifiable.likeable_type == "Highlight" ? @notification.notifiable.likeable_id : @notification.notifiable.highlight.id
+        end
     end
 end

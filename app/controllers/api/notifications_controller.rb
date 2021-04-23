@@ -2,7 +2,7 @@ class Api::NotificationsController < ApplicationController
     skip_before_action :verify_authenticity_token
 
     def index
-        @notifications = Notification.where(recipient: current_user).order(:created_at)
+        @notifications = Notification.where(recipient: current_user).includes(:notifiable).order(:created_at)
         # + Notification.where(recipient: current_user).read
     end
 

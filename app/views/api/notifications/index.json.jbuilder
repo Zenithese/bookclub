@@ -7,13 +7,16 @@ json.array! @notifications do |notification|
     json.notifiable do
         if notification.notifiable.class.to_s == "Comment" || notification.notifiable.class.to_s == "Highlight"
             json.type "a #{notification.notifiable.commentable_type.downcase}"
-            # json.url `/#{notification.notifiable.ancestor_type.downcase}/#{notification.notifiable.ancestor_id}`
             json.ancestor do
                 json.type notification.notifiable.ancestor_type.downcase
                 json.id notification.notifiable.ancestor_id 
             end
         elsif notification.notifiable.class.to_s == "Like"
             json.type "a #{notification.notifiable.likeable_type.downcase}"
+            json.ancestor do
+                json.type "highlight"
+                json.id notification.notifiable.likeable_type == "Highlight" ? notification.notifiable.likeable_id : notification.notifiable.likeable.ancestor_id
+            end
         end
     end
 end

@@ -15,5 +15,7 @@ class Highlight < ApplicationRecord
 
     has_many :likes, as: :likeable
 
+    has_many :comment_highlights
+
     default_scope { order("created_at DESC") }
 end
