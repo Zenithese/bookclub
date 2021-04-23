@@ -77,7 +77,7 @@ function Highlight({ id, text, cfiRange, comments, bookId, i, books, likes, crea
                     </div>
                     {thread.map((comment) => {
                         return (
-                            <Comment key={comment.id} comment={comment} />
+                            <Comment key={comment.id} comment={comment} ancestorType={"Highlight"} ancestorId={id} />
                         )
                     })}
                 </div>

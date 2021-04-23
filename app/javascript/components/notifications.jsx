@@ -54,7 +54,6 @@ function Notifications({ notifications, fetchNotifications, updateSeenNotificati
                 <div className="drop-down-username">Notifcations</div>
                 <div className="inner-contents-container">
                     {notifications.map((n, i) => {
-                        debugger
                         return (
                             <div 
                                 onClick={() => handleNotificationClick(n.id, n.notifiable.ancestor.id)} 
