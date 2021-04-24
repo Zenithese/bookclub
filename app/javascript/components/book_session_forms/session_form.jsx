@@ -42,18 +42,18 @@ function SessionForm(props) {
 
     let appropriateCredentials = props.formType === 'login' ? (
         <div>
-            <label></label>
+            <ul className="session-errors" >{props.errors && props.errors.map(err => <li>{err}</li>)}</ul>
             <input type="text" value={username} onChange={update('username or email')} placeholder="Username or email"/>
         </div>
     ) : (
         <div>
             <div>
-                <label></label>
-                    <input type="text" value={username} onChange={update('username')} placeholder="Username" />
+                <ul className="session-errors">{props.errors && props.errors.map(err => <li>{err}</li>)}</ul>
+                <input type="text" value={username} onChange={update('username')} placeholder="Username" />
             </div>
             <div>
                 <label></label>
-                    <input type="email" value={email} onChange={update('email')} placeholder="Email" />
+                <input type="email" value={email} onChange={update('email')} placeholder="Email" />
             </div>
         </div>
     )
