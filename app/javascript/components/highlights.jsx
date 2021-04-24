@@ -49,7 +49,6 @@ function Highlights({ id, highlights, _fontSize, highlightColor, _theme, deleteH
 
     useEffect(() => {
         if (rendition) {
-            console.log("resize")
             highlights.forEach(highlight => {
                 const { cfiRange } = highlight;
                 updateHighlight(cfiRange)

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Cover from './cover';
 import Page from './page';
 import BackCover from './back_cover';

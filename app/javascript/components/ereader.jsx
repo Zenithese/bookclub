@@ -73,7 +73,6 @@ class Ereader extends Component {
         const _this = this
 
         rendition.on("selected", function (cfiRange, contents) {
-            console.log("selected")
             let className = `${cfiRange}-${Math.random()}`
             rendition.annotations.remove(cfiRange, "highlight");
             rendition.annotations.highlight(cfiRange, {}, null, className, { "fill": "transparent" });
@@ -98,7 +97,6 @@ class Ereader extends Component {
 
         rendition.on("mouseup", function (event) {
             if (_this.state.lastEffectiveEvent == "selected") {
-                console.log("up")
                 if (event.clientX < _this.state.x) {
                     const el = _this.state.el.firstElementChild.getBoundingClientRect()
                     _this.setState({ 
