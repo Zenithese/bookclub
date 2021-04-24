@@ -38,6 +38,7 @@ function HighlightsList({ toggle, highlights, fetchReadersHighlights, userId, co
     const [visibleForms, setVisibleForms] = useState(new Set())
     const [body, setBody] = useState("")
     const [visibleComments, setVisibleComments] = useState(new Set())
+    const [newCommentId, setNewCommentId] = useState(null)
 
     const [width, height] = useWindowSize();
 
@@ -59,6 +60,14 @@ function HighlightsList({ toggle, highlights, fetchReadersHighlights, userId, co
     }, [comments])
 
     useEffect(() => {
+        if (visibleForms.has(newCommentId)) {
+            const newSet = new Set(visibleForms);
+            newSet.delete(newCommentId);
+            setVisibleForms(newSet);
+        }
+    }, [highlights])
+
+    useEffect(() => {
         fetchComments();
         fetchLikes();
 
@@ -78,6 +87,7 @@ function HighlightsList({ toggle, highlights, fetchReadersHighlights, userId, co
             ancestorId: id,
         }
         createComment(comment);
+        setNewCommentId(id);
     }
 
     const handleVisibleForm = (e, id) => {
@@ -124,7 +134,11 @@ function HighlightsList({ toggle, highlights, fetchReadersHighlights, userId, co
                     <div className="comment-actions-container" style={!visibleForms.has(id) ? {} : { display: "none" }}>
                         <div
                             className="comment-icon"
-                            onClick={(e) => handleVisibleForm(e, id)}>
+                            onClick={(e) => {
+                                    handleVisibleForm(e, id)
+                                    if (!visibleComments.has(id)) handleVisibleComments(id)
+                                }
+                            }>
                             <FontAwesomeIcon icon={faComment} />
                         </div>
                         <div
