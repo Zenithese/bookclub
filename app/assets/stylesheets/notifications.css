@@ -55,8 +55,6 @@
     padding: 0px;
     margin: 0px;
     padding-left: 10px;
-    padding-bottom: 7px;
-    padding-top: 3px;
     border-radius: 1px;
 }
 
@@ -73,9 +71,11 @@
     cursor: pointer;
 }
 
-.inner-contents-container {
+.notifications-inner-contents-container {
     margin-top: 5px;
     text-align: left;
+    max-height: 300px;
+    overflow: scroll;
 }
 
 .drop-down-hr {

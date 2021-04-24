@@ -52,7 +52,7 @@ function Notifications({ notifications, fetchNotifications, updateSeenNotificati
             </div>
             <ul className="notifications-drop-down-contents">
                 <div className="drop-down-username">Notifcations</div>
-                <div className="inner-contents-container">
+                <div className="notifications-inner-contents-container">
                     {notifications.map((n, i) => {
                         return (
                             <div 
@@ -70,7 +70,7 @@ function Notifications({ notifications, fetchNotifications, updateSeenNotificati
     );
 
     return (
-        <div className="notifications-dd-container" tabIndex="0" onBlur={() => setVisible(false)} >
+        <div className="notifications-dd-container" tabIndex="0"  >
             <div className="notification-button" onClick={handleClick}>
                 <div className="faBell-container">
                     <FontAwesomeIcon icon={faBell} />

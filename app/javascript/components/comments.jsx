@@ -44,8 +44,7 @@ function Comment({ comment, createComment, fetchComments, userId, comments, crea
         }
     }, [highlights])
 
-    const handleSubmit = (e, id) => {
-        e.preventDefault();
+    const handleSubmit = (id) => {
         if (!body.length) return;
         const comment = {
             body,
@@ -88,8 +87,10 @@ function Comment({ comment, createComment, fetchComments, userId, comments, crea
                 </div>
                 <div className="reply-area" style={visible ? { display: "block" } : { display: "none" }} >
                     <textarea type="body" placeholder="Reply to comment" value={body} onChange={(e) => setBody(e.target.value)}></textarea>
-                    <button onClick={(e) => handleSubmit(e, comment.id)}>Submit</button>
-                    <button onClick={() => setVisible(!visible)}>cancel</button>
+                    <div className="first-reply-actions">
+                        <button onClick={() => handleSubmit(comment.id)}>Submit</button>
+                        <button onClick={() => setVisible(!visible)}>cancel</button>
+                    </div>
                 </div>
                 {nestedComments}
             </div>
