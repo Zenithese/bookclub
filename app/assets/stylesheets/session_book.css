@@ -280,3 +280,9 @@
 .session-form {
   margin-top: 100px;
 }
+
+.login-demo-container {
+  display: grid;
+  width: fit-content;
+  margin: auto;
+}
