@@ -15,7 +15,7 @@ const mapStateToProps = ({ entities, session }, ownProps) => {
         highlights: entities.highlights,
         comments: entities.comments,
         rendition: entities.rendition.rendition,
-        _fontSize: entities.users[session.id].font_size,
+        _fontSize: entities.users[session.id].font_size > 49 ? entities.users[session.id].font_size : 100,
         highlightColor: entities.users[session.id].highlight_color,
         _theme: entities.users[session.id].theme,
         id: session.id,
