@@ -172,7 +172,7 @@ function HighlightsList({ toggle, highlights, fetchReadersHighlights, userId, co
         highlights.map(({ id, text, cfiRange, comments }, i) => {
             return (
                 <div className="annotation" key={i}>
-                    <br />
+                    <div className="remove-highlight" href={`#${cfiRange}`} onClick={() => handleDelete(cfiRange, id)}><span style={{marginLeft: "3px"}}>&#x2715;</span></div>
                     <div className="quote">
                         <div className="apostrophe-container">
                             <div className="apostrophe" style={{ float: "left" }}>&lsquo;&lsquo;</div>
@@ -188,7 +188,6 @@ function HighlightsList({ toggle, highlights, fetchReadersHighlights, userId, co
                         </div>
                     </div>
                     {commentThread(comments, id)}
-                    {/* <div className="remove-highlight" href={`#${cfiRange}`} onClick={() => handleDelete(cfiRange, id)}>delete</div> */}
                 </div>
             )
         })

@@ -24,9 +24,9 @@ function ReaderListNode({ username, id, bookId, fetchReadersHighlights, highligh
     }
     
     return (
-        <div onClick={handleClick} >
+        <option onClick={handleClick} >
             {username}
-        </div>
+        </option>
     )
 }
 

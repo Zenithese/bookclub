@@ -114,7 +114,10 @@ function Highlights({ id, highlights, _fontSize, highlightColor, _theme, deleteH
                     onClick={() => handleClick(true)}>
                     <div>{open == "settings" ? <FontAwesomeIcon icon={faComment} /> : open == "annotations" ? <span>&#x2715;</span> : <FontAwesomeIcon icon={faComment} />}</div>
                 </div>
-                {/* <ReaderList bookId={bookId} /> */}
+                <ReaderList 
+                    bookId={bookId} 
+                    open={open}
+                />
                 <HighlightList
                     open={open}
                     userId={userId}
