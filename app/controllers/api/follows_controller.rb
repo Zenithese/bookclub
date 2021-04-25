@@ -9,6 +9,8 @@ class Api::FollowsController < ApplicationController
         @follow = Follow.new(:user_id => current_user.id, :follow_id => params[:follow_id])
         
         if @follow.save
+            Notification.create!(recipient: @follow.follow, actor: current_user, action: "follows", notifiable: @follow)
+            
             render :show
         else
             render json: @follow.errors.full_messages, status: 422

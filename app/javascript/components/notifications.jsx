@@ -6,6 +6,7 @@ import { fetchHighlight } from '../actions/highlights_actions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell } from '@fortawesome/free-solid-svg-icons';
 import Avatar from './avatar';
+import { useHistory } from 'react-router-dom';
 
 const mapStateToProps = ({ entities, ui }) => {
     return {
@@ -29,6 +30,8 @@ function Notifications({ notifications, fetchNotifications, updateSeenNotificati
 
     const [visible, setVisible] = useState(false);
 
+    const history = useHistory();
+
     useEffect(() => {
         fetchNotifications();
         fetchUnseenNotificationCount();
@@ -43,6 +46,14 @@ function Notifications({ notifications, fetchNotifications, updateSeenNotificati
         updateNotification(id)
         fetchHighlight(nId)
         openModal("highlight")
+        setVisible(false)
+    }
+
+    const handleFollowNotificationClick = (id, rId) => {
+        updateNotification(id)
+        const path = `/reader/${rId}`
+        history.push(path)
+        setVisible(false)
     }
 
     const dd = visible && (
@@ -56,7 +67,7 @@ function Notifications({ notifications, fetchNotifications, updateSeenNotificati
                     {notifications.map((n, i) => {
                         return (
                             <div 
-                                onClick={() => handleNotificationClick(n.id, n.notifiable.ancestor.id)} 
+                                onClick={() => n.action == "follows" ? handleFollowNotificationClick(n.id, n.notifiable.ancestor.id) : handleNotificationClick(n.id, n.notifiable.ancestor.id)} 
                                 style={!n.readAt ? { color: "red" } : { color: "black" }} 
                                 className="notifications-drop-down-content" 
                                 key={i}>
@@ -70,7 +81,7 @@ function Notifications({ notifications, fetchNotifications, updateSeenNotificati
     );
 
     return (
-        <div className="notifications-dd-container" tabIndex="0"  >
+        <div className="notifications-dd-container" tabIndex="0"  onBlur={() => setVisible(false)}>
             <div className="notification-button" onClick={handleClick}>
                 <div className="faBell-container">
                     <FontAwesomeIcon icon={faBell} />

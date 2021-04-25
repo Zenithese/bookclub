@@ -16,5 +16,11 @@ json.notifiable do
             json.type "highlight"
             json.id @notification.notifiable.likeable_type == "Highlight" ? @notification.notifiable.likeable_id : @notification.notifiable.highlight.id
         end
+    elsif @notification.notifiable.class.to_s == "Follow"
+        json.type "you"
+        json.ancestor do
+            json.type "reader"
+            json.id @notification.actor_id
+        end
     end
 end
