@@ -28,7 +28,6 @@ function Books({ fetchBooks, createBook, books }) {
                     <div className="book-container" key={book.id}>
                         <Link className="book-link" to={`/book/${book.id}`} >
                             <img className="book-image" src={book.image}/>
-                            <br/>
                             <div className="book-title">{book.title}</div>
                         </Link>
                     </div>

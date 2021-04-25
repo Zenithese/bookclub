@@ -541,19 +541,22 @@ textarea {
 } */
 
 .book-title {
-  position: relative;
-  top: -40px;
+  position: absolute;
+  bottom: 17px;
   background-color: yellow;
   color: black;
   border-radius: 17px;
-  width: 70%;
-  max-width: 175px;
+  width: 80%;
   margin: auto;
+  margin-left: 7%;
   opacity: .9;
+  padding-left: 8px;
+  padding-right: 8px;
 }
 
 .book-link {
   text-decoration: none;
+  position: relative;
 }
 
 /* @media screen and (min-width: 1080px) {
