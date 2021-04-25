@@ -106,5 +106,11 @@ Book.create!([
         title: "Journey to the Center of the Earth",
         location: "0",
     },
+    {
+        epub_file: "/hplovecraftbook.epub",
+        image: "/hplovecraftcover.jpeg",
+        title: "HP Lovecraft Short fiction",
+        location: "0",
+    },
 ])
 
