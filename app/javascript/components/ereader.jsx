@@ -145,7 +145,7 @@ class Ereader extends Component {
                     styles={this.props.theme === "dark" ? darkTheme : lightTheme}
                 />
 
-                { this.state.visible ? <div className="tooltip" style={{ position: "absolute", left: `${this.state.x}px`, top: `${this.state.y}px`, backgroundColor: "red", zIndex: "1" }}><span className="popuptext" onClick={ () => this.handleHighlight() }>Highlight!</span></div> : null }
+                { this.state.visible ? <div className="tooltip" style={{ position: "absolute", left: `${this.state.x}px`, top: `${this.state.y}px`, backgroundColor: "red", zIndex: "1", cursor: "pointer" }}><span className="popuptext" onClick={ () => this.handleHighlight() }>Highlight!</span></div> : null }
 
             </div>
         );
