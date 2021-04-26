@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { connect } from 'react-redux';
 import { deleteHighlight, fetchReadersHighlights } from '../actions/highlights_actions'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -8,6 +8,7 @@ import { updateSettings } from '../actions/settings_actions'
 import ReaderList from './reader_list'
 import Settings from './settings'
 import HighlightList from './ereader_highlight_list'
+import { debounce } from 'lodash';
 
 
 const mapStateToProps = ({ entities, session }, ownProps) => {
@@ -43,8 +44,13 @@ function Highlights({ id, highlights, _fontSize, highlightColor, _theme, deleteH
     const [theme, setTheme] = useState(_theme)
     const [open, setOpen] = useState(null)
 
+    const delayedUpdate = useCallback(
+        debounce((id, color, fontSize, theme) => updateSettings(id, color, fontSize, theme), 400),
+        []
+    );
+
     useEffect(() => {
-        updateSettings(id, color, fontSize, theme);
+        delayedUpdate(id, color, fontSize, theme)
     }, [updateSettings, id, color, fontSize, theme])
 
     useEffect(() => {

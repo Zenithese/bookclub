@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { fetchReaders } from '../actions/readers_actions';
-import ReaderListNode from './reader_list_node';
 import { fetchReadersHighlights } from '../actions/highlights_actions';
 import { fetchFollows } from '../actions/follows_actions';
 
@@ -38,14 +37,14 @@ function ReaderList({ fetchReaders, readers, bookId, highlights, rendition, fetc
     return (
         <div style={{ height: "3%", display: open == "annotations" ? "block" : "none"}}>
             <div style={{ paddingTop: "2px"}}>
-                <label for="readers" >Select from follows:</label >
+                <label htmlFor="readers" >Select from follows:</label >
                 <select name="readers" id="reader-select" onChange={handleSelect}>
                     <option value="currentUser">
                         {currentUser.username}
                     </option>
                     {readers.map((reader, i) => {
                         return (
-                            <option value={i}>
+                            <option value={i} key={i}>
                                 {reader.username}
                             </option>
                         )
