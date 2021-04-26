@@ -80,6 +80,7 @@ class Ereader extends Component {
             if (_this.state.lastEffectiveEvent == "mouseup") {
                 const el = document.getElementsByClassName(className)[0].firstElementChild.getBoundingClientRect()
                 _this.setState({
+                    cfiRange: cfiRange,
                     visible: true,
                     x: el.x + ((el.width / 2) - 35),
                     y: el.y - 20
