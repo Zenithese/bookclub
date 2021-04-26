@@ -19,6 +19,7 @@ class Api::FollowsController < ApplicationController
 
     def destroy
         @follow = Follow.find(params[:id])
+        @follow.notifications.destroy_all
         @follow.destroy
         render :show
     end

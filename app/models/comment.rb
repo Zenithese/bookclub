@@ -11,6 +11,8 @@ class Comment < ApplicationRecord
     has_one :comment_highlight
     has_one :highlight, through: :comment_highlight
 
+    has_many :notifications, as: :notifiable
+
     def likes_array
         likes.map { |like| like.user_id }
     end

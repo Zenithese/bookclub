@@ -17,5 +17,21 @@ class Highlight < ApplicationRecord
 
     has_many :comment_highlights
 
+    has_many :notifications, as: :notifiable
+
+    def likes_array
+        likes.map { |like| like.user_id }
+    end
+
+    def recursive_delete(comments)
+        comments.each do |comment|
+            if comment.comments.length > 0
+                recursive_delete(comment.comments)
+            end
+            comment.notifications.destroy_all
+            comment.destroy
+        end
+    end
+
     default_scope { order("created_at DESC") }
 end

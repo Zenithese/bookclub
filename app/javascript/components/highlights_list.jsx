@@ -105,9 +105,9 @@ function HighlightsList({ highlights, userId, comments, fetchComments, fetchRead
     }
 
     const list = highlights.length ? (
-        highlights.map(({ id, text, cfiRange, comments, bookId }, i) => {
+        highlights.map(({ id, text, cfiRange, comments, bookId, likesCount, likesArray }, i) => {
             return (
-                <Highlight id={id} text={text} cfiRange={cfiRange} comments={comments} bookId={bookId} i={i} commentThread={commentThread} handleVisibleForm={handleVisibleForm} visibleForms={visibleForms} />
+                <Highlight id={id} text={text} cfiRange={cfiRange} comments={comments} bookId={bookId} i={i} commentThread={commentThread} handleVisibleForm={handleVisibleForm} visibleForms={visibleForms} likesCount={likesCount} likesArray={likesArray} />
             )
         })
     ) : (

@@ -6,4 +6,6 @@ class Follow < ApplicationRecord
 
     belongs_to :follow, class_name: :User
 
+    has_many :notifications, as: :notifiable
+
 end

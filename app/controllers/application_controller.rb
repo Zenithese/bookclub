@@ -32,5 +32,19 @@ class ApplicationController < ActionController::Base
         render json: { base: ['invalid credentials'] }, status: 401
         end
     end
+
+    def recursive_delete(comments)
+        comments.each do |comment|
+            if comment.comments.length > 0
+                recursive_delete(comment.comments)
+            end
+            comment.likes.each do |like| 
+                like.notification.destroy if like.notification
+                like.destroy
+            end
+            comment.notifications.destroy_all
+            comment.destroy
+        end
+    end
 end
 

@@ -14,7 +14,7 @@ json.notifiable do
         json.type "a #{@notification.notifiable.likeable_type.downcase}"
         json.ancestor do
             json.type "highlight"
-            json.id @notification.notifiable.likeable_type == "Highlight" ? @notification.notifiable.likeable_id : @notification.notifiable.highlight.id
+            json.id @notification.notifiable.likeable_type == "Highlight" ? @notification.notifiable.likeable_id : @notification.notifiable.likeable.ancestor_id
         end
     elsif @notification.notifiable.class.to_s == "Follow"
         json.type "you"

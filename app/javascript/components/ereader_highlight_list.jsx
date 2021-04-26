@@ -114,6 +114,7 @@ function HighlightsList({ toggle, highlights, fetchReadersHighlights, userId, co
     }
 
     const handleLike = (id) => {
+        debugger
         likes.highlights && likes.highlights[id] ?
             deleteLike(likes.highlights[id].id)
             : createLike("highlights", id)
@@ -127,7 +128,12 @@ function HighlightsList({ toggle, highlights, fetchReadersHighlights, userId, co
         }
     }
 
-    const commentThread = (thread, id) => {
+    const likeCount = (highlight) => {
+        const count = (likes.highlights && likes.highlights[highlight.id] ? 1 : 0) + highlight.likesCount + (highlight.likesArray.includes(userId) ? -1 : 0)
+        return count === 0 ? null : count
+    }
+
+    const commentThread = (thread, id, count) => {
         return (
             <div className="comments">
                 <div className="comment">
@@ -144,7 +150,7 @@ function HighlightsList({ toggle, highlights, fetchReadersHighlights, userId, co
                         <div
                             style={likes.highlights && likes.highlights[id] ? { color: "red" } : { color: "gray" }}
                             onClick={() => handleLike(id)}>
-                            <FontAwesomeIcon icon={faHeart} />
+                            <FontAwesomeIcon icon={faHeart} /> {count}
                         </div>
                         {thread.length ? 
                             <div className="show-hide-comments" onClick={() => handleVisibleComments(id)}>{ !visibleComments.has(id) ? "show comments" : "hide comments" }</div>
@@ -172,7 +178,11 @@ function HighlightsList({ toggle, highlights, fetchReadersHighlights, userId, co
         highlights.map(({ id, text, cfiRange, comments }, i) => {
             return (
                 <div className="annotation" key={i}>
-                    <div className="remove-highlight" href={`#${cfiRange}`} onClick={() => handleDelete(cfiRange, id)}><span style={{marginLeft: "3px"}}>&#x2715;</span></div>
+                    {
+                        userId == highlights[i].userId ?
+                            <div className="remove-highlight" href={`#${cfiRange}`} onClick={() => handleDelete(cfiRange, id)}><span style={{ marginLeft: "3px" }}>&#x2715;</span></div>
+                            : <br />
+                    }
                     <div className="quote">
                         <div className="apostrophe-container">
                             <div className="apostrophe" style={{ float: "left" }}>&lsquo;&lsquo;</div>
@@ -187,7 +197,7 @@ function HighlightsList({ toggle, highlights, fetchReadersHighlights, userId, co
                             <div className="apostrophe" style={{ float: "right" }}>&rsquo;&rsquo;</div>
                         </div>
                     </div>
-                    {commentThread(comments, id)}
+                    {commentThread(comments, id, likeCount(highlights[i]))}
                 </div>
             )
         })

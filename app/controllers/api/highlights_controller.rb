@@ -2,7 +2,7 @@ class Api::HighlightsController < ApplicationController
     skip_before_action :verify_authenticity_token
 
     def index
-        @highlights = Highlight.where(user_id: current_user.id).includes(:comments)
+        @highlights = Highlight.where(user_id: current_user.id).includes(:comments, :likes)
     end
 
     def search
@@ -19,6 +19,7 @@ class Api::HighlightsController < ApplicationController
         @highlight = Highlight.new(highlight_params)
         
         if @highlight.save
+
             render :show
         else
             render json: @highlight.errors.full_messages, status: 422
@@ -31,6 +32,12 @@ class Api::HighlightsController < ApplicationController
 
     def destroy
         @highlight = Highlight.find(params[:id])
+        @highlight.notifications.destroy_all
+        @highlight.likes.each do |like|
+            like.notification.destroy if like.notification
+            like.destroy
+        end
+        recursive_delete(@highlight.comments)
         @highlight.destroy
         render :show
     end
@@ -44,7 +51,7 @@ class Api::HighlightsController < ApplicationController
         end
     end
 
-    # private
+    private
 
     def highlight_params
         params.require(:highlight).permit(:text, :cfi_range, :user_id, :book_id)

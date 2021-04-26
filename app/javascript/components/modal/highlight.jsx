@@ -27,7 +27,7 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-function Highlight({ id, text, cfiRange, comments, bookId, i, books, likes, createLike, deleteLike, fetchLikes, userId, createComment }) {
+function Highlight({ id, text, cfiRange, comments, bookId, i, books, likes, createLike, deleteLike, fetchLikes, userId, createComment, highlight }) {
 
     const [visibleThread, setVisibleThread] = useState(false)
     const [visibleForms, setVisibleForms] = useState(new Set())
@@ -83,6 +83,11 @@ function Highlight({ id, text, cfiRange, comments, bookId, i, books, likes, crea
         setNewCommentId(id);
     }
 
+    const likeCount = () => {
+        const count = (likes.highlights && likes.highlights[highlight.id] ? 1 : 0) + highlight.likesCount + (highlight.likesArray.includes(userId) ? -1 : 0)
+        return count === 0 ? null : count
+    }
+
     const commentThread = (thread, id) => {
         return (
             <div className="first-comments">
@@ -132,7 +137,7 @@ function Highlight({ id, text, cfiRange, comments, bookId, i, books, likes, crea
                             onClick={handleLike}
                             // onMouseUp={() => handleMouseUp("like")}
                             style={likes.highlights && likes.highlights[id] ? { color: "red" } : { color: "gray" }}>
-                            <FontAwesomeIcon icon={faHeart} />
+                            <FontAwesomeIcon icon={faHeart} /> {likeCount()}
                         </div>
                     </div>
                 </div>

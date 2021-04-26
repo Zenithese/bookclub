@@ -8,6 +8,7 @@ const mapStateToProps = ({ entities, session }) => {
     return {
         likes: entities.likes,
         books: entities.books,
+        userId: session.id,
     }
 }
 
@@ -18,7 +19,7 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-function Highlight({ id, text, cfiRange, comments, bookId, i, commentThread, handleVisibleForm, visibleForms, books, likes, createLike, deleteLike, el }) {
+function Highlight({ id, text, cfiRange, comments, bookId, i, commentThread, handleVisibleForm, visibleForms, books, likes, createLike, deleteLike, likesCount, likesArray, userId }) {
 
     const [visibleThread, setVisibleThread] = useState(false)
     const [cancelClick, setCancelClick] = useState(false)
@@ -41,6 +42,11 @@ function Highlight({ id, text, cfiRange, comments, bookId, i, commentThread, han
         likes.highlights && likes.highlights[id] ?
             deleteLike(likes.highlights[id].id)
             : createLike("highlights", id)
+    }
+
+    const likeCount = () => {
+        const count = (likes.highlights && likes.highlights[id] ? 1 : 0) + likesCount + (likesArray.includes(userId) ? -1 : 0)
+        return count === 0 ? null : count
     }
 
     const handleMouseUp = (type) => {
@@ -75,7 +81,7 @@ function Highlight({ id, text, cfiRange, comments, bookId, i, commentThread, han
                             onClick={handleLike} 
                             onMouseUp={() => handleMouseUp("like")}
                             style={likes.highlights && likes.highlights[id] ? { color: "red" } : { color: "gray"}}>
-                                <FontAwesomeIcon icon={faHeart} />
+                                <FontAwesomeIcon icon={faHeart} /> {likeCount()}
                         </div>
                     </div>
                 </div>

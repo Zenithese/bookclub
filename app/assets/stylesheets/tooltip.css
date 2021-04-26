@@ -1,0 +1,6 @@
+.tooltip {
+    position: absolute;
+    background-color: red;
+    z-index: 1;
+    cursor: pointer;
+}
