@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { createLike, deleteLike } from '../actions/likes_actions'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faComment, faHeart } from '@fortawesome/free-solid-svg-icons'
+import { createComment } from '../actions/comments_actions'
+import Comment from './comments'
 
 const mapStateToProps = ({ entities, session }) => {
     return {
@@ -16,19 +18,25 @@ const mapDispatchToProps = dispatch => {
     return {
         createLike: (likeableType, likeableId) => dispatch(createLike(likeableType, likeableId)),
         deleteLike: (id) => dispatch(deleteLike(id)),
+        createComment: (comment) => dispatch(createComment(comment)),
     }
 }
 
-function Highlight({ id, text, cfiRange, comments, bookId, i, commentThread, handleVisibleForm, visibleForms, books, likes, createLike, deleteLike, likesCount, likesArray, userId }) {
+function Highlight({ id, text, cfiRange, comments, bookId, i, books, likes, createLike, deleteLike, likesCount, likesArray, userId, createComment }) {
 
     const [visibleThread, setVisibleThread] = useState(false)
     const [cancelClick, setCancelClick] = useState(false)
+    const [visible, setVisible] = useState(false)
+    const [body, setBody] = useState("")
+    const [newCommentId, setNewCommentId] = useState(null)
 
     useEffect(() => {
-        if (!visibleThread && visibleForms.has(id)) {
-            handleVisibleForm(id)
+        if (newCommentId) {
+            setVisible(false);
+            setBody("")
+            setNewCommentId(null)
         }
-    }, [visibleThread])
+    }, [comments])
 
     const handleClick = (e) => {
         if (cancelClick) {
@@ -36,6 +44,7 @@ function Highlight({ id, text, cfiRange, comments, bookId, i, commentThread, han
             return
         }
         setVisibleThread(!visibleThread)
+        if (visibleThread && visible) setVisible(false)
     }
 
     const handleLike = () => {
@@ -54,11 +63,49 @@ function Highlight({ id, text, cfiRange, comments, bookId, i, commentThread, han
         setCancelClick(true)
     }
 
+    const handleSubmit = (e, id) => {
+        e.preventDefault();
+        const comment = {
+            body,
+            id,
+            userId,
+            parent: true,
+            ancestorType: "Highlight",
+            ancestorId: id
+        }
+        createComment(comment);
+        setNewCommentId(id);
+    }
+
+    const commentThread = (thread, id) => {
+        return (
+            <div className="first-comments">
+                <div className="comment">
+                    <div className="first-reply-area" style={visible ? {} : { display: "none" }} onSubmit={(e) => handleSubmit(e, id)} >
+                        <textarea type="body" placeholder="Comment on quote" value={body} onChange={(e) => setBody(e.target.value)}></textarea>
+                        <div className="first-reply-actions">
+                            <button onClick={(e) => handleSubmit(e, id)}>Submit</button>
+                            <button onClick={() => setVisible(false)}>cancel</button>
+                        </div>
+                    </div>
+                    {thread.length ?
+                        thread.map((comment) => {
+                            return (
+                                <Comment key={comment.id} comment={comment} ancestorType={"Highlight"} ancestorId={id} />
+                            )
+                        })
+                        : <div>Feeling empty here</div>
+                    }
+                </div>
+            </div>
+        )
+    }
+
     return (
         <div>
             <div className="profile-highlights-container" style={i % 2 ? { flexDirection: "row-reverse" } : {}}>
                 <img className="profile-book-image" src={books[bookId].image} style={i % 2 ? { marginLeft: "20px" } : { marginRight: "20px" }} />
-                <div onClick={handleClick} className="profile-annotation" key={i}>
+                <div onClick={handleClick} className="profile-annotation" >
                     <div className="inner-profile-annotation-container">
                         <div className="apostrophe-container">
                             <div className="apostrophe" style={{ float: "left" }}>&lsquo;&lsquo;</div>
@@ -73,7 +120,7 @@ function Highlight({ id, text, cfiRange, comments, bookId, i, commentThread, han
                     <div className="highlight-comment-actions-container" >
                         <div 
                             className="comment-icon"
-                            onClick={() => handleVisibleForm(id)}
+                            onClick={() => setVisible(!visible)}
                             onMouseUp={() => handleMouseUp("comment")}>
                                 <FontAwesomeIcon icon={faComment} /> 
                         </div>

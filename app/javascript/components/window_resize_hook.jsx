@@ -1,5 +1,4 @@
 import React, { useLayoutEffect, useState } from 'react';
-import { debounce } from 'lodash';
 
 export default function useWindowSize() {
     const [size, setSize] = useState([window.innerWidth, window.innerHeight]);
@@ -13,12 +12,3 @@ export default function useWindowSize() {
     }, []);
     return size;
 }
-
-// useLayoutEffect(() => {
-//     window.addEventListener('resize', updateSize);
-//     const updateSize = useCallback(
-//         debounce(() => setSize([window.innerWidth, window.innerHeight]), 500),
-//         []
-//     );
-//     return () => window.removeEventListener('resize', updateSize);
-// }, []);

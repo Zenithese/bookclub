@@ -1,44 +1,30 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { connect } from 'react-redux';
-import { createComment, fetchComments } from '../actions/comments_actions'
-import { fetchReadersHighlights, clearHighlights, deleteHighlight } from '../actions/highlights_actions'
-import Comment from './comments'
+import { fetchComments } from '../actions/comments_actions'
+import { fetchReadersHighlights, clearHighlights } from '../actions/highlights_actions'
 import useWindowSize from './window_resize_hook';
 import { debounce } from 'lodash';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faComment, faHeart } from '@fortawesome/free-solid-svg-icons'
-import { fetchLikes, createLike, deleteLike } from '../actions/likes_actions'
+import { fetchLikes } from '../actions/likes_actions'
+import EreaderHighlight from './ereader_highlight'
 
 const mapStateToProps = ({ entities, session }) => {
     return {
         highlights: entities.highlights,
         userId: Number(session.id),
         comments: entities.comments,
-        readerId: entities.reader.id,
-        rendition: entities.rendition.rendition,
-        likes: entities.likes,
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        createComment: (comment) => dispatch(createComment(comment)),
         fetchComments: () => dispatch(fetchComments()),
         fetchReadersHighlights: (userId, bookId) => dispatch(fetchReadersHighlights(userId, bookId)),
         clearHighlights: () => dispatch(clearHighlights()),
-        deleteHighlight: (id) => dispatch(deleteHighlight(id)),
         fetchLikes: () => dispatch(fetchLikes()),
-        createLike: (likeableType, likeableId) => dispatch(createLike(likeableType, likeableId)),
-        deleteLike: (id) => dispatch(deleteLike(id)),
     }
 }
 
-function HighlightsList({ toggle, highlights, fetchReadersHighlights, userId, comments, fetchComments, createComment, bookId, clearHighlights, readerId, rendition, deleteHighlight, likes, fetchLikes, createLike, deleteLike, open }) {
-
-    const [visibleForms, setVisibleForms] = useState(new Set())
-    const [body, setBody] = useState("")
-    const [visibleComments, setVisibleComments] = useState(new Set())
-    const [newCommentId, setNewCommentId] = useState(null)
+function HighlightsList({ highlights, fetchReadersHighlights, userId, comments, fetchComments, bookId, clearHighlights, fetchLikes, open }) {
 
     const [width, height] = useWindowSize();
 
@@ -60,14 +46,6 @@ function HighlightsList({ toggle, highlights, fetchReadersHighlights, userId, co
     }, [comments])
 
     useEffect(() => {
-        if (visibleForms.has(newCommentId)) {
-            const newSet = new Set(visibleForms);
-            newSet.delete(newCommentId);
-            setVisibleForms(newSet);
-        }
-    }, [highlights])
-
-    useEffect(() => {
         fetchComments();
         fetchLikes();
 
@@ -76,135 +54,17 @@ function HighlightsList({ toggle, highlights, fetchReadersHighlights, userId, co
         }
     }, [])
 
-    const handleSubmit = (e, id) => {
-        e.preventDefault();
-        const comment = {
-            body,
-            id,
-            userId,
-            parent: true,
-            ancestorType: "Highlight",
-            ancestorId: id,
-        }
-        createComment(comment);
-        setNewCommentId(id);
-    }
-
-    const handleVisibleForm = (e, id) => {
-        e.preventDefault();
-        const newSet = new Set(visibleForms);
-        if (visibleForms.has(id)) {
-            newSet.delete(id);
-            setVisibleForms(newSet);
-        } else {
-            newSet.add(id);
-            setVisibleForms(newSet);
-        }
-    }
-
-    const handleVisibleComments = (id) => {
-        const newSet = new Set(visibleComments);
-        if (visibleComments.has(id)) {
-            newSet.delete(id);
-            setVisibleComments(newSet);
-        } else {
-            newSet.add(id);
-            setVisibleComments(newSet);
-        }
-    }
-
-    const handleLike = (id) => {
-        debugger
-        likes.highlights && likes.highlights[id] ?
-            deleteLike(likes.highlights[id].id)
-            : createLike("highlights", id)
-    }
-
-    const handleDelete = (cfiRange, id) => {
-        const confirmed = window.confirm("Permanently delete highlight?")
-        if (confirmed) {
-            rendition.annotations.remove(cfiRange, "highlight");
-            deleteHighlight(id)
-        }
-    }
-
-    const likeCount = (highlight) => {
-        const count = (likes.highlights && likes.highlights[highlight.id] ? 1 : 0) + highlight.likesCount + (highlight.likesArray.includes(userId) ? -1 : 0)
-        return count === 0 ? null : count
-    }
-
-    const commentThread = (thread, id, count) => {
-        return (
-            <div className="comments">
-                <div className="comment">
-                    <div className="comment-actions-container" style={!visibleForms.has(id) ? {} : { display: "none" }}>
-                        <div
-                            className="comment-icon"
-                            onClick={(e) => {
-                                    handleVisibleForm(e, id)
-                                    if (!visibleComments.has(id)) handleVisibleComments(id)
-                                }
-                            }>
-                            <FontAwesomeIcon icon={faComment} />
-                        </div>
-                        <div
-                            style={likes.highlights && likes.highlights[id] ? { color: "red" } : { color: "gray" }}
-                            onClick={() => handleLike(id)}>
-                            <FontAwesomeIcon icon={faHeart} /> {count}
-                        </div>
-                        {thread.length ? 
-                            <div className="show-hide-comments" onClick={() => handleVisibleComments(id)}>{ !visibleComments.has(id) ? "show comments" : "hide comments" }</div>
-                            : null
-                        }
-                    </div>
-                    <div className="first-reply-area" style={visibleForms.has(id) ? {} : { display: "none" }} onSubmit={(e) => handleSubmit(e, id)} >
-                        <textarea type="body" placeholder="Comment on quote" value={body} onChange={(e) => setBody(e.target.value)}></textarea>
-                        <div className="first-reply-actions">
-                            <button onClick={(e) => handleSubmit(e, id)}>Submit</button>
-                            <button onClick={(e) => handleVisibleForm(e, id)}>cancel</button>
-                        </div>
-                    </div>
-                    {visibleComments.has(id) && thread.map(comment => {
-                        return (
-                            <Comment key={comment.id} comment={comment} ancestorType={"Highlight"} ancestorId={id} />
-                        )
-                    })}
-                </div>
-            </div>
-        )
-    }
-
     const list = highlights.length ? (
-        highlights.map(({ id, text, cfiRange, comments }, i) => {
+        highlights.map(({ id, text, cfiRange, comments, likesCount, likesArray }, i) => {
             return (
-                <div className="annotation" key={i}>
-                    {
-                        userId == highlights[i].userId ?
-                            <div className="remove-highlight" href={`#${cfiRange}`} onClick={() => handleDelete(cfiRange, id)}><span style={{ marginLeft: "3px" }}>&#x2715;</span></div>
-                            : <br />
-                    }
-                    <div className="quote">
-                        <div className="apostrophe-container">
-                            <div className="apostrophe" style={{ float: "left" }}>&lsquo;&lsquo;</div>
-                        </div>
-                        <div 
-                            href={`#${cfiRange}`} 
-                            onClick={() => { rendition.display(cfiRange) }}
-                            className="quote-text">
-                                {text}
-                        </div>
-                        <div className="apostrophe-container">
-                            <div className="apostrophe" style={{ float: "right" }}>&rsquo;&rsquo;</div>
-                        </div>
-                    </div>
-                    {commentThread(comments, id, likeCount(highlights[i]))}
-                </div>
+                <EreaderHighlight id={id} text={text} cfiRange={cfiRange} comments={comments} highlightUserId={highlights[i].userId} i={i} likesCount={likesCount} likesArray={likesArray} key={id} />
             )
         })
     ) : (
         <p>no highlights</p >
     )
 
+    console.log("render")
     return (
         <ul className={open == "settings" ? "highlight-list-closed" : open == "annotations" ? "highlight-list-opened" : "highlight-list-closed"}>
             {list}

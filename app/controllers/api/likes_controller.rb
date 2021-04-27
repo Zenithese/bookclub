@@ -22,7 +22,7 @@ class Api::LikesController < ApplicationController
 
     def destroy
         @like = Like.find(params[:id])
-        @like.notification.destroy
+        @like.notification.destroy if @like.notification
         @like.destroy
         render :show
     end

@@ -11,6 +11,7 @@
 }
 
 .profile-annotation {
+  cursor: pointer;
   width: 90%;
   min-width: 180px;
   border: solid 2px tan;

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, memo } from 'react';
 import { emojis } from './avatar_emojis'
 
 function Avatar({ className, avatarId }) {
@@ -45,4 +45,4 @@ function Avatar({ className, avatarId }) {
     )
 }
 
-export default Avatar;
+export default memo(Avatar);
