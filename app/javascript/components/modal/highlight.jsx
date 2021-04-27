@@ -113,14 +113,16 @@ function Highlight({ id, text, cfiRange, comments, bookId, i, books, likes, crea
                 <img className="profile-book-image" src={books[bookId].image} style={i % 2 ? { marginLeft: "20px" } : { marginRight: "20px" }} />
                 <div onClick={handleClick} className="profile-annotation" key={i}>
                     <div className="inner-profile-annotation-container">
-                        <div className="apostrophe-container">
-                            <div className="apostrophe" style={{ float: "left" }}>&lsquo;&lsquo;</div>
-                        </div>
-                        <div className="quote">
-                            <span className="text">{text}</span>
-                        </div>
-                        <div className="apostrophe-container">
-                            <div className="apostrophe" style={{ float: "right" }}>&rsquo;&rsquo;</div>
+                        <div className="inner-profile-annotation">
+                            <div className="apostrophe-container">
+                                <div className="apostrophe" style={{ float: "left" }}>&lsquo;&lsquo;</div>
+                            </div>
+                            <div className="text-container">
+                                <span className="text">{text}</span>
+                            </div>
+                            <div className="apostrophe-container">
+                                <div className="apostrophe" style={{ float: "right" }}>&rsquo;&rsquo;</div>
+                            </div>
                         </div>
                     </div>
                     <div className="highlight-comment-actions-container" >

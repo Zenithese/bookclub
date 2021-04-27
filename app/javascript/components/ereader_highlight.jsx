@@ -126,7 +126,7 @@ function Highlight({ highlight, id, text, cfiRange, comments, i, likes, createLi
     return (
         <div className="annotation" key={i}>
             {
-                userId == highlight.id ?
+                userId == highlight.userId ?
                     <div className="remove-highlight" href={`#${cfiRange}`} onClick={() => handleDelete(cfiRange, id)}><span style={{ marginLeft: "3px" }}>&#x2715;</span></div>
                     : <br />
             }

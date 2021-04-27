@@ -16,7 +16,6 @@
   min-width: 180px;
   border: solid 2px tan;
   background-color: silver;
-  overflow-y: auto;
   position: relative;
 }
 
@@ -35,13 +34,23 @@
   height: 20px;
 }
 
-.inner-profile-annotation-container {
-  margin: 0;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.inner-profile-annotation {
   width: fit-content;
+}
+
+.inner-profile-annotation-container {
+  height: 100%;
+  position: absolute;
+  overflow-y: scroll;
+  display: grid;
+  align-items: center;
+}
+
+.text-container {
+  padding-left: 22px;
+  padding-right: 22px;
+  text-align: left;
+  text-indent: 50px;
 }
 
 .thread {
