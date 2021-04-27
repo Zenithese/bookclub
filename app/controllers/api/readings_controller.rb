@@ -1,5 +1,6 @@
 class Api::ReadingsController < ApplicationController
-
+    skip_before_action :verify_authenticity_token
+    
     def readings
         @readings = User.find(params[:user_id]).books
     end

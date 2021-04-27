@@ -125,7 +125,6 @@ function Highlight({ id, text, cfiRange, comments, i, likes, createLike, deleteL
         )
     }
 
-    console.log(userId, id)
     return (
         <div className="annotation" key={i}>
             {

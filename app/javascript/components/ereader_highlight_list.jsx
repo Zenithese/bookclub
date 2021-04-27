@@ -64,7 +64,6 @@ function HighlightsList({ highlights, fetchReadersHighlights, userId, comments, 
         <p>no highlights</p >
     )
 
-    console.log("render")
     return (
         <ul className={open == "settings" ? "highlight-list-closed" : open == "annotations" ? "highlight-list-opened" : "highlight-list-closed"}>
             {list}
