@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faComment, faHeart } from '@fortawesome/free-solid-svg-icons'
 import { createComment } from '../actions/comments_actions'
 import Comment from './comments'
+import useLikeCount from './useLikeCount'
 
 const mapStateToProps = ({ entities, session }) => {
     return {
@@ -22,13 +23,15 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-function Highlight({ id, text, cfiRange, comments, bookId, i, books, likes, createLike, deleteLike, likesCount, likesArray, userId, createComment }) {
+function Highlight({ highlight, id, text, cfiRange, comments, bookId, i, books, likes, createLike, deleteLike, userId, createComment }) {
 
     const [visibleThread, setVisibleThread] = useState(false)
     const [cancelClick, setCancelClick] = useState(false)
     const [visible, setVisible] = useState(false)
     const [body, setBody] = useState("")
     const [newCommentId, setNewCommentId] = useState(null)
+
+    const likeCount = useLikeCount(likes, "highlights", highlight, userId)
 
     useEffect(() => {
         if (newCommentId) {
@@ -51,11 +54,6 @@ function Highlight({ id, text, cfiRange, comments, bookId, i, books, likes, crea
         likes.highlights && likes.highlights[id] ?
             deleteLike(likes.highlights[id].id)
             : createLike("highlights", id)
-    }
-
-    const likeCount = () => {
-        const count = (likes.highlights && likes.highlights[id] ? 1 : 0) + likesCount + (likesArray.includes(userId) ? -1 : 0)
-        return count === 0 ? null : count
     }
 
     const handleMouseUp = (type) => {
@@ -128,7 +126,7 @@ function Highlight({ id, text, cfiRange, comments, bookId, i, books, likes, crea
                             onClick={handleLike} 
                             onMouseUp={() => handleMouseUp("like")}
                             style={likes.highlights && likes.highlights[id] ? { color: "red" } : { color: "gray"}}>
-                                <FontAwesomeIcon icon={faHeart} /> {likeCount()}
+                                <FontAwesomeIcon icon={faHeart} /> {likeCount || null}
                         </div>
                     </div>
                 </div>

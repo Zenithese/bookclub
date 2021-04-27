@@ -55,9 +55,9 @@ function HighlightsList({ highlights, fetchReadersHighlights, userId, comments, 
     }, [])
 
     const list = highlights.length ? (
-        highlights.map(({ id, text, cfiRange, comments, likesCount, likesArray }, i) => {
+        highlights.map(({ id, text, cfiRange, comments }, i) => {
             return (
-                <EreaderHighlight id={id} text={text} cfiRange={cfiRange} comments={comments} highlightUserId={highlights[i].userId} i={i} likesCount={likesCount} likesArray={likesArray} key={id} />
+                <EreaderHighlight id={id} text={text} cfiRange={cfiRange} comments={comments} highlight={highlights[i]} i={i} key={id} />
             )
         })
     ) : (

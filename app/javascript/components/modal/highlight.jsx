@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faComment, faHeart } from '@fortawesome/free-solid-svg-icons'
 import { createComment } from '../../actions/comments_actions'
 import { fetchHighlight } from '../../actions/highlights_actions';
+import useLikeCount from '../useLikeCount'
 
 const mapStateToProps = ({ entities, session }) => {
     return {
@@ -33,6 +34,8 @@ function Highlight({ id, text, cfiRange, comments, bookId, i, books, likes, crea
     const [visibleForms, setVisibleForms] = useState(new Set())
     const [body, setBody] = useState("")
     const [newCommentId, setNewCommentId] = useState(null)
+
+    const likeCount = useLikeCount(likes, "highlights", highlight, userId)
 
     useEffect(() => {
         fetchLikes();
@@ -81,11 +84,6 @@ function Highlight({ id, text, cfiRange, comments, bookId, i, books, likes, crea
         }
         createComment(comment);
         setNewCommentId(id);
-    }
-
-    const likeCount = () => {
-        const count = (likes.highlights && likes.highlights[highlight.id] ? 1 : 0) + highlight.likesCount + (highlight.likesArray.includes(userId) ? -1 : 0)
-        return count === 0 ? null : count
     }
 
     const commentThread = (thread, id) => {
@@ -137,7 +135,7 @@ function Highlight({ id, text, cfiRange, comments, bookId, i, books, likes, crea
                             onClick={handleLike}
                             // onMouseUp={() => handleMouseUp("like")}
                             style={likes.highlights && likes.highlights[id] ? { color: "red" } : { color: "gray" }}>
-                            <FontAwesomeIcon icon={faHeart} /> {likeCount()}
+                            <FontAwesomeIcon icon={faHeart} /> {likeCount || null}
                         </div>
                     </div>
                 </div>

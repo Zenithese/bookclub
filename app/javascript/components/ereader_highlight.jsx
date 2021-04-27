@@ -6,6 +6,7 @@ import { faComment, faHeart } from '@fortawesome/free-solid-svg-icons'
 import { createComment } from '../actions/comments_actions'
 import { deleteHighlight } from '../actions/highlights_actions'
 import Comment from './comments'
+import useLikeCount from './useLikeCount'
 
 const mapStateToProps = ({ entities, session }) => {
     return {
@@ -25,12 +26,14 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-function Highlight({ id, text, cfiRange, comments, i, likes, createLike, deleteLike, likesCount, likesArray, userId, highlightUserId, createComment, rendition, deleteHighlight }) {
+function Highlight({ highlight, id, text, cfiRange, comments, i, likes, createLike, deleteLike, userId, createComment, rendition, deleteHighlight }) {
 
     const [visible, setVisible] = useState(false)
     const [body, setBody] = useState("")
     const [newCommentId, setNewCommentId] = useState(null)
     const [visibleComments, setVisibleComments] = useState(new Set())
+
+    const likeCount = useLikeCount(likes, "highlights", highlight, userId)
 
     useEffect(() => {
         if (newCommentId) {
@@ -65,11 +68,6 @@ function Highlight({ id, text, cfiRange, comments, i, likes, createLike, deleteL
         }
     }
 
-    const likeCount = () => {
-        const count = (likes.highlights && likes.highlights[id] ? 1 : 0) + likesCount + (likesArray.includes(userId) ? -1 : 0)
-        return count === 0 ? null : count
-    }
-
     const handleSubmit = (e, id) => {
         e.preventDefault();
         const comment = {
@@ -84,7 +82,7 @@ function Highlight({ id, text, cfiRange, comments, i, likes, createLike, deleteL
         setNewCommentId(id);
     }
 
-    const commentThread = (thread, id, count) => {
+    const commentThread = (thread, id) => {
         return (
             <div className="comments">
                 <div className="comment">
@@ -101,7 +99,7 @@ function Highlight({ id, text, cfiRange, comments, i, likes, createLike, deleteL
                         <div
                             style={likes.highlights && likes.highlights[id] ? { color: "red" } : { color: "gray" }}
                             onClick={() => handleLike(id)}>
-                            <FontAwesomeIcon icon={faHeart} /> {count}
+                            <FontAwesomeIcon icon={faHeart} /> {likeCount || null}
                         </div>
                         {thread.length ?
                             <div className="show-hide-comments" onClick={() => handleVisibleComments(id)}>{!visibleComments.has(id) ? "show comments" : "hide comments"}</div>
@@ -128,7 +126,7 @@ function Highlight({ id, text, cfiRange, comments, i, likes, createLike, deleteL
     return (
         <div className="annotation" key={i}>
             {
-                userId == highlightUserId ?
+                userId == highlight.id ?
                     <div className="remove-highlight" href={`#${cfiRange}`} onClick={() => handleDelete(cfiRange, id)}><span style={{ marginLeft: "3px" }}>&#x2715;</span></div>
                     : <br />
             }
@@ -146,7 +144,7 @@ function Highlight({ id, text, cfiRange, comments, i, likes, createLike, deleteL
                     <div className="apostrophe" style={{ float: "right" }}>&rsquo;&rsquo;</div>
                 </div>
             </div>
-            {commentThread(comments, id, likeCount())}
+            {commentThread(comments, id)}
         </div>
     )
 }

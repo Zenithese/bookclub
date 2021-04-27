@@ -5,6 +5,7 @@ import { createLike, deleteLike } from '../actions/likes_actions'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faComment, faHeart } from '@fortawesome/free-solid-svg-icons'
 import Avatar from './avatar'
+import useLikeCount from './useLikeCount'
 
 const mapStateToProps = ({ entities, session }) => {
     return {
@@ -31,10 +32,11 @@ function Comment({ comment, createComment, fetchComments, userId, comments, crea
     const [body, setBody] = useState("")
     const [displayReplies, setDisplayReplies] = useState(true)
     const [update, setUpdate] = useState(false)
-    const wasLiked = comment.likesArray.includes(userId)
+
+    const likeCount = useLikeCount(likes, "comments", comment, userId)
 
     const nestedComments = (comment.comments || []).map((comment) => {
-        return <Comment key={comment.id} comment={comment} createComment={createComment} userId={userId} fetchComments={fetchComments} comments={comments} createLike={createLike} deleteLike={deleteLike} likes={likes} highlights={highlights} wasLiked={wasLiked} ancestorType={ancestorType} ancestorId={ancestorId} avatarId={avatarId} />
+        return <Comment key={comment.id} comment={comment} createComment={createComment} userId={userId} fetchComments={fetchComments} comments={comments} createLike={createLike} deleteLike={deleteLike} likes={likes} highlights={highlights} ancestorType={ancestorType} ancestorId={ancestorId} avatarId={avatarId} />
     }) // @CoderRocketFuel
 
     useEffect(() => {
@@ -63,11 +65,6 @@ function Comment({ comment, createComment, fetchComments, userId, comments, crea
             : createLike("comments", comment.id)
     }
 
-    const likeCount = () => {
-        const count = (likes.comments && likes.comments[comment.id] ? 1 : 0) + comment.likesCount + (wasLiked ? -1 : 0)
-        return count === 0 ? null : count
-    }
-
     return (
         <div className="comments">
             <div className="comment-img-username-container">
@@ -82,7 +79,7 @@ function Comment({ comment, createComment, fetchComments, userId, comments, crea
                     <div
                         style={likes.comments && likes.comments[comment.id] ? { color: "red" } : { color: "gray" }}
                         onClick={handleLike}
-                    ><FontAwesomeIcon icon={faHeart} /> {likeCount()}
+                    ><FontAwesomeIcon icon={faHeart} /> {likeCount || null}
                     </div>
                 </div>
                 <div className="reply-area" style={visible ? { display: "block" } : { display: "none" }} >
