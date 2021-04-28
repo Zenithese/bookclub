@@ -35,7 +35,7 @@ export default function BackCover({ position, setPosition, setBookClosed, pageNu
             onClick={handleClick}
             onMouseMove={handleHover}
             onMouseLeave={handleLeave}>
-            <div className="front-back-container">
+            <div className="front-back-cover-container">
                 <div className="front back-cover-color">
                     <h1>Welcome Back</h1>
                 </div>

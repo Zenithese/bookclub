@@ -43,7 +43,7 @@ export default function Cover({ position, setPosition, setSessionOpen, defaultZ,
             onClick={handleClick}
             onMouseMove={handleHover}
             onMouseLeave={handleLeave}>
-            <div className="front-back-container">
+            <div className="front-back-cover-container">
                 <div className="front cover-color">
                     <h1>Book Club</h1>
                 </div>

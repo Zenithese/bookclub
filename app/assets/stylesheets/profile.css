@@ -36,10 +36,12 @@
 
 .inner-profile-annotation {
   width: fit-content;
+  margin: auto;
 }
 
 .inner-profile-annotation-container {
   height: 100%;
+  width: 100%;
   position: absolute;
   overflow-y: scroll;
   display: grid;
