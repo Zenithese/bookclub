@@ -91,12 +91,16 @@
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   transition: z-index 0.3s;
+  z-index: 10; /* temp fix */
 }
 
 .back {
   transform: rotateY(-180deg);
-  -webkit-backface-visibility: hidden;
+  transition: z-index 0.3s;
+  z-index: 10;
+  /* -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
+  transition: backface-visibility 0.3s; */ /* temp fix */
 }
 
 .page-front {
@@ -110,6 +114,14 @@
 
 .index {
   z-index: 0;
+}
+
+.showing {
+  z-index: 1;
+}
+
+.backface-visible {
+  backface-visibility: visible;
 }
 
 .page-back {

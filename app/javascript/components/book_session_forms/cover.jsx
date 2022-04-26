@@ -44,10 +44,10 @@ export default function Cover({ position, setPosition, setSessionOpen, defaultZ,
             onMouseMove={handleHover}
             onMouseLeave={handleLeave}>
             <div className="front-back-cover-container">
-                <div className="front cover-color">
+                <div className={`front cover-color ${frontFlipped ? "index" : ""}`}>
                     <h1>Book Club</h1>
                 </div>
-                <div className="back cover-color">
+                <div className={`back cover-color ${frontFlipped ? "" : "index"}`}>
                     <h1>Welcome</h1>
                 </div>
             </div>

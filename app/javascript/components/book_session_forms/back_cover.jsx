@@ -36,10 +36,10 @@ export default function BackCover({ position, setPosition, setBookClosed, pageNu
             onMouseMove={handleHover}
             onMouseLeave={handleLeave}>
             <div className="front-back-cover-container">
-                <div className="front back-cover-color">
+                <div className={`front back-cover-color ${flipped ? " index" : ""}`}>
                     <h1>Welcome Back</h1>
                 </div>
-                <div className="back back-cover-color">
+                <div className={`back back-cover-color ${flipped ? "" : "index"}`}>
                     <h1>About</h1>
                     <p>Book Club is an online space for reading with your peers. Where referring to the text and sharing your favorite passages, highlights and notes is encouraged. Please start reading and invite others to read along with you.</p>
                 </div>
