@@ -56,7 +56,7 @@ export default function Page({ position, setPosition, pageNum, defaultZ, setDefa
             className={`book-box-shadow ${flipped ? "flipped-page page" : "page"}`}
             >
             <div className="front-back-container">
-                <div className={`page-front page-color ${flipped ? " index" : ""}`}>
+                <div className={`page-front page-color ${flipped ? "index not-clickable" : ""}`}>
                     <AuthRoute exact path="/" component={SignupFormContainer}/>
                     <div className="sticky-button-container left-sticky-margin" onClick={handleClick} onMouseMove={handleHover} onMouseLeave={handleLeave}>
                         <div className="left-alt"></div>
@@ -67,7 +67,7 @@ export default function Page({ position, setPosition, pageNum, defaultZ, setDefa
                         <div className="right-end"></div>
                     </div>
                 </div>
-                <div className="page-back page-color">
+                <div className={`page-back page-color ${flipped ? "" : "not-clickable"}`}>
                     <AuthRoute exact path="/" component={LoginFormContainer} />
                 </div>
                 <div className="sticky-button-container abs-sticky-margin" onClick={handleClick} onMouseMove={handleHover} onMouseLeave={handleLeave}>
