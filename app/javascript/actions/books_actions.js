@@ -5,6 +5,7 @@ export const RECEIVE_BOOK = "RECEIVE_BOOK"
 export const RECEIVE_BOOKS = "RECEIVE_BOOKS"
 
 const storeBook = (book) => {
+    
     return {
         type: STORE_BOOK,
         book,
