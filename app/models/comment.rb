@@ -5,7 +5,7 @@ class Comment < ApplicationRecord
         class_name: :User
 
     has_many :comments, as: :commentable
-    has_many :users, {:through=>:comments, :source=>"user"}
+    has_many :users, {:through=>:comments, :source=>:User}
     has_many :likes, as: :likeable
 
     has_one :comment_highlight
