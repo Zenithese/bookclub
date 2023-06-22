@@ -138,6 +138,7 @@
 .back-cover-color {
   /* background-color: #2980b9; */
   background-color: orange;
+  cursor: pointer;
 }
 
 .page-color {
@@ -146,6 +147,7 @@
 
 .cover-color {
   background-color: orange;
+  cursor: pointer;
 }
 
 .book-box-shadow {
@@ -158,6 +160,7 @@
   /* position: relative; */
   background: red;
   border: none;
+  cursor: pointer;
 }
 
 .right-end {
@@ -231,7 +234,7 @@
 .abs-back {
   position: absolute;
   width: 100%;
-  height: 100%;
+  bottom: 25px;
 }
 
 /* .outside-right-sticky {

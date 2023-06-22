@@ -54,15 +54,15 @@ export default function Page({ position, setPosition, pageNum, defaultZ, setDefa
             id={pageNum}
             style={{ zIndex: flipped ? pageNum : defaultZ }}
             className={`book-box-shadow ${flipped ? "flipped-page page" : "page"}`}
-            >
+        >
             <div className="front-back-container">
                 <div className={`page-front page-color ${flipped ? "index not-clickable" : ""}`}>
-                    <AuthRoute exact path="/" component={SignupFormContainer}/>
+                    <AuthRoute exact path="/" component={SignupFormContainer} />
                     <div className="sticky-button-container left-sticky-margin" onClick={handleClick} onMouseMove={handleHover} onMouseLeave={handleLeave}>
                         <div className="left-alt"></div>
                         <div className="page-sticky-container">
-                            <div className={`page-front sticky-button ${flipped ? "index" : ""}`}><span style={{float: "right", cursor: "default" }}>Signup</span></div>
-                            <div className="page-back sticky-button"><span style={{ float: "left", cursor: "default" }}>Signup</span></div>
+                            <div className={`page-front sticky-button ${flipped ? "index" : ""}`}><span style={{ float: "right", cursor: "pointer" }}>Signup</span></div>
+                            <div className="page-back sticky-button"><span style={{ float: "left", cursor: "pointer" }}>Signup</span></div>
                         </div>
                         <div className="right-end"></div>
                     </div>
@@ -74,8 +74,10 @@ export default function Page({ position, setPosition, pageNum, defaultZ, setDefa
                     <div className={`abs-sticky-cover`} style={{ opacity: opacity }}></div>
                     <div className="left-alt"></div>
                     <div className="page-sticky-container">
-                        <div className={`page-front sticky-button ${flipped ? "index" : ""}`}><span style={{ float: "right", cursor: "default", marginRight: "6px" }}>Login</span></div>
-                        <div className="abs-back sticky-button"><div style={{ cursor: "default", transform: "rotateY(180deg)", marginLeft: "10px" }}>Login</div></div>
+                        <div style={{ height: "45px", cursor: "pointer" }}>
+                            <div className={`page-front sticky-button ${flipped ? "index" : ""}`}><span style={{ float: "right", cursor: "pointer", marginRight: "6px" }}>Login</span></div>
+                        </div>
+                        <div className="abs-back sticky-button"><div style={{ cursor: "pointer", transform: "rotateY(180deg)", marginLeft: "10px" }}>Login</div></div>
                     </div>
                     <div className="right-end"></div>
                 </div>
